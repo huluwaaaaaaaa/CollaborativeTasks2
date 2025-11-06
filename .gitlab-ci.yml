@@ -1,6 +1,6 @@
 # ============================================
 # GitLab CI/CD Pipeline 配置
-# 只在test分支触发完整CI/CD流程
+# 只在test分支触发（包括push和merge request）
 # ============================================
 
 variables:
@@ -39,8 +39,8 @@ maven-build:
       - collabtask-api/target/*.jar
       - collabtask-gateway/target/*.jar
     expire_in: 1 day
-  only:
-    - test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test"'
 
 # ============================================
 # 阶段2：测试
@@ -52,8 +52,8 @@ unit-test:
     - echo "==> 运行单元测试..."
     - mvn test || echo "测试失败，继续构建"
   allow_failure: true
-  only:
-    - test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test"'
 
 # ============================================
 # 阶段3：构建Docker镜像
@@ -74,8 +74,8 @@ docker-build-api:
     - docker push ${API_IMAGE}:${VERSION}
     - docker push ${API_IMAGE}:latest
     - echo "==> API镜像构建完成"
-  only:
-    - test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test"'
   dependencies:
     - maven-build
 
@@ -95,8 +95,8 @@ docker-build-gateway:
     - docker push ${GATEWAY_IMAGE}:${VERSION}
     - docker push ${GATEWAY_IMAGE}:latest
     - echo "==> Gateway镜像构建完成"
-  only:
-    - test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test"'
   dependencies:
     - maven-build
 
@@ -108,16 +108,15 @@ deploy-test:
   image: alpine:latest
   script:
     - echo "==> 测试环境部署完成"
-    - echo "镜像已推送到Nexus"
-    - echo "API镜像:     ${API_IMAGE}:latest"
-    - echo "Gateway镜像: ${GATEWAY_IMAGE}:latest"
+    - echo "镜像已推送到Nexus:"
+    - echo "  API镜像 - ${API_IMAGE}:latest"
+    - echo "  Gateway镜像 - ${GATEWAY_IMAGE}:latest"
     - echo ""
     - echo "本地部署命令:"
-    - echo "  cd /Users/zgy/Documents/workspace-web3/CollaborativeTasks2"
     - echo "  make deploy-local"
   environment:
     name: test
     url: http://localhost:8001
-  only:
-    - test
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test"'
   when: on_success

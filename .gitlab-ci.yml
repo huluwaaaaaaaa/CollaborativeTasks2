@@ -1,0 +1,214 @@
+# ============================================
+# GitLab CI/CD Pipeline 配置
+# ============================================
+
+variables:
+  # Maven配置
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  
+  # Nexus私服配置
+  NEXUS_REGISTRY: "localhost:5000"  # Docker Registry端口
+  NEXUS_MAVEN_REPO: "http://localhost:8081/repository/maven-public/"  # Maven仓库
+  
+  # Docker镜像配置
+  API_IMAGE: "${NEXUS_REGISTRY}/collabtask-api"
+  GATEWAY_IMAGE: "${NEXUS_REGISTRY}/collabtask-gateway"
+  
+  # 版本号
+  VERSION: "${CI_COMMIT_SHORT_SHA}"
+
+# 定义阶段
+stages:
+  - build
+  - test
+  - docker-build
+  - deploy
+
+# Maven缓存
+cache:
+  key: "${CI_COMMIT_REF_SLUG}"
+  paths:
+    - .m2/repository/
+    - collabtask-api/target/
+    - collabtask-gateway/target/
+    - collabtask-common/target/
+    - collabtask-dynamic-datasource/target/
+
+# ============================================
+# 阶段1：编译
+# ============================================
+maven-build:
+  stage: build
+  image: maven:3.9-eclipse-temurin-17
+  script:
+    - echo "==> 开始Maven编译..."
+    - mkdir -p ~/.m2
+    - echo '<?xml version="1.0" encoding="UTF-8"?>' > ~/.m2/settings.xml
+    - echo '<settings>' >> ~/.m2/settings.xml
+    - echo '  <mirrors>' >> ~/.m2/settings.xml
+    - echo '    <mirror>' >> ~/.m2/settings.xml
+    - echo '      <id>nexus</id>' >> ~/.m2/settings.xml
+    - echo '      <mirrorOf>*</mirrorOf>' >> ~/.m2/settings.xml
+    - echo "      <url>${NEXUS_MAVEN_REPO}</url>" >> ~/.m2/settings.xml
+    - echo '    </mirror>' >> ~/.m2/settings.xml
+    - echo '  </mirrors>' >> ~/.m2/settings.xml
+    - echo '</settings>' >> ~/.m2/settings.xml
+    - mvn clean package -DskipTests
+    - echo "==> Maven编译完成"
+  artifacts:
+    paths:
+      - collabtask-api/target/*.jar
+      - collabtask-gateway/target/*.jar
+    expire_in: 1 day
+  only:
+    - test
+
+# ============================================
+# 阶段2：测试
+# ============================================
+unit-test:
+  stage: test
+  image: maven:3.9-eclipse-temurin-17
+  script:
+    - echo "==> 运行单元测试..."
+    - mvn test
+    - echo "==> 单元测试完成"
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - "**/target/surefire-reports/TEST-*.xml"
+    paths:
+      - "**/target/site/jacoco/"
+    expire_in: 7 days
+  only:
+    - test  # 只在test分支触发
+
+# 代码质量检查
+code-quality:
+  stage: test
+  image: maven:3.9-eclipse-temurin-17
+  script:
+    - echo "==> 代码质量检查..."
+    - mvn checkstyle:check || true
+    - mvn pmd:check || true
+  allow_failure: true
+  only:
+    - test  # 只在test分支触发
+
+# ============================================
+# 阶段3：构建Docker镜像
+# ============================================
+docker-build-api:
+  stage: docker-build
+  image: docker:24
+  services:
+    - docker:24-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    # 登录Nexus Docker Registry
+    - echo ${NEXUS_PASSWORD} | docker login ${NEXUS_REGISTRY} -u ${NEXUS_USERNAME} --password-stdin
+  script:
+    - echo "==> 构建API镜像..."
+    - docker build -f collabtask-api/Dockerfile -t ${API_IMAGE}:${VERSION} -t ${API_IMAGE}:latest .
+    - echo "==> 推送镜像到Nexus..."
+    - docker push ${API_IMAGE}:${VERSION}
+    - docker push ${API_IMAGE}:latest
+    - echo "==> API镜像构建完成: ${API_IMAGE}:${VERSION}"
+  only:
+    - test  # 只在test分支触发
+  dependencies:
+    - maven-build
+
+docker-build-gateway:
+  stage: docker-build
+  image: docker:24
+  services:
+    - docker:24-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - echo ${NEXUS_PASSWORD} | docker login ${NEXUS_REGISTRY} -u ${NEXUS_USERNAME} --password-stdin
+  script:
+    - echo "==> 构建Gateway镜像..."
+    - docker build -f collabtask-gateway/Dockerfile -t ${GATEWAY_IMAGE}:${VERSION} -t ${GATEWAY_IMAGE}:latest .
+    - echo "==> 推送镜像到Nexus..."
+    - docker push ${GATEWAY_IMAGE}:${VERSION}
+    - docker push ${GATEWAY_IMAGE}:latest
+    - echo "==> Gateway镜像构建完成: ${GATEWAY_IMAGE}:${VERSION}"
+  only:
+    - test  # 只在test分支触发
+  dependencies:
+    - maven-build
+
+# ============================================
+# 阶段4：部署
+# ============================================
+
+# 部署到测试环境（test分支自动触发）
+deploy-test:
+  stage: deploy
+  image: docker:24
+  before_script:
+    - apk add --no-cache curl
+  script:
+    - echo "==> 部署到测试环境..."
+    - echo "镜像已推送到Nexus，准备部署..."
+    - echo "API镜像:     ${API_IMAGE}:latest"
+    - echo "Gateway镜像: ${GATEWAY_IMAGE}:latest"
+    - echo ""
+    - echo "如果需要自动部署到远程服务器，请配置 TEST_SERVER_HOST 环境变量"
+    - echo "本地部署请执行: docker-compose -f docker-compose-nexus.yml up -d"
+    - echo "==> 测试环境准备完成"
+  environment:
+    name: test
+    url: http://${TEST_SERVER_HOST:-localhost}:8001
+  only:
+    - test
+  when: on_success  # test分支自动触发
+
+# 部署到开发环境（手动触发）
+deploy-dev:
+  stage: deploy
+  image: docker:24
+  script:
+    - echo "==> 开发环境部署..."
+    - echo "镜像已推送到Nexus"
+    - echo "API镜像:     ${API_IMAGE}:latest"
+    - echo "Gateway镜像: ${GATEWAY_IMAGE}:latest"
+    - echo ""
+    - echo "手动部署到开发环境，请在服务器执行:"
+    - echo "docker-compose -f docker-compose-nexus.yml pull"
+    - echo "docker-compose -f docker-compose-nexus.yml up -d"
+  environment:
+    name: development
+    url: http://localhost:8001
+  only:
+    - develop
+  when: manual
+  dependencies: []  # 不依赖其他job
+
+# 部署到生产环境（手动触发）
+deploy-prod:
+  stage: deploy
+  image: docker:24
+  script:
+    - echo "==> 生产环境部署..."
+    - echo "镜像已推送到Nexus"
+    - echo "API镜像:     ${API_IMAGE}:${VERSION}"
+    - echo "Gateway镜像: ${GATEWAY_IMAGE}:${VERSION}"
+    - echo ""
+    - echo "手动部署到生产环境，请在服务器执行:"
+    - echo "export IMAGE_TAG=${VERSION}"
+    - echo "docker-compose -f docker-compose-nexus.yml pull"
+    - echo "docker-compose -f docker-compose-nexus.yml up -d"
+  environment:
+    name: production
+    url: http://localhost:8001
+  only:
+    - main
+  when: manual
+  dependencies: []  # 不依赖其他job
+

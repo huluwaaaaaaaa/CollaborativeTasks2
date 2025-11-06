@@ -1,0 +1,8 @@
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/annotation/DataSource.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/aspect/DataSourceAspect.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicContextHolder.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicDataSource.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicDataSourceConfig.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicDataSourceFactory.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/properties/DataSourceProperties.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/properties/DynamicDataSourceProperties.java

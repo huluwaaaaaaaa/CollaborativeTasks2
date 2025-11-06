@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: collabtask-gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      # Nacos服务地址（支持环境变量，默认localhost:8848）
+      server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
+      
+      # Nacos认证（生产环境必须配置）
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      
+      # Nacos注册中心
+      discovery:
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: ${NACOS_GROUP:DEFAULT_GROUP}
+        ephemeral: true  # 临时实例（重启后自动注销）
+        metadata:
+          management:
+            context-path: /actuator
+      
+      # Nacos配置中心
+      config:
+        # 引用discovery的配置，避免重复
+        server-addr: ${spring.cloud.nacos.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        group: ${spring.cloud.nacos.discovery.group}
+        file-extension: yaml
+        refresh-enabled: true
+        
+        # 扩展配置：明确指定要加载的配置文件
+        extension-configs:
+          # 主配置文件（必须明确指定，包含后缀）
+          - data-id: collabtask-gateway.yaml
+            group: ${spring.cloud.nacos.discovery.group}
+            refresh: true
+          # 公共配置
+          - data-id: common-config.yaml
+            group: ${spring.cloud.nacos.discovery.group}
+            refresh: true
+
+# 开启DEBUG日志，方便查看配置加载过程
+logging:
+  level:
+    com.alibaba.cloud.nacos.config: DEBUG
+    com.alibaba.nacos.client.config: DEBUG

@@ -1,0 +1,16 @@
+# ============================================
+# API服务 - 生产环境配置
+# 所有配置已迁移到Nacos配置中心
+# ============================================
+#
+# Nacos配置位置：
+# 命名空间：prod
+# Data ID：collabtask-api.yaml
+# Group：DEFAULT_GROUP
+#
+# 启动命令：
+# export NACOS_HOST=your_nacos_host
+# export NACOS_NAMESPACE=prod
+# export NACOS_USERNAME=prod-user
+# export NACOS_PASSWORD=your_password
+# java -jar collabtask-api.jar

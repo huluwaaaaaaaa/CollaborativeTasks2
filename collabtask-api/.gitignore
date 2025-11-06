@@ -20,21 +20,8 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
-.idea/
+target/
 .cusors/
-
-logs/
-.DS_Store
-docs/
-docker/
-scripts/
-
-# Docker
-Dockerfile
-docker-compose.yml
-.dockerignore
-
-# 其他
+.idea/
+*.als
 .mvn/
-mvnw
-mvnw.cmd

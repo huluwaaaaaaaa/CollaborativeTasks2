@@ -1,0 +1,18 @@
+# ============================================
+# Gateway网关 - 开发环境配置
+# 所有配置已迁移到Nacos配置中心
+# ============================================
+#
+# Nacos配置位置：
+# 命名空间：dev
+# Data ID：collabtask-gateway.yaml
+# Group：DEFAULT_GROUP
+
+# 开发环境日志级别
+logging:
+  level:
+    io.user.gateway: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway.filter: TRACE
+    org.springframework.cloud.gateway.handler: TRACE
+    org.springframework.cloud.loadbalancer: DEBUG

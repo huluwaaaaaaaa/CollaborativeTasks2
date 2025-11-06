@@ -1,0 +1,13 @@
+# ============================================
+# Gateway网关 - 生产环境配置
+# 所有配置已迁移到Nacos配置中心
+# ============================================
+#
+# Nacos配置位置：
+# 命名空间：prod
+# Data ID：collabtask-gateway.yaml
+# Group：DEFAULT_GROUP
+
+logging:
+  level:
+    io.user.gateway: WARN

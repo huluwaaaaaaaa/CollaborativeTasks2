@@ -30,6 +30,8 @@ cache:
 maven-build:
   stage: build
   image: maven:3.9-eclipse-temurin-17
+  tags:
+    - docker
   script:
     - echo "==> 开始Maven编译..."
     - mvn clean package -DskipTests
@@ -48,6 +50,8 @@ maven-build:
 unit-test:
   stage: test
   image: maven:3.9-eclipse-temurin-17
+  tags:
+    - docker
   script:
     - echo "==> 运行单元测试..."
     - mvn test || echo "测试失败，继续构建"
@@ -61,6 +65,8 @@ unit-test:
 docker-build-api:
   stage: docker-build
   image: docker:24
+  tags:
+    - docker
   services:
     - docker:24-dind
   variables:
@@ -82,6 +88,8 @@ docker-build-api:
 docker-build-gateway:
   stage: docker-build
   image: docker:24
+  tags:
+    - docker
   services:
     - docker:24-dind
   variables:
@@ -106,6 +114,8 @@ docker-build-gateway:
 deploy-test:
   stage: deploy
   image: alpine:latest
+  tags:
+    - docker
   script:
     - echo "==> 测试环境部署完成"
     - echo "镜像已推送到Nexus:"

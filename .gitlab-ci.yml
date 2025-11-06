@@ -42,20 +42,17 @@ maven-build:
   image: maven:3.9-eclipse-temurin-17
   script:
     - echo "==> 开始Maven编译..."
-    # 配置Nexus Maven仓库
     - mkdir -p ~/.m2
-    - |
-      cat > ~/.m2/settings.xml << EOF
-      <settings>
-        <mirrors>
-          <mirror>
-            <id>nexus</id>
-            <mirrorOf>*</mirrorOf>
-            <url>${NEXUS_MAVEN_REPO}</url>
-          </mirror>
-        </mirrors>
-      </settings>
-      EOF
+    - echo '<?xml version="1.0" encoding="UTF-8"?>' > ~/.m2/settings.xml
+    - echo '<settings>' >> ~/.m2/settings.xml
+    - echo '  <mirrors>' >> ~/.m2/settings.xml
+    - echo '    <mirror>' >> ~/.m2/settings.xml
+    - echo '      <id>nexus</id>' >> ~/.m2/settings.xml
+    - echo '      <mirrorOf>*</mirrorOf>' >> ~/.m2/settings.xml
+    - echo "      <url>${NEXUS_MAVEN_REPO}</url>" >> ~/.m2/settings.xml
+    - echo '    </mirror>' >> ~/.m2/settings.xml
+    - echo '  </mirrors>' >> ~/.m2/settings.xml
+    - echo '</settings>' >> ~/.m2/settings.xml
     - mvn clean package -DskipTests
     - echo "==> Maven编译完成"
   artifacts:
@@ -64,10 +61,7 @@ maven-build:
       - collabtask-gateway/target/*.jar
     expire_in: 1 day
   only:
-    - main
-    - develop
     - test
-    - merge_requests
 
 # ============================================
 # 阶段2：测试
@@ -89,10 +83,7 @@ unit-test:
       - "**/target/site/jacoco/"
     expire_in: 7 days
   only:
-    - main
-    - develop
-    - test
-    - merge_requests
+    - test  # 只在test分支触发
 
 # 代码质量检查
 code-quality:
@@ -104,10 +95,7 @@ code-quality:
     - mvn pmd:check || true
   allow_failure: true
   only:
-    - main
-    - develop
-    - test
-    - merge_requests
+    - test  # 只在test分支触发
 
 # ============================================
 # 阶段3：构建Docker镜像
@@ -130,9 +118,7 @@ docker-build-api:
     - docker push ${API_IMAGE}:latest
     - echo "==> API镜像构建完成: ${API_IMAGE}:${VERSION}"
   only:
-    - main
-    - develop
-    - test
+    - test  # 只在test分支触发
   dependencies:
     - maven-build
 
@@ -153,9 +139,7 @@ docker-build-gateway:
     - docker push ${GATEWAY_IMAGE}:latest
     - echo "==> Gateway镜像构建完成: ${GATEWAY_IMAGE}:${VERSION}"
   only:
-    - main
-    - develop
-    - test
+    - test  # 只在test分支触发
   dependencies:
     - maven-build
 
@@ -204,6 +188,7 @@ deploy-dev:
   only:
     - develop
   when: manual
+  dependencies: []  # 不依赖其他job
 
 # 部署到生产环境（手动触发）
 deploy-prod:
@@ -225,4 +210,5 @@ deploy-prod:
   only:
     - main
   when: manual
+  dependencies: []  # 不依赖其他job
 

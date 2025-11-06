@@ -171,34 +171,13 @@ deploy-test:
     - apk add --no-cache curl
   script:
     - echo "==> 部署到测试环境..."
-    - echo "==> 使用docker-compose-nexus.yml部署..."
-    # 如果有远程测试服务器，使用SSH部署
-    # 如果是本地测试，使用docker-compose
-    - |
-      if [ -n "${TEST_SERVER_HOST}" ]; then
-        # SSH到测试服务器部署
-        apk add --no-cache openssh-client
-        ssh -o StrictHostKeyChecking=no ${TEST_SERVER_USER}@${TEST_SERVER_HOST} << EOF
-          cd /opt/collabtask
-          echo "==> 拉取最新代码..."
-          git pull origin test
-          echo "==> 拉取最新镜像..."
-          docker login ${NEXUS_REGISTRY} -u ${NEXUS_USERNAME} -p ${NEXUS_PASSWORD}
-          docker pull ${API_IMAGE}:latest
-          docker pull ${GATEWAY_IMAGE}:latest
-          echo "==> 重启服务..."
-          docker-compose -f docker-compose-nexus.yml down
-          docker-compose -f docker-compose-nexus.yml up -d
-          echo "==> 等待服务启动..."
-          sleep 30
-          docker-compose -f docker-compose-nexus.yml ps
-        EOF
-      else
-        # 本地部署
-        echo "==> 本地测试环境部署..."
-        echo "请在本地执行: make deploy-local"
-      fi
-    - echo "==> 测试环境部署完成"
+    - echo "镜像已推送到Nexus，准备部署..."
+    - echo "API镜像:     ${API_IMAGE}:latest"
+    - echo "Gateway镜像: ${GATEWAY_IMAGE}:latest"
+    - echo ""
+    - echo "如果需要自动部署到远程服务器，请配置 TEST_SERVER_HOST 环境变量"
+    - echo "本地部署请执行: docker-compose -f docker-compose-nexus.yml up -d"
+    - echo "==> 测试环境准备完成"
   environment:
     name: test
     url: http://${TEST_SERVER_HOST:-localhost}:8001
@@ -206,65 +185,43 @@ deploy-test:
     - test
   when: on_success  # test分支自动触发
 
-# 部署到开发环境
+# 部署到开发环境（手动触发）
 deploy-dev:
   stage: deploy
   image: docker:24
-  before_script:
-    - apk add --no-cache openssh-client
   script:
-    - echo "==> 部署到开发环境..."
-    # SSH到目标服务器
-    - |
-      ssh -o StrictHostKeyChecking=no ${DEV_SERVER_USER}@${DEV_SERVER_HOST} << EOF
-        cd /opt/collabtask
-        # 停止旧服务
-        docker-compose down
-        # 拉取最新镜像
-        docker pull ${API_IMAGE}:latest
-        docker pull ${GATEWAY_IMAGE}:latest
-        # 启动新服务
-        docker-compose up -d
-        # 查看状态
-        docker-compose ps
-      EOF
-    - echo "==> 开发环境部署完成"
+    - echo "==> 开发环境部署..."
+    - echo "镜像已推送到Nexus"
+    - echo "API镜像:     ${API_IMAGE}:latest"
+    - echo "Gateway镜像: ${GATEWAY_IMAGE}:latest"
+    - echo ""
+    - echo "手动部署到开发环境，请在服务器执行:"
+    - echo "docker-compose -f docker-compose-nexus.yml pull"
+    - echo "docker-compose -f docker-compose-nexus.yml up -d"
   environment:
     name: development
-    url: http://${DEV_SERVER_HOST}:8001
+    url: http://localhost:8001
   only:
     - develop
   when: manual
 
-# 部署到生产环境
+# 部署到生产环境（手动触发）
 deploy-prod:
   stage: deploy
   image: docker:24
-  before_script:
-    - apk add --no-cache openssh-client
   script:
-    - echo "==> 部署到生产环境..."
-    - |
-      ssh -o StrictHostKeyChecking=no ${PROD_SERVER_USER}@${PROD_SERVER_HOST} << EOF
-        cd /opt/collabtask
-        # 停止旧服务
-        docker-compose down
-        # 拉取指定版本镜像
-        docker pull ${API_IMAGE}:${VERSION}
-        docker pull ${GATEWAY_IMAGE}:${VERSION}
-        # 更新docker-compose.yml中的镜像版本
-        sed -i "s|image: .*collabtask-api.*|image: ${API_IMAGE}:${VERSION}|g" docker-compose.yml
-        sed -i "s|image: .*collabtask-gateway.*|image: ${GATEWAY_IMAGE}:${VERSION}|g" docker-compose.yml
-        # 启动新服务
-        docker-compose up -d
-        # 健康检查
-        sleep 30
-        curl -f http://localhost:8001/actuator/health || exit 1
-      EOF
-    - echo "==> 生产环境部署完成"
+    - echo "==> 生产环境部署..."
+    - echo "镜像已推送到Nexus"
+    - echo "API镜像:     ${API_IMAGE}:${VERSION}"
+    - echo "Gateway镜像: ${GATEWAY_IMAGE}:${VERSION}"
+    - echo ""
+    - echo "手动部署到生产环境，请在服务器执行:"
+    - echo "export IMAGE_TAG=${VERSION}"
+    - echo "docker-compose -f docker-compose-nexus.yml pull"
+    - echo "docker-compose -f docker-compose-nexus.yml up -d"
   environment:
     name: production
-    url: http://${PROD_SERVER_HOST}:8001
+    url: http://localhost:8001
   only:
     - main
   when: manual

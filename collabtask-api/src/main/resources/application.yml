@@ -1,0 +1,118 @@
+# ============================================
+# API服务 - 本地配置文件（精简版）
+# 业务配置全部在Nacos配置中心管理
+# ============================================
+
+# 服务器配置
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 1000
+      min-spare: 30
+  port: 8002
+  servlet:
+    context-path: /collabtask-api
+    session:
+      cookie:
+        http-only: true
+        
+spring:
+  application:
+    name: collabtask-api
+  
+  # 环境配置
+  profiles:
+    active: dev
+  
+  # 允许循环依赖
+  main:
+    allow-circular-references: true
+  
+  # 禁用SQL初始化
+  sql:
+    init:
+      mode: never
+  
+  # 新方式：使用config.import导入Nacos配置
+  config:
+    import:
+      - optional:nacos:collabtask-api.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:common-config.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+  
+  # 国际化配置
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+  
+  # Jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  
+  # MVC配置
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true
+  
+  # 禁用Spring Cloud版本兼容性检查
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    # Nacos配置
+    nacos:
+      server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      config:
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: DEFAULT_GROUP
+        file-extension: yaml
+      discovery:
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: DEFAULT_GROUP
+
+# MyBatis Plus配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  typeAliasesPackage: io.user.entity
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+  configuration-properties:
+    prefix:
+    blobType: BLOB
+    boolValue: TRUE
+
+# Knife4j配置
+knife4j:
+  enable: true
+  basic:
+    enable: false
+    username: admin
+    password: admin
+  setting:
+    enableFooter: false
+
+# 自定义配置
+collabtask:
+  redis:
+    open: false
+
+# 说明：
+# - 数据库配置在 Nacos: collabtask-api.yaml
+# - Redis配置在 Nacos: collabtask-api.yaml
+# - 其他环境相关配置在 Nacos

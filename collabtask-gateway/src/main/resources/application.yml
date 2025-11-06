@@ -1,0 +1,58 @@
+# ============================================
+# Gateway网关 - 本地配置文件（精简版）
+# 业务配置全部在Nacos配置中心管理
+# ============================================
+
+# 服务器配置
+server:
+  port: 8001
+
+spring:
+  application:
+    name: collabtask-gateway
+  
+  # 环境配置
+  profiles:
+    active: dev
+  
+  # 强制使用响应式Web
+  main:
+    web-application-type: reactive
+  
+  # 新方式：使用config.import导入Nacos配置
+  config:
+    import:
+      - optional:nacos:collabtask-gateway.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:common-config.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+  
+  # 禁用Spring Cloud版本兼容性检查
+  cloud:
+    compatibility-verifier:
+      enabled: false
+    
+    # Nacos配置
+    nacos:
+      server-addr: ${NACOS_HOST:localhost}:${NACOS_PORT:8848}
+      username: ${NACOS_USERNAME:nacos}
+      password: ${NACOS_PASSWORD:nacos}
+      config:
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: DEFAULT_GROUP
+        file-extension: yaml
+      discovery:
+        namespace: ${NACOS_NAMESPACE:dev}
+        group: DEFAULT_GROUP
+  
+  # 排除数据源自动配置
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure
+
+# 说明：
+# - 路由规则在 Nacos: collabtask-gateway.yaml
+# - 跨域配置在 Nacos: collabtask-gateway.yaml
+# - 认证配置在 Nacos: collabtask-gateway.yaml
+# - 日志配置在 Nacos: collabtask-gateway.yaml

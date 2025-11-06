@@ -1,0 +1,837 @@
+2025-11-06 17:01:06.316 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:01:06.319 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:01:06.319 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:01:06.323 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:01:06.328 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:01:06.840 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:01:08.120 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[io.user.gateway]' package. Please check your configuration.
+2025-11-06 17:01:08.199 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:01:08.416 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8000"]
+2025-11-06 17:01:08.417 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-11-06 17:01:08.417 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.43]
+2025-11-06 17:01:08.448 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-11-06 17:01:08.711 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'org.springframework.cloud.gateway.config.GatewayClassPathWarningAutoConfiguration$SpringMvcFoundOnClasspathConfiguration': Failed to instantiate [org.springframework.cloud.gateway.config.GatewayClassPathWarningAutoConfiguration$SpringMvcFoundOnClasspathConfiguration]: Constructor threw exception
+2025-11-06 17:01:08.719 [main] INFO  org.apache.catalina.core.StandardService - Stopping service [Tomcat]
+2025-11-06 17:01:08.756 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Spring MVC found on classpath, which is incompatible with Spring Cloud Gateway.
+
+Action:
+
+Please set spring.main.web-application-type=reactive or remove spring-boot-starter-web dependency.
+
+2025-11-06 17:01:08.757 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 17:08:52.048 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:08:52.051 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:08:52.051 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:08:52.056 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:08:52.061 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:08:52.363 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:08:53.065 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[io.user.gateway]' package. Please check your configuration.
+2025-11-06 17:08:53.152 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:08:53.526 [main] ERROR i.n.resolver.dns.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-11-06 17:08:53.740 [main] DEBUG o.s.cloud.gateway.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='collabtask-api', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-api, order=0, metadata={}, enabled=true}, RouteDefinition{id='collabtask-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/admin/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-admin, order=0, metadata={}, enabled=true}]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-11-06 17:08:53.801 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-11-06 17:08:53.896 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:08:53.896 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:08:53.926 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2025-11-06 17:08:53.952 [main] WARN  o.s.b.w.r.c.AnnotationConfigReactiveWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'webHandler' defined in class path resource [org/springframework/boot/autoconfigure/web/reactive/WebFluxAutoConfiguration$EnableWebFluxConfiguration.class]: Error creating bean with name 'healthEndpointWebFluxHandlerMapping' defined in class path resource [org/springframework/boot/actuate/autoconfigure/health/HealthEndpointReactiveWebExtensionConfiguration$WebFluxAdditionalHealthEndpointPathsConfiguration.class]: Failed to instantiate [org.springframework.boot.actuate.endpoint.web.reactive.AdditionalHealthEndpointPathsWebFluxHandlerMapping]: Factory method 'healthEndpointWebFluxHandlerMapping' threw exception with message: Error creating bean with name 'healthEndpoint' defined in class path resource [org/springframework/boot/actuate/autoconfigure/health/HealthEndpointConfiguration.class]: Unsatisfied dependency expressed through method 'healthEndpoint' parameter 0: Error creating bean with name 'healthContributorRegistry' defined in class path resource [org/springframework/boot/actuate/autoconfigure/health/HealthEndpointConfiguration.class]: Unsatisfied dependency expressed through method 'healthContributorRegistry' parameter 2: Error creating bean with name 'dbHealthContributor' defined in class path resource [org/springframework/boot/actuate/autoconfigure/jdbc/DataSourceHealthContributorAutoConfiguration.class]: Failed to instantiate [org.springframework.boot.actuate.health.HealthContributor]: Factory method 'dbHealthContributor' threw exception with message: Error creating bean with name 'dataSource' defined in class path resource [com/alibaba/druid/spring/boot3/autoconfigure/DruidDataSourceAutoConfigure.class]: Failed to determine suitable jdbc url
+2025-11-06 17:08:53.982 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to configure a DataSource: 'url' attribute is not specified and no embedded datasource could be configured.
+
+Reason: Failed to determine suitable jdbc url
+
+
+Action:
+
+Consider the following:
+	If you want an embedded database (H2, HSQL or Derby), please put it on the classpath.
+	If you have database settings to be loaded from a particular profile you may need to activate it (the profiles dev are currently active).
+
+2025-11-06 17:08:54.359 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 17:08:54.359 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2025-11-06 17:11:30.362 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:11:30.364 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:11:30.364 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:11:30.373 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:11:30.377 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:11:30.670 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:11:31.309 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:11:31.605 [main] ERROR i.n.resolver.dns.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-11-06 17:11:31.832 [main] DEBUG o.s.cloud.gateway.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='collabtask-api', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-api, order=0, metadata={}, enabled=true}, RouteDefinition{id='collabtask-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/admin/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-admin, order=0, metadata={}, enabled=true}]
+2025-11-06 17:11:31.879 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-11-06 17:11:31.879 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-11-06 17:11:31.879 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-11-06 17:11:31.880 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-11-06 17:11:31.960 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:11:31.960 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:11:32.217 [main] WARN  o.s.b.w.r.c.AnnotationConfigReactiveWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'compositeCompatibilityVerifier' defined in class path resource [org/springframework/cloud/configuration/CompatibilityVerifierAutoConfiguration.class]: Failed to instantiate [org.springframework.cloud.configuration.CompositeCompatibilityVerifier]: Factory method 'compositeCompatibilityVerifier' threw exception with message: Spring Cloud/ Spring Boot version compatibility checks have failed: [[VerificationResult@7683ea43 description = 'Spring Boot [3.5.4] is not compatible with this Spring Cloud release train', action = 'Change Spring Boot version to one of the following versions [3.4.x] .
+You can find the latest Spring Boot versions here [https://spring.io/projects/spring-boot#learn]. 
+If you want to learn more about the Spring Cloud Release train compatibility, you can visit this page [https://spring.io/projects/spring-cloud#overview] and check the [Release Trains] section.
+If you want to disable this check, just set the property [spring.cloud.compatibility-verifier.enabled=false]']]
+2025-11-06 17:11:32.246 [main] ERROR o.s.b.diagnostics.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Your project setup is incompatible with our requirements due to following reasons:
+
+- Spring Boot [3.5.4] is not compatible with this Spring Cloud release train
+
+
+Action:
+
+Consider applying the following actions:
+
+- Change Spring Boot version to one of the following versions [3.4.x] .
+You can find the latest Spring Boot versions here [https://spring.io/projects/spring-boot#learn]. 
+If you want to learn more about the Spring Cloud Release train compatibility, you can visit this page [https://spring.io/projects/spring-cloud#overview] and check the [Release Trains] section.
+If you want to disable this check, just set the property [spring.cloud.compatibility-verifier.enabled=false]
+
+
+2025-11-06 17:11:32.459 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 17:11:32.460 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Destruction of the end
+2025-11-06 17:11:32.460 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2025-11-06 17:14:27.972 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:14:27.973 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:14:27.973 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:14:27.976 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:14:27.980 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:14:28.232 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:14:28.942 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:14:29.292 [main] ERROR i.n.resolver.dns.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-11-06 17:14:29.605 [main] DEBUG o.s.cloud.gateway.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='collabtask-api', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-api, order=0, metadata={}, enabled=true}, RouteDefinition{id='collabtask-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/admin/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-admin, order=0, metadata={}, enabled=true}]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-11-06 17:14:29.823 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-11-06 17:14:29.928 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:14:29.928 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:14:30.247 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-11-06 17:14:30.332 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:14:30.332 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:14:30.804 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to get current node abilities...
+2025-11-06 17:14:30.805 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to initialize current node abilities, support modes: [SDK_CLIENT]
+2025-11-06 17:14:30.806 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Initialize current abilities finish...
+2025-11-06 17:14:30.806 [main] INFO  c.a.n.c.ability.discover.NacosAbilityManagerHolder - [AbilityControlManager] Successfully initialize AbilityControlManager
+2025-11-06 17:14:30.937 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP collabtask-gateway 10.192.168.112:8000 register finished
+2025-11-06 17:14:31.032 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:14:31.042 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:14:31.054 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:14:31.054 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:14:31.060 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:14:31.060 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:14:31.060 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:14:31.060 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:14:31.061 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.061 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.062 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:14:31.062 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:14:31.062 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:14:31.062 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:14:31.063 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.063 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.063 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:14:31.063 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:14:31.065 [main] INFO  c.a.c.n.discovery.NacosDiscoveryHeartBeatPublisher - Start nacos heartBeat task scheduler.
+2025-11-06 17:14:31.069 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:14:31.073 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:14:31.073 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:14:31.073 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:14:31.074 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:14:31.074 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:14:31.074 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.074 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:14:31.074 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:14:31.075 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.075 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:14:31.083 [main] INFO  io.user.gateway.GatewayApplication - Started GatewayApplication in 3.402 seconds (process running for 4.116)
+2025-11-06 17:14:31.085 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:14:31.085 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:14:31.086 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:14:31.086 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:14:31.086 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:14:31.087 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.087 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:14:31.087 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:14:31.087 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:14:31.088 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:14:57.566 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2025-11-06 17:14:57.567 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 17:14:57.566 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2025-11-06 17:14:57.568 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2025-11-06 17:14:57.569 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Destruction of the end
+2025-11-06 17:14:57.570 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2025-11-06 17:14:59.681 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2025-11-06 17:14:59.708 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2025-11-06 17:15:03.486 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:15:03.489 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:15:03.490 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:15:03.494 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:15:03.510 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:15:03.998 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:15:04.883 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:15:05.309 [main] ERROR i.n.resolver.dns.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-11-06 17:15:05.536 [main] DEBUG o.s.cloud.gateway.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='collabtask-api', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-api, order=0, metadata={}, enabled=true}, RouteDefinition{id='collabtask-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/admin/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-admin, order=0, metadata={}, enabled=true}]
+2025-11-06 17:15:05.589 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-11-06 17:15:05.589 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-11-06 17:15:05.589 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-11-06 17:15:05.590 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-11-06 17:15:05.681 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:15:05.681 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:15:06.036 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-11-06 17:15:06.112 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:15:06.112 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:15:06.518 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to get current node abilities...
+2025-11-06 17:15:06.519 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to initialize current node abilities, support modes: [SDK_CLIENT]
+2025-11-06 17:15:06.519 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Initialize current abilities finish...
+2025-11-06 17:15:06.519 [main] INFO  c.a.n.c.ability.discover.NacosAbilityManagerHolder - [AbilityControlManager] Successfully initialize AbilityControlManager
+2025-11-06 17:15:06.648 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP collabtask-gateway 10.192.168.112:8000 register finished
+2025-11-06 17:15:06.716 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:15:06.716 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:15:06.741 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.741 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.751 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:15:06.751 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:15:06.751 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:15:06.751 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:15:06.753 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.753 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.754 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:15:06.754 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:15:06.757 [main] INFO  c.a.c.n.discovery.NacosDiscoveryHeartBeatPublisher - Start nacos heartBeat task scheduler.
+2025-11-06 17:15:06.765 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:15:06.772 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:15:06.775 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:15:06.775 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.778 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:15:06.778 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:15:06.780 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.781 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:15:06.796 [main] INFO  io.user.gateway.GatewayApplication - Started GatewayApplication in 4.326 seconds (process running for 5.444)
+2025-11-06 17:15:06.799 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:15:06.800 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.801 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:15:06.801 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:15:06.801 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:06.801 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:15:06.802 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:15:36.803 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:15:36.804 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:15:36.807 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:15:36.838 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:15:36.838 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:15:36.839 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:36.839 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:15:36.840 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:15:36.840 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:15:36.840 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:16:06.800 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:16:06.800 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:16:06.803 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:16:06.804 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:16:06.804 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:16:06.805 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:06.806 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:16:06.806 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:16:06.807 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:06.807 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:16:21.884 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2025-11-06 17:16:21.884 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 17:16:21.885 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2025-11-06 17:16:21.886 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2025-11-06 17:16:21.886 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Destruction of the end
+2025-11-06 17:16:21.887 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2025-11-06 17:16:24.028 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2025-11-06 17:16:24.056 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2025-11-06 17:16:26.319 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:16:26.321 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:16:26.324 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:16:26.328 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:16:26.335 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:16:26.598 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:16:27.266 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:16:27.610 [main] ERROR i.n.resolver.dns.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-11-06 17:16:27.847 [main] DEBUG o.s.cloud.gateway.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='collabtask-api', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-api, order=0, metadata={}, enabled=true}, RouteDefinition{id='collabtask-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/admin/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-admin, order=0, metadata={}, enabled=true}]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-11-06 17:16:27.901 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-11-06 17:16:27.992 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:16:27.992 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:16:28.326 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-11-06 17:16:28.403 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:16:28.403 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:16:28.725 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to get current node abilities...
+2025-11-06 17:16:28.726 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to initialize current node abilities, support modes: [SDK_CLIENT]
+2025-11-06 17:16:28.726 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Initialize current abilities finish...
+2025-11-06 17:16:28.726 [main] INFO  c.a.n.c.ability.discover.NacosAbilityManagerHolder - [AbilityControlManager] Successfully initialize AbilityControlManager
+2025-11-06 17:16:28.751 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP collabtask-gateway 10.192.168.112:8000 register finished
+2025-11-06 17:16:28.793 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:16:28.793 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:16:28.801 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.801 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.804 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:16:28.804 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:16:28.804 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:16:28.804 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:16:28.805 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.805 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.805 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:16:28.805 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:16:28.806 [main] INFO  c.a.c.n.discovery.NacosDiscoveryHeartBeatPublisher - Start nacos heartBeat task scheduler.
+2025-11-06 17:16:28.810 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:16:28.811 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:16:28.811 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:16:28.812 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.812 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:16:28.812 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:16:28.813 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.813 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:16:28.822 [main] INFO  io.user.gateway.GatewayApplication - Started GatewayApplication in 2.867 seconds (process running for 3.684)
+2025-11-06 17:16:28.823 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:16:28.823 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:16:28.824 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.824 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:16:28.824 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:16:28.824 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:28.825 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:16:58.839 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:16:58.839 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:16:58.842 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:16:58.847 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:16:58.847 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:16:58.848 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:58.849 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:16:58.849 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:16:58.850 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:16:58.850 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:17:28.844 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:17:28.844 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:17:28.849 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:17:28.850 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:17:28.850 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:17:28.852 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:17:28.853 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:17:28.854 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:17:28.855 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:17:28.856 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:17:58.883 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:17:58.884 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:17:58.886 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:17:58.887 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:17:58.887 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:17:58.887 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:17:58.888 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:17:58.888 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:17:58.888 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:17:58.889 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:18:28.894 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:18:28.894 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:18:28.911 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:18:28.913 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:18:28.913 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:18:28.914 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:18:28.917 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:18:28.917 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:18:28.930 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:18:28.932 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:18:56.777 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:18:56.777 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:18:56.793 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:18:56.795 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:18:56.795 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:18:56.796 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:18:56.799 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:18:56.799 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:18:56.800 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:18:56.800 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:19:26.784 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:19:26.784 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:19:26.787 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:19:26.788 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:19:26.788 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:19:26.789 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:19:26.790 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:19:26.790 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:19:26.790 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:19:26.791 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:19:56.818 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:19:56.818 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:19:56.823 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:19:56.824 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:19:56.824 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:19:56.825 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:19:56.826 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:19:56.826 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:19:56.827 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:19:56.828 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:20:26.819 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:20:26.819 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:20:26.822 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:20:26.823 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:20:26.823 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:20:26.823 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:26.824 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:20:26.824 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:20:26.824 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:26.825 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:20:35.007 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2025-11-06 17:20:35.007 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2025-11-06 17:20:35.007 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2025-11-06 17:20:35.007 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 17:20:35.011 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Destruction of the end
+2025-11-06 17:20:35.011 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2025-11-06 17:20:37.192 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2025-11-06 17:20:37.213 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2025-11-06 17:20:41.301 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:20:41.302 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:20:41.303 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:20:41.305 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:20:41.311 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:20:41.579 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:20:42.241 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:20:42.559 [main] ERROR i.n.resolver.dns.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-11-06 17:20:42.798 [main] DEBUG o.s.cloud.gateway.config.GatewayProperties - Routes supplied from Gateway Properties: [RouteDefinition{id='collabtask-api', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/api/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-api, order=0, metadata={}, enabled=true}, RouteDefinition{id='collabtask-admin', predicates=[PredicateDefinition{name='Path', args={_genkey_0=/admin/**}}], filters=[FilterDefinition{name='StripPrefix', args={_genkey_0=1}}], uri=lb://collabtask-admin, order=0, metadata={}, enabled=true}]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [After]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Before]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Between]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Cookie]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Header]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Host]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Method]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Path]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Query]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [ReadBody]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [RemoteAddr]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [Weight]
+2025-11-06 17:20:42.847 [main] INFO  o.s.c.gateway.route.RouteDefinitionRouteLocator - Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-11-06 17:20:42.930 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:20:42.931 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:20:43.191 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-11-06 17:20:43.259 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:20:43.259 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:20:43.614 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to get current node abilities...
+2025-11-06 17:20:43.615 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to initialize current node abilities, support modes: [SDK_CLIENT]
+2025-11-06 17:20:43.615 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Initialize current abilities finish...
+2025-11-06 17:20:43.616 [main] INFO  c.a.n.c.ability.discover.NacosAbilityManagerHolder - [AbilityControlManager] Successfully initialize AbilityControlManager
+2025-11-06 17:20:43.641 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP collabtask-gateway 10.192.168.112:8000 register finished
+2025-11-06 17:20:43.689 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:20:43.689 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:20:43.699 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.699 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.703 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:20:43.703 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:20:43.703 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:20:43.703 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:20:43.704 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.704 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.704 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:20:43.704 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:20:43.705 [main] INFO  c.a.c.n.discovery.NacosDiscoveryHeartBeatPublisher - Start nacos heartBeat task scheduler.
+2025-11-06 17:20:43.710 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:20:43.712 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:20:43.712 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:20:43.713 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.713 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:20:43.713 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:20:43.713 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.714 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:20:43.722 [main] INFO  io.user.gateway.GatewayApplication - Started GatewayApplication in 2.751 seconds (process running for 3.389)
+2025-11-06 17:20:43.724 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 2
+2025-11-06 17:20:43.724 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:20:43.725 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.725 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:20:43.725 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:20:43.725 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:20:43.726 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:21:13.756 [boundedElastic-2] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:21:13.756 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:21:13.761 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:21:13.769 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:21:13.769 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:21:13.770 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:21:13.770 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:21:13.770 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:21:13.771 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:21:13.771 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:21:43.735 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:21:43.735 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:21:43.737 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:21:43.738 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:21:43.738 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:21:43.739 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:21:43.739 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:21:43.739 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:21:43.739 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:21:43.739 [boundedElastic-2] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:22:13.747 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:22:13.747 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:22:13.750 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:22:13.750 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:22:13.750 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:22:13.751 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:22:13.751 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:22:13.751 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:22:13.752 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:22:13.753 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:22:43.761 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:22:43.763 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:22:43.765 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:22:43.766 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:22:43.766 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:22:43.767 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:22:43.768 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:22:43.768 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:22:43.769 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:22:43.770 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:23:13.784 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:23:13.784 [boundedElastic-3] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 3
+2025-11-06 17:23:13.802 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:23:13.804 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:23:13.804 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:23:13.805 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:23:13.806 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:23:13.806 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:23:13.807 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:23:13.808 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:23:43.795 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:23:43.796 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:23:43.798 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:23:43.799 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:23:43.800 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:23:43.800 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:23:43.801 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:23:43.801 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:23:43.802 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:23:43.802 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:23:43.802 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:23:43.803 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:23:43.804 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:24:13.821 [boundedElastic-6] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:24:13.821 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:24:13.825 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:24:13.826 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:24:13.826 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:24:13.827 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:24:13.827 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:24:13.827 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:24:13.828 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:24:13.828 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:24:13.828 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:24:13.829 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:24:13.829 [boundedElastic-3] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:24:43.831 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:24:43.831 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:24:43.833 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:24:43.834 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:24:43.834 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:24:43.834 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:24:43.835 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:24:43.835 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:24:43.835 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:24:43.835 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:24:43.835 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:24:43.836 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:24:43.836 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:25:13.853 [boundedElastic-6] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:25:13.854 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:25:13.857 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:25:13.858 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:25:13.858 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:25:13.859 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:25:13.860 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:25:13.860 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:25:13.860 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:25:13.861 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:25:13.861 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:25:13.862 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:25:13.863 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:25:43.861 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:25:43.861 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:25:43.866 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:25:43.867 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:25:43.867 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:25:43.868 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:25:43.869 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:25:43.869 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:25:43.869 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:25:43.870 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:25:43.870 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:25:43.871 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:25:43.871 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:26:13.874 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:26:13.874 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:26:13.876 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:26:13.877 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:26:13.877 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:26:13.878 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:26:13.878 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:26:13.878 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:26:13.878 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:26:13.879 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:26:13.879 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:26:13.879 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:26:13.879 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:26:43.893 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:26:43.893 [boundedElastic-8] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:26:43.898 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:26:43.899 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:26:43.900 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:26:43.901 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:26:43.901 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:26:43.901 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:26:43.902 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:26:43.903 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:26:43.903 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:26:43.903 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:26:43.904 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:27:13.909 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:27:13.909 [boundedElastic-7] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:27:13.911 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:27:13.912 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:27:13.912 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:27:13.913 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:27:13.914 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:27:13.914 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:27:13.914 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:27:13.914 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:27:13.914 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:27:13.915 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:27:13.915 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:27:43.926 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:27:43.926 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:27:43.930 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:27:43.931 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:27:43.931 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:27:43.932 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:27:43.932 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:27:43.933 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:27:43.933 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:27:43.934 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:27:43.934 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:27:43.935 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:27:43.937 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:28:13.938 [boundedElastic-7] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:28:13.938 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:28:13.941 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:28:13.941 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:28:13.942 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:28:13.942 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:28:13.942 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:28:13.942 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:28:13.943 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:28:13.943 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:28:13.943 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:28:13.944 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:28:13.944 [boundedElastic-4] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:28:43.968 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:28:43.968 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:28:43.971 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:28:43.972 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:28:43.973 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:28:43.973 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:28:43.974 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:28:43.974 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:28:43.975 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:28:43.975 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:28:43.975 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:28:43.976 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:28:43.977 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:29:13.988 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:29:13.988 [boundedElastic-9] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:29:13.992 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:29:13.993 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:29:13.994 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:29:13.995 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:29:13.996 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:29:13.996 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:29:13.997 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:29:13.998 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:29:13.998 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:29:13.999 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:29:13.999 [boundedElastic-5] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:29:43.995 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:29:43.996 [boundedElastic-5] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:29:43.999 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:29:44.000 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:29:44.000 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:29:44.001 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:29:44.002 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:29:44.002 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:29:44.003 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:29:44.004 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:29:44.004 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:29:44.005 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:29:44.005 [boundedElastic-6] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:30:14.016 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:30:14.016 [boundedElastic-7] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:30:14.042 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:30:14.044 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:30:14.045 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:30:14.046 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:30:14.046 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:30:14.046 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:30:14.047 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:30:14.048 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:30:14.048 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:30:14.049 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:30:14.049 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:30:44.026 [boundedElastic-6] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:30:44.026 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:30:44.030 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:30:44.031 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:30:44.032 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:30:44.032 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:30:44.033 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:30:44.033 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:30:44.033 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:30:44.033 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:30:44.033 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:30:44.034 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:30:44.035 [boundedElastic-9] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:31:14.030 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:31:14.030 [boundedElastic-4] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:31:14.035 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:31:14.042 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:31:14.042 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:31:14.044 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:31:14.044 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:31:14.044 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:31:14.044 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:31:14.045 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:31:14.045 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:31:14.045 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:31:14.046 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:31:44.089 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:31:44.089 [boundedElastic-5] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:31:44.098 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:31:44.101 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:31:44.102 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:31:44.103 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:31:44.104 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:31:44.104 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:31:44.106 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:31:44.108 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:31:44.108 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:31:44.109 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:31:44.110 [boundedElastic-1] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:32:14.064 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying {pattern=/collabtask-gateway/**} to Path
+2025-11-06 17:32:14.066 [boundedElastic-1] DEBUG o.s.cloud.gateway.filter.GatewayMetricsFilter - New routes count: 4
+2025-11-06 17:32:14.067 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-gateway applying filter {regexp=/collabtask-gateway/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:32:14.068 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-gateway
+2025-11-06 17:32:14.068 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying {pattern=/collabtask-api/**} to Path
+2025-11-06 17:32:14.069 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition ReactiveCompositeDiscoveryClient_collabtask-api applying filter {regexp=/collabtask-api/?(?<remaining>.*), replacement=/${remaining}} to RewritePath
+2025-11-06 17:32:14.070 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: ReactiveCompositeDiscoveryClient_collabtask-api
+2025-11-06 17:32:14.070 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying {_genkey_0=/api/**} to Path
+2025-11-06 17:32:14.071 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-api applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:32:14.072 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-api
+2025-11-06 17:32:14.072 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying {_genkey_0=/admin/**} to Path
+2025-11-06 17:32:14.073 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition collabtask-admin applying filter {_genkey_0=1} to StripPrefix
+2025-11-06 17:32:14.073 [boundedElastic-7] DEBUG o.s.c.gateway.route.RouteDefinitionRouteLocator - RouteDefinition matched: collabtask-admin
+2025-11-06 17:32:31.906 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 17:32:31.906 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2025-11-06 17:32:31.907 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2025-11-06 17:32:31.907 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2025-11-06 17:32:31.908 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Destruction of the end
+2025-11-06 17:32:31.912 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2025-11-06 17:32:34.142 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2025-11-06 17:32:34.147 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.
+2025-11-06 17:36:39.433 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback12.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:36:39.435 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapterBuilder
+2025-11-06 17:36:39.435 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter: com.alibaba.nacos.logger.adapter.logback14.LogbackNacosLoggingAdapter match ch.qos.logback.classic.Logger success.
+2025-11-06 17:36:39.437 [main] INFO  com.alibaba.nacos.client.logging.NacosLogging - Nacos Logging Adapter Builder: com.alibaba.nacos.logger.adapter.log4j2.Log4j2NacosLoggingAdapterBuilder
+2025-11-06 17:36:39.442 [background-preinit] INFO  org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-11-06 17:36:39.731 [main] INFO  io.user.gateway.GatewayApplication - The following 1 profile is active: "dev"
+2025-11-06 17:36:40.662 [main] WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.cloud.nacos.NacosConfigAutoConfiguration' of type [com.alibaba.cloud.nacos.NacosConfigAutoConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [nacosAnnotationProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-11-06 17:36:41.124 [main] ERROR i.n.resolver.dns.DnsServerAddressStreamProviders - Unable to load io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'. Use DEBUG level to see the full stack: java.lang.UnsatisfiedLinkError: failed to load the required native library
+2025-11-06 17:36:41.544 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:36:41.544 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:36:41.845 [main] WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-11-06 17:36:41.944 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.impl.NacosClientAuthServiceImpl success.
+2025-11-06 17:36:41.945 [main] INFO  c.a.n.p.auth.spi.client.ClientAuthPluginManager - [ClientAuthPluginManager] Load ClientAuthService com.alibaba.nacos.client.auth.ram.RamClientAuthServiceImpl success.
+2025-11-06 17:36:42.249 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to get current node abilities...
+2025-11-06 17:36:42.249 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Ready to initialize current node abilities, support modes: [SDK_CLIENT]
+2025-11-06 17:36:42.250 [main] INFO  c.a.n.common.ability.AbstractAbilityControlManager - Initialize current abilities finish...
+2025-11-06 17:36:42.250 [main] INFO  c.a.n.c.ability.discover.NacosAbilityManagerHolder - [AbilityControlManager] Successfully initialize AbilityControlManager
+2025-11-06 17:36:42.318 [main] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - nacos registry, DEFAULT_GROUP collabtask-gateway 10.192.168.112:8000 register finished
+2025-11-06 17:36:42.392 [main] INFO  c.a.c.n.discovery.NacosDiscoveryHeartBeatPublisher - Start nacos heartBeat task scheduler.
+2025-11-06 17:36:42.408 [main] INFO  io.user.gateway.GatewayApplication - Started GatewayApplication in 3.269 seconds (process running for 4.486)
+2025-11-06 19:11:55.205 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Start destroying Publisher
+2025-11-06 19:11:55.206 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Start destroying ThreadPool
+2025-11-06 19:11:55.206 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Start destroying common HttpClient
+2025-11-06 19:11:55.210 [Thread-29] WARN  com.alibaba.nacos.common.notify.NotifyCenter - [NotifyCenter] Destruction of the end
+2025-11-06 19:11:55.211 [Thread-2] WARN  c.alibaba.nacos.common.executor.ThreadPoolManager - [ThreadPoolManager] Destruction of the end
+2025-11-06 19:11:55.218 [Thread-25] WARN  c.alibaba.nacos.common.http.HttpClientBeanHolder - [HttpClientBeanHolder] Destruction of the end
+2025-11-06 19:11:57.579 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registering from Nacos Server now...
+2025-11-06 19:11:57.606 [SpringApplicationShutdownHook] INFO  c.a.cloud.nacos.registry.NacosServiceRegistry - De-registration finished.

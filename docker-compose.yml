@@ -1,0 +1,169 @@
+version: '3.8'
+
+# ============================================
+# CollaborativeTasks2 Docker Compose配置
+# 用于本地开发和演示
+# ============================================
+
+services:
+  # MySQL数据库
+  mysql:
+    image: mysql:8.0
+    container_name: collabtask-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Y9!8nIeRH@163
+      MYSQL_DATABASE: collabtask
+      TZ: Asia/Shanghai
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docs/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - collabtask-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis缓存
+  redis:
+    image: redis:7-alpine
+    container_name: collabtask-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - collabtask-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Nexus私服
+  nexus:
+    image: sonatype/nexus3
+    container_name: collabtask-nexus
+    ports:
+      - "8081:8081"  # Nexus Web UI
+      - "5000:5000"  # Docker Registry
+    volumes:
+      - nexus-data:/nexus-data
+    networks:
+      - collabtask-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Nacos服务注册与配置中心
+  nacos:
+    image: nacos/nacos-server:v2.4.2
+    container_name: collabtask-nacos
+    environment:
+      MODE: standalone
+      PREFER_HOST_MODE: hostname
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_SERVICE_HOST: mysql
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_DB_NAME: nacos_config
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: Y9!8nIeRH@163
+      TZ: Asia/Shanghai
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    volumes:
+      - nacos-data:/home/nacos/data
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - collabtask-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8848/nacos/"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  # API服务
+  collabtask-api:
+    build:
+      context: .
+      dockerfile: collabtask-api/Dockerfile
+    container_name: collabtask-api
+    environment:
+      NACOS_HOST: nacos
+      NACOS_PORT: 8848
+      NACOS_NAMESPACE: dev
+      NACOS_USERNAME: nacos
+      NACOS_PASSWORD: nacos
+      JAVA_OPTS: -Xms512m -Xmx1024m
+      TZ: Asia/Shanghai
+    ports:
+      - "8002:8002"
+    volumes:
+      - api-logs:/app/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nacos:
+        condition: service_healthy
+    networks:
+      - collabtask-network
+    restart: unless-stopped
+
+  # Gateway网关
+  collabtask-gateway:
+    build:
+      context: .
+      dockerfile: collabtask-gateway/Dockerfile
+    container_name: collabtask-gateway
+    environment:
+      NACOS_HOST: nacos
+      NACOS_PORT: 8848
+      NACOS_NAMESPACE: dev
+      NACOS_USERNAME: nacos
+      NACOS_PASSWORD: nacos
+      JAVA_OPTS: -Xms256m -Xmx512m
+      TZ: Asia/Shanghai
+    ports:
+      - "8001:8001"
+    volumes:
+      - gateway-logs:/app/logs
+    depends_on:
+      - nacos
+      - collabtask-api
+    networks:
+      - collabtask-network
+    restart: unless-stopped
+
+# 网络配置
+networks:
+  collabtask-network:
+    driver: bridge
+
+# 数据卷
+volumes:
+  mysql-data:
+    driver: local
+  redis-data:
+    driver: local
+  nacos-data:
+    driver: local
+  nexus-data:
+    driver: local
+  api-logs:
+    driver: local
+  gateway-logs:
+    driver: local
+

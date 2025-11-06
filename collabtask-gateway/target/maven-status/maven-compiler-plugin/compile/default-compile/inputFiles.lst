@@ -1,0 +1,10 @@
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/GatewayApplication.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/common/Result.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/config/CorsConfig.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/config/GatewayAuthProperties.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/config/WebClientConfig.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/entity/TokenValidateResponse.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/filter/AuthGlobalFilter.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/filter/RequestLogFilter.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/service/TokenService.java
+/Users/zgy/Documents/workspace-web3/CollaborativeTasks2/collabtask-gateway/src/main/java/io/user/gateway/service/impl/TokenServiceImpl.java

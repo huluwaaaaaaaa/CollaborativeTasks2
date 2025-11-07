@@ -4,8 +4,8 @@
 # ============================================
 
 variables:
-  # 使用容器名访问Nexus（关键！）
-  NEXUS_REGISTRY: "collabtask-nexus:5000"
+  # 使用host.docker.internal访问宿主机Nexus
+  NEXUS_REGISTRY: "host.docker.internal:5000"
   NEXUS_USERNAME: "admin"
   NEXUS_PASSWORD: "123456"
   PROJECT_DIR: "/workspace"

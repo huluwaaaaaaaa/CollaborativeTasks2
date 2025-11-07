@@ -38,3 +38,6 @@ docker-compose.yml
 .mvn/
 mvnw
 mvnw.cmd
+.gitlab-ci.yml
+.gitlab-ci.yml.example
+.github/

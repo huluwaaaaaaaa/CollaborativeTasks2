@@ -1,8 +1,0 @@
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/annotation/DataSource.java
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/aspect/DataSourceAspect.java
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicContextHolder.java
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicDataSource.java
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicDataSourceConfig.java
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/config/DynamicDataSourceFactory.java
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/properties/DataSourceProperties.java
-/workspace/collabtask-dynamic-datasource/src/main/java/io/user/commons/dynamic/datasource/properties/DynamicDataSourceProperties.java

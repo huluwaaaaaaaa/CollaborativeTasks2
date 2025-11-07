@@ -32,6 +32,14 @@ deploy-test:
     - echo "=========================================="
     - cd $PROJECT_DIR
     - echo "🔐 登录Nexus..."
+    
+    - echo "=========================================="
+    - echo "🔍 调试信息"
+    - echo "NEXUS_REGISTRY=$NEXUS_REGISTRY"
+    - docker info | grep -A 3 "Insecure Registries"
+    - echo "=========================================="
+    - echo "🔐 登录Nexus..."
+
     - echo "$NEXUS_PASSWORD" | docker login $NEXUS_REGISTRY -u $NEXUS_USERNAME --password-stdin
     - echo "📦 开始构建和推送..."
     - make release-ci ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY

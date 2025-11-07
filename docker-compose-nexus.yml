@@ -1,5 +1,3 @@
-version: '3.8'
-
 # ============================================
 # CollaborativeTasks2 Docker Compose配置
 # 从Nexus私服拉取镜像版本
@@ -16,12 +14,19 @@ services:
     image: ${NEXUS_REGISTRY:-localhost:5000}/collabtask-api:${IMAGE_TAG:-latest}
     container_name: collabtask-api
     environment:
-      # 使用host.docker.internal连接宿主机服务
+      # 动态环境配置（通过DEPLOY_ENV变量指定）
+      SPRING_PROFILES_ACTIVE: ${DEPLOY_ENV:-test}  # 默认test，可覆盖
       NACOS_HOST: host.docker.internal
       NACOS_PORT: 8848
-      NACOS_NAMESPACE: ${NACOS_NAMESPACE:-dev}
+      NACOS_NAMESPACE: ${DEPLOY_ENV:-test}  # namespace跟随环境
       NACOS_USERNAME: nacos
       NACOS_PASSWORD: nacos
+      # 覆盖Nacos配置（双保险）
+      SPRING_DATASOURCE_URL: jdbc:mysql://host.docker.internal:3306/collabtask?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Y9!8nIeRH@163
+      SPRING_REDIS_HOST: host.docker.internal
+      SPRING_REDIS_PORT: 6379
       JAVA_OPTS: -Xms512m -Xmx1024m
       TZ: Asia/Shanghai
     ports:
@@ -46,10 +51,11 @@ services:
     image: ${NEXUS_REGISTRY:-localhost:5000}/collabtask-gateway:${IMAGE_TAG:-latest}
     container_name: collabtask-gateway
     environment:
-      # 使用host.docker.internal连接宿主机Nacos
+      # 动态环境配置
+      SPRING_PROFILES_ACTIVE: ${DEPLOY_ENV:-test}  # 默认test，可覆盖
       NACOS_HOST: host.docker.internal
       NACOS_PORT: 8848
-      NACOS_NAMESPACE: ${NACOS_NAMESPACE:-dev}
+      NACOS_NAMESPACE: ${DEPLOY_ENV:-test}  # namespace跟随环境
       NACOS_USERNAME: nacos
       NACOS_PASSWORD: nacos
       JAVA_OPTS: -Xms256m -Xmx512m

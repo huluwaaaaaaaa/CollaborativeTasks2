@@ -33,8 +33,8 @@ deploy-test:
     - cd $PROJECT_DIR
     - echo "🔐 登录Nexus..."
     - echo "$NEXUS_PASSWORD" | docker login $NEXUS_REGISTRY -u $NEXUS_USERNAME --password-stdin
-    - echo "📦 开始构建和部署..."
-    - make release ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY
+    - echo "📦 开始构建和推送..."
+    - make release-ci ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY
     - echo "=========================================="
     - echo "✅ 测试环境部署完成！"
     - echo "==========================================="
@@ -66,8 +66,8 @@ deploy-prod:
     - echo "=========================================="
     - cd $PROJECT_DIR
     - echo "$NEXUS_PASSWORD" | docker login $NEXUS_REGISTRY -u $NEXUS_USERNAME --password-stdin
-    - make release ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY
-    - echo "✅ 生产环境部署完成！"
+    - make release-ci ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY
+    - echo "✅ 生产环境构建完成！"
   rules:
     # test合并到main时，需要手动点击
     - if: '$CI_COMMIT_BRANCH == "main"'

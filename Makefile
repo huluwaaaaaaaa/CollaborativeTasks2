@@ -179,6 +179,37 @@ release:
 	@echo "🌐 访问: http://localhost:8001"
 	@echo "=========================================="
 
+# CI专用：只构建和推送，不部署
+release-ci:
+	@echo "=========================================="
+	@echo "🚀 CI构建和推送"
+	@echo "当前分支: $$(git rev-parse --abbrev-ref HEAD)"
+	@echo "目标环境: $(ENV)"
+	@echo "新版本号: $(VERSION)"
+	@echo "=========================================="
+	@echo ""
+	@echo "[1/4] Maven编译..."
+	@mvn clean package -DskipTests -q
+	@echo "[2/4] 构建镜像（环境: $(ENV)）..."
+	@docker build -f collabtask-api/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) . -q
+	@docker build -f collabtask-gateway/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) . -q
+	@echo "[3/4] 推送到Nexus..."
+	@echo "123456" | docker login $(NEXUS_REGISTRY) -u admin --password-stdin > /dev/null 2>&1
+	@docker push $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) -q
+	@docker push $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) -q
+	@echo "[4/4] 完成！"
+	@echo ""
+	@echo "=========================================="
+	@echo "✅ CI构建完成！"
+	@echo ""
+	@echo "📦 版本: $(VERSION)"
+	@echo "🎯 环境: $(ENV)"
+	@echo "🌐 Nexus: $(NEXUS_REGISTRY)"
+	@echo ""
+	@echo "💡 部署命令（在宿主机执行）："
+	@echo "   IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml up -d"
+	@echo "=========================================="
+
 # 快捷命令：发版到测试环境
 release-test:
 	@$(MAKE) release ENV=test

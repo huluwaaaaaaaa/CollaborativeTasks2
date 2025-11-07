@@ -26,29 +26,20 @@ deploy-test:
     - echo "=========================================="
     - echo "🚀 测试环境自动部署"
     - echo "=========================================="
-    - echo "提交分支: $CI_COMMIT_BRANCH"
-    - echo "提交作者: $CI_COMMIT_AUTHOR"
-    - echo "提交SHA: $CI_COMMIT_SHORT_SHA"
+    - echo "提交分支:$CI_COMMIT_BRANCH"
+    - echo "提交作者:$CI_COMMIT_AUTHOR"
+    - echo "提交SHA:$CI_COMMIT_SHORT_SHA"
     - echo "=========================================="
-    - echo ""
-    
-    # 进入项目目录
     - cd $PROJECT_DIR
-    
-    # 登录Nexus（使用容器名）
     - echo "🔐 登录Nexus..."
     - echo "$NEXUS_PASSWORD" | docker login $NEXUS_REGISTRY -u $NEXUS_USERNAME --password-stdin
-    
-    # 执行发版（传递容器名作为Registry）
     - echo "📦 开始构建和部署..."
     - make release ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY
-    
-    - echo ""
     - echo "=========================================="
     - echo "✅ 测试环境部署完成！"
     - echo "=========================================="
-    - echo "🌐 访问: http://localhost:8001"
-    - echo "📊 日志: docker logs -f collabtask-api"
+    - echo "🌐 访问:http://localhost:8001"
+    - echo "📊 日志:docker logs -f collabtask-api"
     - echo "=========================================="
   rules:
     # 当代码合并到test分支时触发
@@ -75,7 +66,6 @@ deploy-prod:
     - cd $PROJECT_DIR
     - echo "$NEXUS_PASSWORD" | docker login $NEXUS_REGISTRY -u $NEXUS_USERNAME --password-stdin
     - make release ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY
-    - echo ""
     - echo "✅ 生产环境部署完成！"
   rules:
     # test合并到main时，需要手动点击

@@ -2,7 +2,7 @@ spring:
   application:
     name: collabtask-api
   profiles:
-    active: dev
+    active: ${SPRING_PROFILES_ACTIVE:dev}
   cloud:
     nacos:
       # Nacos服务地址（支持环境变量，默认localhost:8848）

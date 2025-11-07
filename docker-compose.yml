@@ -1,5 +1,3 @@
-version: '3.8'
-
 # ============================================
 # CollaborativeTasks2 Docker Compose配置
 # 用于本地开发和演示

@@ -6,7 +6,10 @@
 
 # 配置
 NEXUS_REGISTRY ?= localhost:5000
-VERSION ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo "latest")
+# 每次发版生成唯一版本号（时间戳）
+VERSION := v$(shell date +%Y%m%d-%H%M%S)
+# 环境配置（可通过命令行指定：make release ENV=prod）
+ENV ?= test
 
 # 默认目标
 help:
@@ -27,8 +30,11 @@ help:
 	@echo "  make docker-restart - 重启Docker服务"
 	@echo ""
 	@echo "CI/CD命令："
+	@echo "  make release-test   - 🌟 发版到测试环境（推荐）"
+	@echo "  make release-prod   - 发版到生产环境"
+	@echo "  make release-dev    - 发版到开发环境"
+	@echo "  make release ENV=xxx - 发版到指定环境"
 	@echo "  make ci-cd          - 完整CI/CD流程"
-	@echo "  make ci-cd-local    - 本地模拟CI/CD"
 	@echo "  make deploy-local   - 部署到本地"
 	@echo ""
 	@echo "清理命令："
@@ -129,19 +135,82 @@ ci-cd-local:
 
 docker-push:
 	@echo "==> 推送镜像到Nexus..."
-	@docker push $(NEXUS_REGISTRY)/collabtask-api:$(VERSION)
+	@echo "123456" | docker login $(NEXUS_REGISTRY) -u admin --password-stdin
 	@docker push $(NEXUS_REGISTRY)/collabtask-api:latest
-	@docker push $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION)
 	@docker push $(NEXUS_REGISTRY)/collabtask-gateway:latest
 	@echo "✅ 镜像推送完成"
 
 deploy-local:
 	@echo "==> 部署到本地..."
-	@docker-compose -f docker-compose-nexus.yml down
-	@docker-compose -f docker-compose-nexus.yml up -d
+	@docker compose -f docker-compose-nexus.yml down
+	@docker compose -f docker-compose-nexus.yml up -d
 	@echo "✅ 本地部署完成"
 	@echo "Gateway: http://localhost:8001"
 	@echo "API:     http://localhost:8002"
+
+# ============================================
+# 一键发版（任何分支都可用，完全自动）
+# ============================================
+release:
+	@echo "=========================================="
+	@echo "🚀 一键发版"
+	@echo "当前分支: $$(git rev-parse --abbrev-ref HEAD)"
+	@echo "目标环境: $(ENV)"
+	@echo "新版本号: $(VERSION)"
+	@echo "=========================================="
+	@echo ""
+	@echo "[1/5] Maven编译..."
+	@mvn clean package -DskipTests -q
+	@echo "[2/5] 构建镜像（环境: $(ENV)）..."
+	@docker build -f collabtask-api/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) . -q
+	@docker build -f collabtask-gateway/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) . -q
+	@echo "[3/5] 推送到Nexus..."
+	@echo "123456" | docker login $(NEXUS_REGISTRY) -u admin --password-stdin > /dev/null 2>&1
+	@docker push $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) -q
+	@docker push $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) -q
+	@echo "[4/5] 部署到$(ENV)环境..."
+	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml up -d --quiet-pull
+	@echo ""
+	@echo "=========================================="
+	@echo "✅ 发版完成！"
+	@echo ""
+	@echo "🎯 环境: $(ENV)"
+	@echo "📦 版本: $(VERSION)"
+	@echo "🌐 访问: http://localhost:8001"
+	@echo "=========================================="
+
+# 快捷命令：发版到测试环境
+release-test:
+	@$(MAKE) release ENV=test
+
+# 快捷命令：发版到生产环境
+release-prod:
+	@$(MAKE) release ENV=prod
+
+# 快捷命令：发版到开发环境
+release-dev:
+	@$(MAKE) release ENV=dev
+
+# 强制发版（先停止所有服务）
+release-force:
+	@echo "=========================================="
+	@echo "🚀 强制发版（清理端口占用）"
+	@echo "=========================================="
+	@echo "停止所有服务..."
+	@docker compose -f docker-compose-nexus.yml down 2>/dev/null || true
+	@docker stop collabtask-api collabtask-gateway 2>/dev/null || true
+	@docker rm collabtask-api collabtask-gateway 2>/dev/null || true
+	@sleep 2
+	@echo ""
+	@$(MAKE) release ENV=$(ENV)
+
+# 强制发版到测试环境
+release-test-force:
+	@$(MAKE) release-force ENV=test
+
+# 强制发版到生产环境
+release-prod-force:
+	@$(MAKE) release-force ENV=prod
 
 # 快速开始
 quick-start: docker-up

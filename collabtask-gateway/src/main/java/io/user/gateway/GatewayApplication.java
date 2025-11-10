@@ -9,6 +9,7 @@
 package io.user.gateway;
 
 import com.alibaba.druid.spring.boot3.autoconfigure.DruidDataSourceAutoConfigure;
+import org.redisson.spring.starter.RedissonAutoConfigurationV2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -26,7 +27,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
         DruidDataSourceAutoConfigure.class,
-        HibernateJpaAutoConfiguration.class
+        HibernateJpaAutoConfiguration.class,
+        RedissonAutoConfigurationV2.class  // 排除Redisson（Gateway不需要）
 })
 public class GatewayApplication {
 

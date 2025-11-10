@@ -92,12 +92,14 @@
             <version>${hutool.version}</version>
         </dependency>
 
-        <!-- Reactive Redis（用于token缓存，可选） -->
+        <!-- Reactive Redis（可选，Gateway暂不使用） -->
+        <!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
             <optional>true</optional>
         </dependency>
+        -->
 
         <!-- FastJson2 -->
         <dependency>

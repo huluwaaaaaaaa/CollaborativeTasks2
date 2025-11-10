@@ -30,6 +30,7 @@ mvnw.cmd
 .project
 .factorypath
 .cusors/
+.cursor/
 
 # OS
 .DS_Store
@@ -85,3 +86,9 @@ rad.json
 *.g.xlf
 *.flf
 TestResults.xml
+
+database/
+backup/
+tests/
+docs-final/
+archive/

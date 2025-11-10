@@ -61,5 +61,33 @@ public class TokenServiceImpl implements TokenService {
                 })
                 .defaultIfEmpty(null);
     }
+    
+    /**
+     * 检查 Token 是否被撤销（v2.0 新增）⭐
+     */
+    @Override
+    public Mono<Boolean> isTokenRevoked(String token) {
+        String url = authProperties.getApiServiceUrl() + "/collabtask-api/token/check-revoked";
+        
+        log.debug("检查 Token 撤销状态: {}", token.substring(0, Math.min(20, token.length())));
+        
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                    .path(url)
+                    .queryParam("token", token)
+                    .build())
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .doOnNext(isRevoked -> {
+                    if (isRevoked) {
+                        log.warn("Token 已被撤销: {}", token.substring(0, Math.min(20, token.length())));
+                    }
+                })
+                .onErrorResume(error -> {
+                    log.error("检查 Token 撤销状态失败: {}", error.getMessage());
+                    return Mono.just(false);  // 默认未撤销
+                })
+                .defaultIfEmpty(false);
+    }
 
 }

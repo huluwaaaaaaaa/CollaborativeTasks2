@@ -9,7 +9,7 @@
 package io.user.interceptor;
 
 import cn.hutool.core.util.StrUtil;
-import io.user.annotation.Login;
+import io.user.common.annotation.Login;
 import io.user.common.exception.ErrorCode;
 import io.user.common.exception.RenException;
 import io.user.entity.TokenEntity;

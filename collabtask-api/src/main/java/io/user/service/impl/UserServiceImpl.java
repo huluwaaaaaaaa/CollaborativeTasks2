@@ -22,6 +22,7 @@ import io.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserDao, UserEntity> implem
     }
 
     @Override
-    public Map<String, Object> login(LoginDTO dto) {
+    public Map<String, Object> login(LoginDTO dto, HttpServletRequest request) {
         UserEntity user = getByMobile(dto.getMobile());
         AssertUtils.isNull(user, ErrorCode.ACCOUNT_PASSWORD_ERROR);
 
@@ -50,12 +51,15 @@ public class UserServiceImpl extends BaseServiceImpl<UserDao, UserEntity> implem
             throw new RenException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
 
-        //获取登录token
-        TokenEntity tokenEntity = tokenService.createToken(user.getId());
+        //获取登录 token（v2.0 - 传入 request 参数）
+        TokenEntity tokenEntity = tokenService.createToken(user.getId(), request);
 
-        Map<String, Object> map = new HashMap<>(2);
+        // v2.0 - 返回 refreshToken
+        Map<String, Object> map = new HashMap<>(4);
         map.put("token", tokenEntity.getToken());
-        map.put("expire", tokenEntity.getExpireDate().getTime() - System.currentTimeMillis());
+        map.put("refreshToken", tokenEntity.getRefreshToken());  // ⭐ 新增
+        map.put("expire", tokenEntity.getExpiresAt().getTime() - System.currentTimeMillis());
+        map.put("userId", user.getId());  // ⭐ 新增
 
         return map;
     }

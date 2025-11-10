@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * collabtask-api
@@ -20,6 +21,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author Mark sunlightcs@gmail.com
  */
 @EnableDiscoveryClient
+@EnableScheduling
 @SpringBootApplication
 public class ApiApplication extends SpringBootServletInitializer {
 

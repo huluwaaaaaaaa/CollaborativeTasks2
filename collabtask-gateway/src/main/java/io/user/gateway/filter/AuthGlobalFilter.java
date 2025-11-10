@@ -87,12 +87,21 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         return tokenService.validateToken(token)
                 .flatMap(userId -> {
                     if (userId != null) {
-                        log.debug("Token验证通过: {}, userId: {}", finalToken, userId);
-                        // Token有效，将userId添加到header中传递给下游服务
-                        ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
-                                .header("X-User-Id", String.valueOf(userId))
-                                .build();
-                        return chain.filter(exchange.mutate().request(mutatedRequest).build());
+                        // v2.0 - 检查 Token 是否被撤销 ⭐
+                        return tokenService.isTokenRevoked(finalToken)
+                                .flatMap(isRevoked -> {
+                                    if (isRevoked) {
+                                        log.warn("Token 已被撤销（已登出）: {}", finalToken.substring(0, Math.min(20, finalToken.length())));
+                                        return unauthorized(exchange.getResponse(), "token 已失效");
+                                    }
+                                    
+                                    // Token 有效且未撤销，将 userId 添加到 header 中传递给下游服务
+                                    log.debug("Token验证通过: {}, userId: {}", finalToken, userId);
+                                    ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                                            .header("X-User-Id", String.valueOf(userId))
+                                            .build();
+                                    return chain.filter(exchange.mutate().request(mutatedRequest).build());
+                                });
                     } else {
                         log.warn("Token验证失败或已过期: {}", finalToken);
                         return unauthorized(exchange.getResponse(), "token无效或已过期");

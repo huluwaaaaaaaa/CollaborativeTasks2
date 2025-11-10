@@ -1,0 +1,1513 @@
+# TODO List API - 开发规范
+
+> **版本**: v1.0 | **日期**: 2025-11-09 | **强制等级**: 必须遵守
+
+---
+
+## 一、代码分层规范
+
+### 1.1 标准分层架构
+
+```
+src/main/java/com/example/todoapi/
+├── controller/          # 控制层（接收请求，返回响应）
+├── service/             # 业务层（业务逻辑 + 权限检查）
+├── repository/          # 数据访问层（与数据库交互）
+├── entity/              # 实体类（对应数据库表）
+├── dto/                 # 数据传输对象
+│   ├── request/         # 请求 DTO（入参）
+│   └── response/        # 响应 VO（出参）
+├── mapper/              # Entity ↔ DTO 转换
+├── security/            # 安全相关
+├── exception/           # 异常定义
+├── config/              # 配置类
+└── common/              # 公共类
+```
+
+### 1.2 各层职责
+
+| 层级 | 职责 | 禁止事项 |
+|-----|------|---------|
+| **Controller** | • 接收 HTTP 请求<br>• 参数验证（@Valid）<br>• 调用 Service<br>• 返回响应 | ❌ 不写业务逻辑<br>❌ 不直接操作数据库<br>❌ 不做权限检查 |
+| **Service** | • 业务逻辑处理<br>• 权限检查<br>• 事务管理<br>• 调用 Repository | ❌ 不处理 HTTP 请求<br>❌ 不返回 HTTP 响应 |
+| **Repository** | • 数据库 CRUD<br>• 复杂查询<br>• 数据持久化 | ❌ 不写业务逻辑<br>❌ 不做权限检查 |
+| **Entity** | • 对应数据库表<br>• JPA 注解 | ❌ 不包含业务逻辑<br>❌ 不直接暴露给前端 |
+
+---
+
+## 二、DTO/VO/Entity 规范 ⭐
+
+### 2.1 核心概念
+
+```
+数据流转：
+客户端 → Controller → Service → Repository → 数据库
+  ↓         ↓          ↓         ↓           ↓
+ DTO    转换为VO      操作       操作      Entity
+(Request)  (Response)  Entity    Entity
+```
+
+### 2.2 DTO（Data Transfer Object）- 入参
+
+**定义**：用于接收客户端请求的数据对象
+
+**命名规范**：`{业务名称}{操作}Request`
+
+**存放位置**：`dto/request/`
+
+**示例**：
+
+```java
+package com.example.todoapi.dto.request;
+
+import jakarta.validation.constraints.*;
+import lombok.Data;
+
+/**
+ * TODO 创建请求 DTO
+ * 
+ * 用途：接收客户端创建 TODO 的请求参数
+ * 使用场景：POST /api/todos
+ */
+@Data
+public class TodoCreateRequest {
+    
+    @NotBlank(message = "TODO 名称不能为空")
+    @Size(min = 1, max = 200, message = "TODO 名称长度必须在 1-200 之间")
+    private String name;
+    
+    @Size(max = 2000, message = "描述最多 2000 字符")
+    private String description;
+    
+    @Future(message = "截止日期必须是未来时间")
+    private LocalDate dueDate;
+    
+    @Pattern(regexp = "LOW|MEDIUM|HIGH|URGENT", message = "优先级必须是 LOW/MEDIUM/HIGH/URGENT")
+    private String priority;
+    
+    private List<@Positive Long> tagIds;  // 标签 ID 列表
+    private Long teamId;  // 团队 ID（可选）
+}
+
+/**
+ * TODO 更新请求 DTO
+ */
+@Data
+public class TodoUpdateRequest {
+    @NotBlank(message = "TODO 名称不能为空")
+    @Size(min = 1, max = 200)
+    private String name;
+    
+    @Size(max = 2000)
+    private String description;
+    
+    private LocalDate dueDate;
+    
+    @Pattern(regexp = "NOT_STARTED|IN_PROGRESS|COMPLETED")
+    private String status;
+    
+    @Pattern(regexp = "LOW|MEDIUM|HIGH|URGENT")
+    private String priority;
+}
+
+/**
+ * TODO 筛选查询 DTO
+ */
+@Data
+public class TodoQueryRequest {
+    private String status;           // 状态筛选
+    private String priority;         // 优先级筛选
+    private LocalDate dueDateFrom;   // 截止日期起始
+    private LocalDate dueDateTo;     // 截止日期结束
+    private List<Long> tagIds;       // 标签筛选
+    private String keyword;          // 关键词搜索
+    
+    // 排序参数
+    private String sortBy = "createDate";
+    private String order = "desc";
+    
+    // 分页参数
+    @Min(value = 1, message = "页码必须大于 0")
+    private Integer page = 1;
+    
+    @Min(value = 1, message = "每页大小必须大于 0")
+    @Max(value = 100, message = "每页大小不能超过 100")
+    private Integer size = 20;
+}
+
+/**
+ * 分享请求 DTO
+ */
+@Data
+public class TodoShareRequest {
+    @NotNull(message = "必须指定分享对象")
+    private Long sharedWithUserId;
+    
+    @NotBlank(message = "权限不能为空")
+    @Pattern(regexp = "VIEW|COMMENT|EDIT|SHARE", message = "权限必须是 VIEW/COMMENT/EDIT/SHARE")
+    private String permission;
+    
+    private LocalDate expiresAt;
+    
+    @Size(max = 500, message = "留言最多 500 字符")
+    private String message;
+}
+```
+
+**DTO 规范**：
+- ✅ 使用 `@Data` 注解（Lombok）
+- ✅ 所有字段添加验证注解（`@NotNull`, `@Size`, `@Pattern` 等）
+- ✅ 提供清晰的错误消息
+- ✅ 添加 JavaDoc 注释
+- ✅ 只包含必要字段
+
+---
+
+### 2.3 VO（View Object）- 出参
+
+**定义**：返回给客户端的数据对象
+
+**命名规范**：`{业务名称}Response` 或 `{业务名称}VO`
+
+**存放位置**：`dto/response/`
+
+**示例**：
+
+```java
+package com.example.todoapi.dto.response;
+
+import lombok.Data;
+import lombok.Builder;
+
+/**
+ * TODO 响应 VO（简化版）
+ * 
+ * 用途：返回 TODO 列表时使用
+ * 使用场景：GET /api/todos
+ */
+@Data
+@Builder
+public class TodoResponse {
+    private Long id;
+    private String name;
+    private String description;
+    private LocalDate dueDate;
+    private String status;
+    private String priority;
+    
+    // 关联对象
+    private UserSimpleResponse owner;
+    private TeamSimpleResponse team;
+    private List<TagResponse> tags;
+    
+    // 时间信息
+    private LocalDateTime completedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+
+/**
+ * TODO 详情响应 VO（完整版）
+ * 
+ * 用途：返回 TODO 详细信息时使用
+ * 使用场景：GET /api/todos/{id}
+ */
+@Data
+@Builder
+public class TodoDetailResponse {
+    // 基础信息
+    private Long id;
+    private String name;
+    private String description;
+    private LocalDate dueDate;
+    private String status;
+    private String priority;
+    
+    // 关联对象（完整信息）
+    private UserResponse owner;
+    private TeamResponse team;
+    private List<TagResponse> tags;
+    
+    // ⭐ 权限信息（重要）
+    private List<String> myPermissions;      // 当前用户拥有的权限列表 ["VIEW", "EDIT"]
+    private String highestPermission;        // 最高权限
+    private Integer permissionLevel;         // 权限级别
+    private Boolean canView;                 // 是否可查看
+    private Boolean canEdit;                 // 是否可编辑
+    private Boolean canDelete;               // 是否可删除
+    private Boolean canShare;                // 是否可分享
+    private Boolean isOwner;                 // 是否是所有者
+    
+    // 分享信息（如果是被分享的）
+    private TodoShareInfo shareInfo;
+    
+    // 统计信息
+    private Integer viewCount;
+    private Integer commentCount;
+    
+    // 时间信息
+    private LocalDateTime completedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+}
+
+/**
+ * 分享信息 VO
+ */
+@Data
+@Builder
+public class TodoShareInfo {
+    private Boolean isShared;
+    private UserSimpleResponse sharedBy;
+    private LocalDateTime sharedAt;
+    private String permission;
+    private LocalDateTime expiresAt;
+}
+
+/**
+ * 用户简单信息 VO（嵌套使用）
+ */
+@Data
+@Builder
+public class UserSimpleResponse {
+    private Long id;
+    private String username;
+    private String fullName;
+    private String avatarUrl;
+}
+
+/**
+ * 分页响应 VO
+ */
+@Data
+@Builder
+public class PageResponse<T> {
+    private List<T> content;
+    private Integer page;
+    private Integer size;
+    private Long totalElements;
+    private Integer totalPages;
+    private Boolean first;
+    private Boolean last;
+}
+
+/**
+ * 统一响应包装 VO
+ */
+@Data
+@Builder
+public class ApiResponse<T> {
+    private Boolean success;
+    private String message;
+    private T data;
+    
+    public static <T> ApiResponse<T> success(T data) {
+        return ApiResponse.<T>builder()
+            .success(true)
+            .message("操作成功")
+            .data(data)
+            .build();
+    }
+    
+    public static <T> ApiResponse<T> error(String message) {
+        return ApiResponse.<T>builder()
+            .success(false)
+            .message(message)
+            .data(null)
+            .build();
+    }
+}
+
+/**
+ * 错误响应 VO
+ */
+@Data
+@Builder
+public class ErrorResponse {
+    private Boolean success = false;
+    private String message;
+    private String errorCode;
+    private LocalDateTime timestamp;
+    private Map<String, String> validationErrors;
+}
+```
+
+**VO 规范**：
+- ✅ 使用 `@Data` 和 `@Builder` 注解
+- ✅ 只包含需要返回给前端的字段
+- ✅ 敏感字段不返回（如 password）
+- ✅ 添加权限信息（canEdit、canDelete 等）
+- ✅ 嵌套对象使用简化版 VO（避免循环引用）
+- ✅ 添加 JavaDoc 说明用途和使用场景
+
+---
+
+### 2.4 Entity（实体类）
+
+**定义**：对应数据库表的 Java 类
+
+**命名规范**：与数据库表名对应（驼峰命名）
+
+**存放位置**：`entity/`
+
+**示例**：
+
+```java
+package com.example.todoapi.entity;
+
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
+
+/**
+ * TODO 实体类
+ * 对应数据库表：tb_todos
+ */
+@Data
+@TableName("tb_todos")
+public class Todo {
+    
+    @TableId(type = IdType.AUTO)
+    private Long id;
+    
+    @TableField("name")
+    private String name;
+    
+    @TableField("description")
+    private String description;
+    
+    @TableField("due_date")
+    private LocalDate dueDate;
+    
+    @TableField("status")
+    private String status;
+    
+    @TableField("priority")
+    private String priority;
+    
+    @TableField("user_id")
+    private Long userId;
+    
+    @TableField("team_id")
+    private Long teamId;
+    
+    @TableField("completed_at")
+    private LocalDateTime completedAt;
+    
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
+    private LocalDateTime createDate;
+    
+    @TableField(value = "update_date", fill = FieldFill.UPDATE)
+    private LocalDateTime updateDate;
+    
+    // ⭐ 非数据库字段（用于关联查询）
+    @TableField(exist = false)
+    private User owner;
+    
+    @TableField(exist = false)
+    private Team team;
+    
+    @TableField(exist = false)
+    private List<Tag> tags;
+}
+
+/**
+ * ACL 访问控制实体类
+ * 对应数据库表：tb_acl_access_control
+ */
+@Data
+@TableName("tb_acl_access_control")
+public class AclAccessControl {
+    @TableId(type = IdType.AUTO)
+    private Long id;
+    
+    @TableField("subject_type")
+    private String subjectType;  // USER/TEAM
+    
+    @TableField("subject_id")
+    private Long subjectId;
+    
+    @TableField("resource_type")
+    private String resourceType;  // TODO/TEAM/TAG
+    
+    @TableField("resource_id")
+    private Long resourceId;
+    
+    @TableField("permission_id")
+    private Integer permissionId;
+    
+    @TableField("source_type")
+    private String sourceType;  // DIRECT/SHARED/TEAM
+    
+    @TableField("source_id")
+    private Long sourceId;
+    
+    @TableField("granted_by")
+    private Long grantedBy;
+    
+    @TableField("granted_at")
+    private LocalDateTime grantedAt;
+    
+    @TableField("expires_at")
+    private LocalDateTime expiresAt;
+    
+    @TableField("is_active")
+    private Byte isActive;
+    
+    @TableField("revoked_by")
+    private Long revokedBy;
+    
+    @TableField("revoked_at")
+    private LocalDateTime revokedAt;
+    
+    @TableField("revoke_reason")
+    private String revokeReason;
+    
+    @TableField(value = "create_date", fill = FieldFill.INSERT)
+    private LocalDateTime createDate;
+    
+    @TableField(value = "update_date", fill = FieldFill.UPDATE)
+    private LocalDateTime updateDate;
+}
+```
+
+**Entity 规范**：
+- ✅ 使用 `@TableName` 指定表名
+- ✅ 使用 `@TableField` 映射字段（下划线转驼峰）
+- ✅ 主键使用 `@TableId(type = IdType.AUTO)`
+- ✅ 自动填充字段使用 `@TableField(fill = ...)`
+- ✅ 非数据库字段使用 `@TableField(exist = false)`
+- ✅ 不包含业务逻辑
+
+---
+
+### 2.5 Mapper（转换器）
+
+**定义**：Entity ↔ DTO/VO 转换
+
+**命名规范**：`{业务名称}Mapper`
+
+**使用工具**：MapStruct
+
+**示例**：
+
+```java
+package com.example.todoapi.mapper;
+
+import org.mapstruct.*;
+
+/**
+ * TODO 对象转换器
+ */
+@Mapper(componentModel = "spring", uses = {UserMapper.class, TagMapper.class})
+public interface TodoMapper {
+    
+    /**
+     * Entity → Response（简化版）
+     */
+    @Mapping(source = "userId", target = "owner", qualifiedByName = "userIdToSimpleResponse")
+    @Mapping(source = "teamId", target = "team", qualifiedByName = "teamIdToSimpleResponse")
+    TodoResponse toResponse(Todo todo);
+    
+    /**
+     * Entity → DetailResponse（完整版）
+     */
+    @Mapping(source = "userId", target = "owner", qualifiedByName = "userIdToResponse")
+    @Mapping(source = "teamId", target = "team", qualifiedByName = "teamIdToResponse")
+    TodoDetailResponse toDetailResponse(Todo todo);
+    
+    /**
+     * CreateRequest → Entity
+     */
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", constant = "NOT_STARTED")
+    @Mapping(target = "createDate", ignore = true)
+    @Mapping(target = "updateDate", ignore = true)
+    Todo toEntity(TodoCreateRequest request);
+    
+    /**
+     * UpdateRequest → Entity（部分更新）
+     */
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "userId", ignore = true)
+    @Mapping(target = "createDate", ignore = true)
+    void updateEntity(TodoUpdateRequest request, @MappingTarget Todo todo);
+    
+    /**
+     * 批量转换
+     */
+    List<TodoResponse> toResponseList(List<Todo> todos);
+}
+```
+
+**Mapper 规范**：
+- ✅ 使用 MapStruct（编译时生成，性能好）
+- ✅ 单向转换：Request → Entity，Entity → Response
+- ✅ 不要双向转换（避免循环依赖）
+- ✅ 嵌套对象使用 `qualifiedByName` 指定转换方法
+- ✅ 忽略不需要的字段
+
+---
+
+### 2.6 DTO/VO/Entity 对比
+
+| 类型 | 用途 | 方向 | 验证 | 示例 |
+|-----|------|------|------|------|
+| **DTO (Request)** | 接收请求参数 | 客户端 → 后端 | ✅ 需要 | TodoCreateRequest |
+| **VO (Response)** | 返回响应数据 | 后端 → 客户端 | ❌ 不需要 | TodoResponse |
+| **Entity** | 数据库映射 | 后端 ↔ 数据库 | ❌ 不需要 | Todo |
+
+---
+
+## 三、命名规范
+
+### 3.1 类命名
+
+| 类型 | 命名规则 | 示例 |
+|-----|---------|------|
+| **Controller** | `{业务}Controller` | TodoController |
+| **Service** | `{业务}Service` | TodoService |
+| **Repository** | `{业务}Repository` | TodoRepository |
+| **Entity** | 与表名对应（驼峰） | Todo, User, Team |
+| **Request DTO** | `{业务}{操作}Request` | TodoCreateRequest |
+| **Response VO** | `{业务}Response` | TodoResponse |
+| **Mapper** | `{业务}Mapper` | TodoMapper |
+| **Exception** | `{异常名}Exception` | ResourceNotFoundException |
+| **Config** | `{功能}Config` | SecurityConfig |
+
+---
+
+### 3.2 方法命名
+
+#### Controller 层
+
+```java
+@RestController
+@RequestMapping("/api/todos")
+public class TodoController {
+    
+    // GET 请求：get{资源名}
+    @GetMapping
+    public ApiResponse<PageResponse<TodoResponse>> getTodos(...) {}
+    
+    @GetMapping("/{id}")
+    public ApiResponse<TodoDetailResponse> getTodoById(@PathVariable Long id) {}
+    
+    // POST 请求：create{资源名}
+    @PostMapping
+    public ApiResponse<TodoResponse> createTodo(@RequestBody @Valid TodoCreateRequest request) {}
+    
+    // PUT 请求：update{资源名}
+    @PutMapping("/{id}")
+    public ApiResponse<TodoResponse> updateTodo(@PathVariable Long id, @RequestBody @Valid TodoUpdateRequest request) {}
+    
+    // PATCH 请求：{动作}{资源名}
+    @PatchMapping("/{id}/complete")
+    public ApiResponse<TodoResponse> completeTodo(@PathVariable Long id) {}
+    
+    // DELETE 请求：delete{资源名}
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> deleteTodo(@PathVariable Long id) {}
+}
+```
+
+#### Service 层
+
+```java
+@Service
+public class TodoService {
+    
+    // 查询：get/find/query
+    public TodoResponse getTodoById(Long id) {}
+    public PageResponse<TodoResponse> getTodos(TodoQueryRequest query) {}
+    public List<TodoResponse> findByUserId(Long userId) {}
+    
+    // 创建：create
+    public TodoResponse createTodo(TodoCreateRequest request) {}
+    
+    // 更新：update
+    public TodoResponse updateTodo(Long id, TodoUpdateRequest request) {}
+    
+    // 删除：delete/remove
+    public void deleteTodo(Long id) {}
+    
+    // 业务操作：动词开头
+    public TodoResponse completeTodo(Long id) {}
+    public void shareTodo(Long todoId, TodoShareRequest request) {}
+    
+    // 权限检查：can{操作}
+    public boolean canView(Long todoId, Long userId) {}
+    public boolean canEdit(Long todoId, Long userId) {}
+}
+```
+
+---
+
+## 四、RESTful API 规范
+
+### 4.1 URL 设计
+
+```
+✅ 推荐：
+GET    /api/todos              # 获取列表
+GET    /api/todos/{id}         # 获取详情
+POST   /api/todos              # 创建
+PUT    /api/todos/{id}         # 完整更新
+PATCH  /api/todos/{id}         # 部分更新
+DELETE /api/todos/{id}         # 删除
+
+GET    /api/todos/{id}/shares  # 获取子资源
+POST   /api/todos/{id}/shares  # 创建子资源
+
+❌ 不推荐：
+GET    /api/getTodos           # 不要在 URL 中用动词
+POST   /api/todo/create        # 不要用单数名词
+GET    /api/todos/list         # 不要冗余
+DELETE /api/todos/delete/{id}  # 不要重复动词
+```
+
+---
+
+### 4.2 HTTP 方法
+
+| 方法 | 用途 | 幂等性 | 示例 |
+|-----|------|-------|------|
+| GET | 查询资源 | ✅ 是 | GET /api/todos |
+| POST | 创建资源 | ❌ 否 | POST /api/todos |
+| PUT | 完整更新 | ✅ 是 | PUT /api/todos/1 |
+| PATCH | 部分更新 | ✅ 是 | PATCH /api/todos/1/complete |
+| DELETE | 删除资源 | ✅ 是 | DELETE /api/todos/1 |
+
+---
+
+### 4.3 HTTP 状态码
+
+| 状态码 | 含义 | 使用场景 |
+|-------|------|---------|
+| 200 OK | 成功 | GET、PUT、PATCH 成功 |
+| 201 Created | 已创建 | POST 创建成功 |
+| 204 No Content | 无内容 | DELETE 成功 |
+| 400 Bad Request | 请求错误 | 参数验证失败 |
+| 401 Unauthorized | 未认证 | Token 无效或过期 |
+| 403 Forbidden | 无权限 | 权限检查失败 |
+| 404 Not Found | 未找到 | 资源不存在 |
+| 500 Internal Server Error | 服务器错误 | 系统异常 |
+
+---
+
+### 4.4 统一响应格式
+
+#### 成功响应
+
+```json
+{
+  "success": true,
+  "message": "操作成功",
+  "data": {
+    // 实际数据
+  }
+}
+```
+
+#### 错误响应
+
+```json
+{
+  "success": false,
+  "message": "错误消息",
+  "errorCode": "ERROR_CODE",
+  "timestamp": "2025-11-09T20:00:00",
+  "validationErrors": {
+    "name": "名称不能为空",
+    "email": "邮箱格式不正确"
+  }
+}
+```
+
+---
+
+## 五、ACL 权限规范
+
+### 5.1 权限检查注解
+
+```java
+// ✅ 推荐：使用注解声明权限
+@RequirePermission(resource = ResourceType.TODO, action = ActionType.VIEW)
+public TodoResponse getTodoById(Long id) {
+    // 业务逻辑
+}
+
+// ❌ 不推荐：手动检查权限
+public TodoResponse getTodoById(Long id) {
+    if (!permissionService.canView(id, userId)) {
+        throw new AccessDeniedException();
+    }
+    // 业务逻辑
+}
+```
+
+---
+
+### 5.2 权限检查实现
+
+```java
+@Service
+@RequiredArgsConstructor
+public class AclPermissionService {
+    
+    private final JdbcTemplate jdbcTemplate;
+    
+    /**
+     * 检查用户对资源的权限
+     * 
+     * @param userId 用户ID
+     * @param resourceType 资源类型（TODO/TEAM/TAG）
+     * @param resourceId 资源ID
+     * @param permissionCode 权限代码（VIEW/EDIT/DELETE）
+     * @return true=有权限，false=无权限
+     */
+    public boolean hasPermission(Long userId, String resourceType, 
+                                Long resourceId, String permissionCode) {
+        
+        String sql = """
+            SELECT COUNT(*) > 0
+            FROM acl_access_control ac
+            JOIN acl_permission_definitions pd ON ac.permission_id = pd.id
+            WHERE ac.subject_type = 'USER'
+              AND ac.subject_id = ?
+              AND ac.resource_type = ?
+              AND ac.resource_id = ?
+              AND ac.is_active = 1
+              AND (ac.expires_at IS NULL OR ac.expires_at > NOW())
+              AND pd.is_active = 1
+              AND pd.level >= (
+                  SELECT level FROM acl_permission_definitions 
+                  WHERE resource_type = ? AND permission_code = ?
+              )
+        """;
+        
+        Boolean result = jdbcTemplate.queryForObject(
+            sql, Boolean.class,
+            userId, resourceType, resourceId, resourceType, permissionCode
+        );
+        
+        return Boolean.TRUE.equals(result);
+    }
+}
+```
+
+---
+
+## 六、异常处理规范
+
+### 6.1 异常定义
+
+```java
+/**
+ * 业务异常基类
+ */
+public class BusinessException extends RuntimeException {
+    private String errorCode;
+    
+    public BusinessException(String message, String errorCode) {
+        super(message);
+        this.errorCode = errorCode;
+    }
+}
+
+/**
+ * 资源未找到异常（404）
+ */
+public class ResourceNotFoundException extends BusinessException {
+    public ResourceNotFoundException(String message) {
+        super(message, "RESOURCE_NOT_FOUND");
+    }
+}
+
+/**
+ * 权限不足异常（403）
+ */
+public class AccessDeniedException extends BusinessException {
+    public AccessDeniedException(String message) {
+        super(message, "ACCESS_DENIED");
+    }
+}
+```
+
+---
+
+### 6.2 全局异常处理
+
+```java
+@RestControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+    
+    /**
+     * 资源未找到（404）
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFound(ResourceNotFoundException ex) {
+        log.warn("Resource not found: {}", ex.getMessage());
+        
+        ErrorResponse error = ErrorResponse.builder()
+            .success(false)
+            .message(ex.getMessage())
+            .errorCode("RESOURCE_NOT_FOUND")
+            .timestamp(LocalDateTime.now())
+            .build();
+        
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    
+    /**
+     * 权限不足（403）
+     */
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
+        log.warn("Access denied: {}", ex.getMessage());
+        
+        ErrorResponse error = ErrorResponse.builder()
+            .success(false)
+            .message(ex.getMessage())
+            .errorCode("ACCESS_DENIED")
+            .timestamp(LocalDateTime.now())
+            .build();
+        
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+    
+    /**
+     * 参数验证失败（400）
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage())
+        );
+        
+        ErrorResponse error = ErrorResponse.builder()
+            .success(false)
+            .message("参数验证失败")
+            .errorCode("VALIDATION_ERROR")
+            .timestamp(LocalDateTime.now())
+            .validationErrors(errors)
+            .build();
+        
+        return ResponseEntity.badRequest().body(error);
+    }
+}
+```
+
+---
+
+## 七、日志规范
+
+### 7.1 日志级别
+
+| 级别 | 用途 | 示例 |
+|-----|------|------|
+| ERROR | 错误，需要立即处理 | `log.error("Database connection failed", e)` |
+| WARN | 警告，可能有问题 | `log.warn("User {} attempted unauthorized access", userId)` |
+| INFO | 重要信息 | `log.info("User {} logged in", username)` |
+| DEBUG | 调试信息 | `log.debug("Permission check: userId={}, result={}", userId, result)` |
+
+---
+
+### 7.2 日志规范
+
+```java
+@Service
+@Slf4j  // ⭐ 使用 Lombok 的 @Slf4j
+public class TodoService {
+    
+    public TodoResponse createTodo(TodoCreateRequest request) {
+        Long userId = userContext.getCurrentUserId();
+        
+        // ✅ 推荐：使用占位符
+        log.info("Creating TODO: name={}, userId={}", request.getName(), userId);
+        
+        // ❌ 不推荐：字符串拼接
+        // log.info("Creating TODO: " + request.getName());
+        
+        try {
+            Todo todo = todoRepository.save(...);
+            log.info("TODO created successfully: id={}", todo.getId());
+            return todoMapper.toResponse(todo);
+            
+        } catch (Exception e) {
+            // ✅ 记录异常堆栈
+            log.error("Failed to create TODO: userId={}", userId, e);
+            throw new BusinessException("创建 TODO 失败");
+        }
+    }
+}
+```
+
+---
+
+## 八、测试规范
+
+### 8.1 单元测试命名
+
+```java
+@ExtendWith(MockitoExtension.class)
+@DisplayName("TodoService 单元测试")
+class TodoServiceTest {
+    
+    @Test
+    @DisplayName("测试：创建TODO成功")
+    void testCreateTodo_Success() {
+        // Given
+        TodoCreateRequest request = new TodoCreateRequest();
+        request.setName("Test TODO");
+        
+        // When
+        TodoResponse response = todoService.createTodo(request);
+        
+        // Then
+        assertNotNull(response);
+        assertEquals("Test TODO", response.getName());
+        verify(todoRepository).save(any());
+    }
+    
+    @Test
+    @DisplayName("测试：无权限查看TODO_抛出异常")
+    void testGetTodo_ThrowsAccessDeniedWhenNoPermission() {
+        // Given
+        Long todoId = 1L;
+        Long userId = 999L;  // 无权限的用户
+        
+        when(aclService.hasPermission(userId, "TODO", todoId, "VIEW"))
+            .thenReturn(false);
+        
+        // When & Then
+        assertThrows(AccessDeniedException.class, () -> {
+            todoService.getTodoById(todoId);
+        });
+    }
+}
+```
+
+**测试方法命名**：`test{方法名}_{场景}`
+
+---
+
+## 九、事务管理规范
+
+```java
+@Service
+public class TodoService {
+    
+    // ✅ 只读操作
+    @Transactional(readOnly = true)
+    public TodoResponse getTodoById(Long id) {
+        // 查询操作
+    }
+    
+    // ✅ 写操作
+    @Transactional
+    public TodoResponse createTodo(TodoCreateRequest request) {
+        // 创建 TODO
+        // 授予权限
+        // 多个写操作在同一事务中
+    }
+    
+    // ✅ 指定回滚异常
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteTodo(Long id) {
+        // 删除 TODO
+        // 清理 ACL 记录
+    }
+}
+```
+
+---
+
+## 十、Git 提交规范
+
+### Commit Message 格式
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+**Type 类型**：
+- `feat`: 新功能
+- `fix`: 修复 bug
+- `docs`: 文档更新
+- `refactor`: 代码重构
+- `test`: 测试相关
+- `chore`: 构建/配置相关
+- `perf`: 性能优化
+
+**示例**：
+```
+feat(auth): 实现用户登录功能
+
+- 添加 JWT Token 生成
+- 添加登录接口
+- 添加单元测试
+
+Closes #123
+```
+
+---
+
+## 十一、开发检查清单
+
+### ✅ 代码提交前检查
+
+- [ ] 所有 DTO 包含验证注解
+- [ ] 所有 VO 不包含敏感信息
+- [ ] 所有 Service 方法添加权限检查
+- [ ] 所有异常都被正确处理
+- [ ] 所有日志使用占位符
+- [ ] 所有测试通过
+- [ ] 代码格式化
+- [ ] 无编译警告
+
+---
+
+## 十二、服务化架构规范 ⭐
+
+### 12.1 架构说明
+
+**当前架构**：服务化单体应用（Service-Oriented Monolith）
+
+**特征**：
+- ✅ 有网关（Spring Cloud Gateway）
+- ✅ 有服务注册（Nacos）
+- ✅ 支持负载均衡和多实例部署
+- ✅ 但只有 1 个业务服务
+
+### 12.2 适用场景
+
+**传统单体**（无服务化）：
+- 团队 1-3 人
+- MVP 快速验证
+- 小型项目
+
+**服务化单体**（当前架构）⭐：
+- 团队 3-10 人
+- 中高并发场景
+- 需要高可用
+
+**多服务微服务**（未来演进）：
+- 团队 10+ 人
+- 超高并发
+- 需要独立扩展各模块
+
+### 12.3 当前架构的特点
+
+**无需使用（当前架构）**：
+- ❌ Feign Client（无服务间调用）
+- ❌ 分布式事务（单数据库，本地事务即可）
+- ❌ Internal DTO（无服务间通信）
+
+**需要使用（当前架构）**：
+- ✅ Request DTO（客户端 → 服务）
+- ✅ Response VO（服务 → 客户端）
+- ✅ Entity（数据库映射）
+- ✅ UserContext（从网关获取用户信息）
+
+### 12.4 从网关获取用户信息
+
+```java
+/**
+ * 从网关传递的请求头获取用户信息
+ */
+@Service
+public class TodoService {
+    
+    public TodoResponse createTodo(TodoCreateRequest request) {
+        // 从网关传递的请求头获取用户ID
+        Long userId = UserContext.getCurrentUserId();  // ⭐ 网关添加的 X-User-Id
+        String username = UserContext.getCurrentUsername();  // X-Username
+        
+        // 业务逻辑...
+    }
+}
+```
+
+### 12.5 未来演进时需要（多服务微服务）
+
+**当拆分为多个服务时才需要**：
+
+```java
+// Internal DTO（服务间通信）
+
+```java
+package com.example.todoapi.dto.internal;
+
+/**
+ * Internal DTO（服务间通信）
+ * 
+ * 特点：
+ *   - 不暴露给客户端
+ *   - 可以包含敏感字段（如 roles）
+ *   - 不需要验证注解
+ */
+@Data
+@Builder
+public class UserInternalDTO implements Serializable {
+    private Long id;
+    private String username;
+    private String email;
+    private String fullName;
+    private List<String> roles;      // ⭐ 内部字段
+    private List<Long> teamIds;      // ⭐ 内部字段
+}
+
+/**
+ * 权限检查 Internal DTO
+ */
+@Data
+@Builder
+public class PermissionCheckInternalDTO implements Serializable {
+    private Long userId;
+    private String resourceType;
+    private Long resourceId;
+    private String action;
+}
+```
+
+### 12.3 Feign Client 规范
+
+```java
+/**
+ * Feign Client 命名规范
+ * 
+ * 命名：{服务名}Client
+ * 路径：com.example.todoapi.client
+ */
+@FeignClient(
+    name = "auth-service",
+    path = "/internal/users",
+    configuration = FeignConfig.class,
+    fallbackFactory = UserServiceClientFallbackFactory.class
+)
+public interface UserServiceClient {
+    
+    @GetMapping("/{userId}")
+    UserInternalDTO getUserById(@PathVariable("userId") Long userId);
+    
+    @PostMapping("/batch")
+    List<UserInternalDTO> getUsersByIds(@RequestBody List<Long> userIds);
+}
+```
+
+### 12.4 服务间调用示例
+
+```java
+@Service
+@RequiredArgsConstructor
+public class TodoService {
+    
+    private final UserServiceClient userServiceClient;  // ⭐ Feign Client
+    private final PermissionServiceClient permissionServiceClient;
+    private final TodoRepository todoRepository;
+    
+    public TodoResponse getTodoById(Long id) {
+        Long userId = UserContext.getCurrentUserId();
+        
+        // 1. 检查权限（调用 Permission Service）
+        Boolean hasPermission = permissionServiceClient.checkPermission(
+            PermissionCheckInternalDTO.builder()
+                .userId(userId)
+                .resourceType("TODO")
+                .resourceId(id)
+                .action("VIEW")
+                .build()
+        );
+        
+        if (!hasPermission) {
+            throw new AccessDeniedException("无权限");
+        }
+        
+        // 2. 查询 TODO
+        Todo todo = todoRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("TODO 不存在"));
+        
+        // 3. 获取用户信息（调用 User Service）
+        UserInternalDTO owner = userServiceClient.getUserById(todo.getUserId());
+        
+        // 4. 组装响应
+        TodoResponse response = todoMapper.toResponse(todo);
+        response.setOwner(userMapper.toResponse(owner));
+        
+        return response;
+    }
+}
+```
+
+### 12.5 数据库访问规则
+
+```
+✅ 推荐：只访问自己的表
+@Service
+public class TodoService {
+    @Autowired
+    private TodoRepository todoRepository;  // ✅ 自己的表
+    
+    @Autowired
+    private UserServiceClient userServiceClient;  // ✅ 通过 API 调用
+}
+
+❌ 禁止：跨服务访问表
+@Service
+public class TodoService {
+    @Autowired
+    private UserRepository userRepository;  // ❌ 不能直接访问其他服务的表
+}
+```
+
+### 12.7 演进参考
+
+**当前架构（服务化单体）**：
+- 详细文档：`docs/18-网关+API多节点部署方案.md`
+
+**未来演进（多服务微服务）**：
+- 参考文档：`docs/17-微服务开发规范.md`
+- 演进路径：`docs/19-架构演进路线图.md`
+- 术语说明：`docs/架构术语说明.md`
+
+**何时演进**：
+- QPS > 10,000
+- 团队 > 15 人
+- 需要独立扩展某个模块
+
+---
+
+## 十三、并发控制规范 ⭐⭐⭐⭐⭐
+
+### 13.1 为什么必须考虑并发？
+
+**多实例部署的特点**：
+```
+请求 1 → Gateway → API Instance 1
+请求 2 → Gateway → API Instance 2  ← 同时处理同一个 TODO
+请求 3 → Gateway → API Instance 3
+
+都操作同一个数据库 → 并发冲突！
+```
+
+### 13.2 核心方案（修正）
+
+**❌ 不推荐**：乐观锁（高并发时大量失败）
+
+**✅ 核心方案**：
+1. **分布式锁（Redisson + Redis）** - 关键操作 ⭐⭐⭐⭐⭐
+2. **幂等性（Redis Token）** - 防止重复提交 ⭐⭐⭐⭐⭐
+
+**说明**：统计功能后期按需扩展，当前不实现。
+
+### 13.3 分布式锁（必须使用）⭐
+
+**注解定义**：
+
+```java
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DistributedLock {
+    String key();  // 锁的 key（支持 SpEL）
+    int waitTime() default 3;
+    int leaseTime() default 10;
+}
+```
+
+**Service 使用**：
+
+```java
+@Service
+public class TodoService {
+    
+    /**
+     * 完成 TODO（分布式锁）
+     */
+    @Transactional
+    @DistributedLock(
+        key = "'todo:complete:' + #id",  // ⭐ 分布式锁
+        waitTime = 3,
+        leaseTime = 10
+    )
+    public TodoResponse completeTodo(Long id) {
+        // 持有锁，无并发冲突
+        Todo todo = todoRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("TODO 不存在"));
+        
+        todo.setStatus("COMPLETED");
+        todo.setCompletedAt(LocalDateTime.now());
+        todoRepository.updateById(todo);
+        
+        return todoMapper.toResponse(todo);
+    }
+    
+    /**
+     * 编辑 TODO（分布式锁）
+     */
+    @Transactional
+    @DistributedLock(
+        key = "'todo:edit:' + #id",
+        waitTime = 3,
+        leaseTime = 10
+    )
+    public TodoResponse updateTodo(Long id, TodoUpdateRequest request) {
+        // 持有锁，无并发问题
+        Todo todo = todoRepository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("TODO 不存在"));
+        
+        todo.setName(request.getName());
+        todo.setDescription(request.getDescription());
+        todoRepository.updateById(todo);
+        
+        return todoMapper.toResponse(todo);
+    }
+}
+```
+
+### 13.3 幂等性（必须使用）⭐
+
+**Controller 定义**：
+
+```java
+@RestController
+public class TodoController {
+    
+    /**
+     * 创建 TODO（幂等）
+     * 
+     * 客户端请求头：X-Idempotent-Token: <uuid>
+     */
+    @PostMapping("/api/todos")
+    @Idempotent(timeout = 300)  // ⭐ 5分钟防重
+    public ApiResponse<TodoResponse> createTodo(
+        @RequestBody @Valid TodoCreateRequest request
+    ) {
+        TodoResponse response = todoService.createTodo(request);
+        return ApiResponse.success(response);
+    }
+}
+```
+
+### 13.4 最终一致性（统计操作）⭐
+
+```java
+@Service
+public class TodoService {
+    
+    private final ApplicationEventPublisher eventPublisher;
+    
+    /**
+     * 查询 TODO（发布查看事件）
+     */
+    public TodoDetailResponse getTodoById(Long id) {
+        // 查询 TODO...
+        
+        // ⭐ 发布查看事件（异步更新查看次数）
+        eventPublisher.publishEvent(
+            TodoViewedEvent.builder()
+                .todoId(id)
+                .userId(userId)
+                .viewedAt(LocalDateTime.now())
+                .build()
+        );
+        
+        return response;
+    }
+}
+
+/**
+ * 事件监听器（异步处理）
+ */
+@Component
+@Slf4j
+public class TodoStatisticsEventListener {
+    
+    @Autowired
+    private RedisTemplate<String, Integer> redisTemplate;
+    
+    @EventListener
+    @Async  // ⭐ 异步处理
+    public void handleTodoViewed(TodoViewedEvent event) {
+        // 1. 增加 Redis 计数
+        String key = "todo:view:count:" + event.getTodoId();
+        redisTemplate.opsForValue().increment(key);
+        
+        // 2. 每 10 次刷新数据库
+        Long count = redisTemplate.opsForValue().get(key);
+        if (count != null && count % 10 == 0) {
+            todoRepository.incrementViewCount(event.getTodoId(), 10);
+        }
+    }
+}
+```
+
+### 13.5 方案选择
+
+| 场景 | 推荐方案 | 示例 |
+|-----|---------|------|
+| **状态变更** | 分布式锁 ⭐ | completeTodo、deleteTodo |
+| **权限操作** | 分布式锁 ⭐ | grantPermission、revokePermission |
+| **创建操作** | 幂等性 Token ⭐ | createTodo |
+| **统计操作** | 最终一致性 ⭐ | viewCount、commentCount |
+
+### 13.6 并发控制检查清单
+
+**开发时必须实现**：
+- [ ] 引入 Redisson 依赖
+- [ ] 配置 Redis 连接（单节点）
+- [ ] 实现 @DistributedLock 注解和切面
+- [ ] 实现 @Idempotent 注解和切面
+- [ ] 所有状态变更使用分布式锁
+- [ ] 所有权限操作使用分布式锁
+- [ ] 所有创建操作使用幂等性
+- [ ] 编写并发测试用例
+
+**详细文档**：`docs/20-并发处理方案.md`
+
+**说明**：Redis 高可用由运维负责，应用只需配置连接即可。
+
+---
+
+## 十四、核心规范总结
+
+### DTO/VO/Entity 核心规则
+
+1. **DTO (Request)**：
+   - ✅ 命名：`{业务}{操作}Request`
+   - ✅ 位置：`dto/request/`
+   - ✅ 用途：接收请求参数
+   - ✅ 验证：添加 `@Valid` 注解
+
+2. **VO (Response)**：
+   - ✅ 命名：`{业务}Response`
+   - ✅ 位置：`dto/response/`
+   - ✅ 用途：返回响应数据
+   - ✅ 安全：不包含敏感字段
+
+3. **Internal DTO**（微服务专用）：
+   - ✅ 命名：`{业务}InternalDTO`
+   - ✅ 位置：`dto/internal/`
+   - ✅ 用途：服务间通信
+   - ✅ 特点：可包含内部字段
+
+4. **Entity**：
+   - ✅ 命名：与表名对应
+   - ✅ 位置：`entity/`
+   - ✅ 用途：数据库映射
+   - ✅ 注解：MyBatis-Plus 注解
+
+5. **Mapper**：
+   - ✅ 命名：`{业务}Mapper`
+   - ✅ 工具：MapStruct
+   - ✅ 用途：对象转换
+
+---
+
+**遵守这些规范，代码质量更高，团队协作更顺畅！** ✅

@@ -3,12 +3,24 @@
 
 <mapper namespace="io.user.dao.TokenDao">
 
+    <!-- v2.0: 表名从 tb_token 改为 tb_tokens -->
+    
     <select id="getByToken" resultType="io.user.entity.TokenEntity">
-        select * from tb_token where token = #{value}
+        select * from tb_tokens where token = #{value}
     </select>
 
     <select id="getByUserId" resultType="io.user.entity.TokenEntity">
-        select * from tb_token where user_id = #{value}
+        select * from tb_tokens where user_id = #{value} 
+        order by create_date desc limit 1
+    </select>
+    
+    <!-- v2.0 新增：根据 Refresh Token 查询最新记录 -->
+    <select id="getByRefreshToken" resultType="io.user.entity.TokenEntity">
+        select * from tb_tokens 
+        where refresh_token = #{value} 
+          and is_revoked = 0
+        order by create_date desc 
+        limit 1
     </select>
 
 </mapper>

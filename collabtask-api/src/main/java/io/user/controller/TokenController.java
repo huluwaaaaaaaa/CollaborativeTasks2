@@ -65,8 +65,14 @@ public class TokenController {
             return new Result<TokenValidateVO>().ok(vo);
         }
 
-        // 检查token是否过期
-        if (tokenEntity.getExpireDate().getTime() < System.currentTimeMillis()) {
+        // 检查token是否过期（v2.0 - 使用 expiresAt）
+        if (tokenEntity.getExpiresAt().getTime() < System.currentTimeMillis()) {
+            vo.setValid(false);
+            return new Result<TokenValidateVO>().ok(vo);
+        }
+        
+        // v2.0 - 检查是否被撤销 ⭐
+        if (tokenEntity.getIsRevoked() != null && tokenEntity.getIsRevoked() == 1) {
             vo.setValid(false);
             return new Result<TokenValidateVO>().ok(vo);
         }
@@ -77,6 +83,25 @@ public class TokenController {
         
         return new Result<TokenValidateVO>().ok(vo);
 
+    }
+    
+    /**
+     * 检查 Token 是否被撤销（v2.0 新增）⭐
+     * 
+     * 供 Gateway 调用
+     */
+    @GetMapping("/check-revoked")
+    @Operation(summary = "检查 Token 是否被撤销", description = "供Gateway调用，检查token是否已登出")
+    public boolean checkRevoked(HttpServletRequest request) {
+        // 从参数中获取 token
+        String token = request.getParameter("token");
+        
+        if (StrUtil.isBlank(token)) {
+            return false;
+        }
+        
+        // 调用 Service 检查（带 Redis 缓存）
+        return tokenService.isTokenRevoked(token);
     }
 
     /**

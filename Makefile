@@ -198,7 +198,8 @@ release-ci:
 	@docker push $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) -q
 	@docker push $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) -q
 	@echo "[4/5] 停止旧服务..."
-	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml down 2>/dev/null || true
+	@docker stop collabtask-api collabtask-gateway 2>/dev/null || true
+	@docker rm -f collabtask-api collabtask-gateway 2>/dev/null || true
 	@echo "[5/5] 部署新服务..."
 	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) NEXUS_REGISTRY=$(NEXUS_REGISTRY) docker compose -f docker-compose-nexus.yml up -d
 	@echo ""
@@ -214,7 +215,7 @@ release-ci:
 	@echo "🌐 访问: http://localhost:8001"
 	@echo ""
 	@echo "🔍 服务状态:"
-	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker-compose -f docker-compose-nexus.yml ps
+	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml ps
 	@echo ""
 	@echo "📊 查看日志:"
 	@echo "   docker logs -f collabtask-gateway"

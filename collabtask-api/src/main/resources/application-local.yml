@@ -1,0 +1,80 @@
+# ============================================
+# API服务 - 本地测试配置（无需Nacos）
+# ============================================
+
+server:
+  port: 8002
+  servlet:
+    context-path: /collabtask-api
+
+spring:
+  application:
+    name: collabtask-api
+  
+  # 禁用 Nacos
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+    compatibility-verifier:
+      enabled: false
+  
+  # 本地数据源配置
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/collabtask?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+      username: root
+      password: Y9!8nIeRH@163
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+  
+  # Redis 配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      timeout: 6000ms
+      lettuce:
+        pool:
+          max-active: 1000
+          max-wait: -1ms
+          max-idle: 10
+          min-idle: 5
+
+# MyBatis Plus
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  typeAliasesPackage: io.user.entity
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# Knife4j
+knife4j:
+  enable: true
+
+# Redis 开关
+collabtask:
+  redis:
+    open: true
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    io.user: DEBUG
+    io.user.aspect: DEBUG
+    io.user.aspect.PermissionCheckAspect: TRACE
+

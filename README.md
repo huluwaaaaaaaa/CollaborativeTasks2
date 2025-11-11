@@ -1,3 +1,5 @@
+[English](README.md) | [中文](README_ZH.md)
+
 # CollabTask - Collaborative Task Management System
 
 [![JDK](https://img.shields.io/badge/JDK-17+-orange)](https://www.oracle.com/java/technologies/downloads/)

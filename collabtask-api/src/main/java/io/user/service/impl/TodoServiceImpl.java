@@ -8,10 +8,6 @@
 
 package io.user.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.user.common.exception.ErrorCode;
 import io.user.common.exception.RenException;
 import io.user.common.service.impl.BaseServiceImpl;
 import io.user.common.page.PageData;
@@ -23,13 +19,11 @@ import io.user.dto.TodoUpdateDTO;
 import io.user.dto.TodoVO;
 import io.user.entity.TodoEntity;
 import io.user.entity.UserEntity;
-import io.user.common.annotation.DistributedLock;
 import io.user.common.annotation.Idempotent;
 import io.user.enums.PermissionCode;
 import io.user.enums.ResourceType;
 import io.user.enums.TodoPriority;
 import io.user.enums.TodoStatus;
-import io.user.service.AclPermissionService;
 import io.user.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -51,7 +45,6 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	private final TodoDao todoDao;
 	private final UserDao userDao;
-	private final AclPermissionService aclPermissionService;
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -122,22 +115,18 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	}
 	
 	@Override
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TODO,
+		permission = PermissionCode.VIEW,
+		checkOwner = true  // ⭐ 自动检查 OWNER + ACL
+	)
 	public TodoVO getTodoById(Long id, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER + ACL）
+		
 		TodoEntity todo = todoDao.selectById(id);
 		
 		if (todo == null) {
 			throw new RenException("记录不存在");
-		}
-		
-		// v1.1: ACL权限检查（支持TODO共享）
-		// 检查是否是创建者，或者有VIEW权限
-		boolean isOwner = todo.getUserId().equals(userId);
-		boolean hasPermission = aclPermissionService.hasPermission(
-			userId, ResourceType.TODO.getCode(), id, PermissionCode.VIEW.getCode()
-		);
-		
-		if (!isOwner && !hasPermission) {
-			throw new RenException("无权限查看此 TODO");
 		}
 		
 		return convertToVO(todo);
@@ -145,23 +134,19 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TODO,
+		permission = PermissionCode.EDIT,
+		checkOwner = true  // ⭐ 自动检查 OWNER + ACL
+	)
 	// @DistributedLock(key = "'todo:edit:' + #id", waitTime = 3, leaseTime = 10)  // v1.2: 分布式锁（暂时注释）
 	public TodoVO updateTodo(Long id, TodoUpdateDTO dto, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER + ACL）
+		
 		TodoEntity todo = todoDao.selectById(id);
 		
 		if (todo == null) {
 			throw new RenException("记录不存在");
-		}
-		
-		// v1.1: ACL权限检查（支持TODO共享）
-		// 检查是否是创建者，或者有EDIT权限
-		boolean isOwner = todo.getUserId().equals(userId);
-		boolean hasPermission = aclPermissionService.hasPermission(
-			userId, ResourceType.TODO.getCode(), id, PermissionCode.EDIT.getCode()
-		);
-		
-		if (!isOwner && !hasPermission) {
-			throw new RenException("无权限编辑此 TODO");
 		}
 		
 		// 更新字段
@@ -195,16 +180,18 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TODO,
+		permission = PermissionCode.EDIT,
+		checkOwner = true  // ⭐ 自动检查 OWNER + ACL
+	)
 	public TodoVO completeTodo(Long id, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER + ACL）
+		
 		TodoEntity todo = todoDao.selectById(id);
 		
 		if (todo == null) {
 			throw new RenException("记录不存在");
-		}
-		
-		// 简单检查：只能完成自己的 TODO
-		if (!todo.getUserId().equals(userId)) {
-			throw new RenException("无权限操作此 TODO");
 		}
 		
 		// 已完成则不重复操作
@@ -224,18 +211,19 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TODO,
+		permission = PermissionCode.DELETE,
+		checkOwner = true  // ⭐ 只检查 OWNER（删除权限只有OWNER有）
+	)
 	// @DistributedLock(key = "'todo:delete:' + #id", waitTime = 3, leaseTime = 10)  // v1.2: 分布式锁（暂时注释）
 	public void deleteTodo(Long id, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER + ACL）
+		
 		TodoEntity todo = todoDao.selectById(id);
 		
 		if (todo == null) {
 			throw new RenException("记录不存在");
-		}
-		
-		// v1.1: ACL权限检查
-		// 只有创建者可以删除（即使有EDIT权限也不能删除）
-		if (!todo.getUserId().equals(userId)) {
-			throw new RenException("只有创建者可以删除 TODO");
 		}
 		
 		// 删除TODO

@@ -1,0 +1,46 @@
+# ============================================
+# 测试环境配置
+# ============================================
+
+spring:
+  application:
+    name: collabtask-api-test
+  
+  # 禁用 Nacos
+  cloud:
+    nacos:
+      discovery:
+        enabled: false
+      config:
+        enabled: false
+  
+  # 数据源配置（使用H2内存数据库）
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  
+  # Redis 配置（使用内嵌Redis或禁用）
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 1
+
+# MyBatis Plus
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 禁用 Redis
+collabtask:
+  redis:
+    open: false
+
+# 日志级别
+logging:
+  level:
+    io.user: DEBUG
+    io.user.aspect: DEBUG
+

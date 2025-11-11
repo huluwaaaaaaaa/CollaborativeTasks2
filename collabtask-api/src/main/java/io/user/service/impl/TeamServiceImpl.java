@@ -9,15 +9,15 @@
 package io.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.user.common.exception.RenException;
 import io.user.common.page.PageData;
 import io.user.common.service.impl.BaseServiceImpl;
 import io.user.dao.*;
 import io.user.dto.*;
-import io.user.common.annotation.DistributedLock;
 import io.user.common.annotation.Idempotent;
 import io.user.entity.*;
+import io.user.enums.PermissionCode;
+import io.user.enums.ResourceType;
 import io.user.service.TeamService;
 import io.user.service.TodoService;
 import lombok.AllArgsConstructor;
@@ -42,7 +42,6 @@ public class TeamServiceImpl extends BaseServiceImpl<TeamDao, TeamEntity> implem
 	private final TeamDao teamDao;
 	private final TeamMemberDao teamMemberDao;
 	private final UserDao userDao;
-	private final TodoDao todoDao;
 	private final TodoService todoService;
 	
 	@Override
@@ -107,16 +106,18 @@ public class TeamServiceImpl extends BaseServiceImpl<TeamDao, TeamEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TEAM,
+		permission = PermissionCode.EDIT,
+		checkOwner = true  // ⭐ 自动检查 OWNER（Team的owner字段是ownerId）
+	)
 	// @DistributedLock(key = "'team:edit:' + #id", waitTime = 3, leaseTime = 10)  // v1.2: 分布式锁（暂时注释）
 	public TeamVO updateTeam(Long id, TeamUpdateDTO dto, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER）
+		
 		TeamEntity team = teamDao.selectById(id);
 		if (team == null) {
 			throw new RenException("团队不存在");
-		}
-		
-		// 检查权限：只有所有者可以修改
-		if (!team.getOwnerId().equals(userId)) {
-			throw new RenException("只有团队所有者可以修改团队信息");
 		}
 		
 		// 更新
@@ -134,15 +135,17 @@ public class TeamServiceImpl extends BaseServiceImpl<TeamDao, TeamEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TEAM,
+		permission = PermissionCode.DELETE,
+		checkOwner = true  // ⭐ 自动检查 OWNER
+	)
 	public void deleteTeam(Long id, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER）
+		
 		TeamEntity team = teamDao.selectById(id);
 		if (team == null) {
 			throw new RenException("团队不存在");
-		}
-		
-		// 检查权限：只有所有者可以删除
-		if (!team.getOwnerId().equals(userId)) {
-			throw new RenException("只有团队所有者可以删除团队");
 		}
 		
 		// 删除团队成员

@@ -15,6 +15,8 @@ import io.user.dao.*;
 import io.user.dto.*;
 import io.user.entity.*;
 import io.user.common.annotation.Idempotent;
+import io.user.enums.PermissionCode;
+import io.user.enums.ResourceType;
 import io.user.service.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -87,15 +89,17 @@ public class TagServiceImpl extends BaseServiceImpl<TagDao, TagEntity> implement
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TAG,
+		permission = PermissionCode.EDIT,
+		checkOwner = true  // ⭐ 自动检查 OWNER
+	)
 	public TagVO updateTag(Long id, TagUpdateDTO dto, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER）
+		
 		TagEntity tag = tagDao.selectById(id);
 		if (tag == null) {
 			throw new RenException("标签不存在");
-		}
-		
-		// 检查权限
-		if (!tag.getUserId().equals(userId)) {
-			throw new RenException("无权限修改该标签");
 		}
 		
 		// 检查标签名是否已存在
@@ -122,15 +126,17 @@ public class TagServiceImpl extends BaseServiceImpl<TagDao, TagEntity> implement
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@io.user.common.annotation.RequirePermission(
+		resourceType = ResourceType.TAG,
+		permission = PermissionCode.DELETE,
+		checkOwner = true  // ⭐ 自动检查 OWNER
+	)
 	public void deleteTag(Long id, Long userId) {
+		// ✅ 切面已自动检查权限（OWNER）
+		
 		TagEntity tag = tagDao.selectById(id);
 		if (tag == null) {
 			throw new RenException("标签不存在");
-		}
-		
-		// 检查权限
-		if (!tag.getUserId().equals(userId)) {
-			throw new RenException("无权限删除该标签");
 		}
 		
 		// 删除关联关系

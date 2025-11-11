@@ -214,7 +214,7 @@ release-ci:
 	@echo "🌐 访问: http://localhost:8001"
 	@echo ""
 	@echo "🔍 服务状态:"
-	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml ps
+	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker-compose -f docker-compose-nexus.yml ps
 	@echo ""
 	@echo "📊 查看日志:"
 	@echo "   docker logs -f collabtask-gateway"

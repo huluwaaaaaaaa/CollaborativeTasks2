@@ -33,8 +33,11 @@ public class AclAccessControlEntity implements Serializable {
 	@TableId(type = IdType.AUTO)
 	private Long id;
 	
-	@TableField("user_id")
-	private Long userId;
+	@TableField("subject_type")
+	private String subjectType;
+	
+	@TableField("subject_id")
+	private Long subjectId;
 	
 	@TableField("resource_type")
 	private String resourceType;
@@ -42,16 +45,40 @@ public class AclAccessControlEntity implements Serializable {
 	@TableField("resource_id")
 	private Long resourceId;
 	
-	@TableField("permission_code")
-	private String permissionCode;
+	@TableField("permission_id")
+	private Long permissionId;
+	
+	// @TableField("source_type")  // 数据库表中无此字段
+	// private String sourceType;
+	
+	// @TableField("source_id")  // 数据库表中无此字段
+	// private Long sourceId;
 	
 	@TableField("granted_by")
 	private Long grantedBy;
 	
-	@TableField("grant_date")
-	private Date grantDate;
+	@TableField("granted_at")
+	private Date grantedAt;
 	
 	@TableField("expires_at")
 	private Date expiresAt;
+	
+	@TableField("is_active")
+	private Integer isActive;
+	
+	@TableField("revoked_by")
+	private Long revokedBy;
+	
+	@TableField("revoked_at")
+	private Date revokedAt;
+	
+	@TableField("revoke_reason")
+	private String revokeReason;
+	
+	@TableField("create_date")
+	private Date createDate;
+	
+	// @TableField("update_date")  // 数据库表中无此字段
+	// private Date updateDate;
 }
 

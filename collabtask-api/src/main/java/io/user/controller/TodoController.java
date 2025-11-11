@@ -17,8 +17,12 @@ import io.user.common.utils.Result;
 import io.user.common.validator.ValidatorUtils;
 import io.user.dto.TodoCreateDTO;
 import io.user.dto.TodoQueryDTO;
+import io.user.dto.TodoShareDTO;
 import io.user.dto.TodoUpdateDTO;
 import io.user.dto.TodoVO;
+import io.user.enums.PermissionCode;
+import io.user.enums.ResourceType;
+import io.user.service.AclPermissionService;
 import io.user.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +39,7 @@ import org.springframework.web.bind.annotation.*;
 public class TodoController {
 	
 	private final TodoService todoService;
+	private final AclPermissionService aclPermissionService;
 	
 	/**
 	 * 创建 TODO
@@ -128,6 +133,65 @@ public class TodoController {
 	) {
 		todoService.deleteTodo(id, userId);
 		return new Result().ok("删除成功");
+	}
+	
+	/**
+	 * 共享 TODO（v1.1新增）
+	 */
+	@Login
+	@PostMapping("/{id}/share")
+	@Operation(summary = "共享 TODO 给其他用户")
+	public Result shareTodo(
+		@PathVariable Long id,
+		@RequestBody TodoShareDTO dto,
+		@Parameter(hidden = true) @RequestAttribute("userId") Long userId
+	) {
+		// 验证
+		ValidatorUtils.validateEntity(dto);
+		
+		// 检查是否是TODO的所有者
+		TodoVO todo = todoService.getTodoById(id, userId);
+		if (!todo.getUserId().equals(userId)) {
+			throw new io.user.common.exception.RenException("只有创建者可以共享 TODO");
+		}
+		
+		// 授予权限
+		PermissionCode permissionCode = "VIEW".equals(dto.getPermission()) 
+			? PermissionCode.VIEW 
+			: PermissionCode.EDIT;
+		aclPermissionService.grantPermission(
+			dto.getTargetUserId(),
+			ResourceType.TODO.getCode(),
+			id,
+			permissionCode.getCode(),
+			userId
+		);
+		
+		return new Result().ok("共享成功");
+	}
+	
+	/**
+	 * 取消共享 TODO（v1.1新增）
+	 */
+	@Login
+	@DeleteMapping("/{id}/share/{targetUserId}")
+	@Operation(summary = "取消共享 TODO")
+	public Result unshareTodo(
+		@PathVariable Long id,
+		@PathVariable Long targetUserId,
+		@Parameter(hidden = true) @RequestAttribute("userId") Long userId
+	) {
+		// 检查是否是TODO的所有者
+		TodoVO todo = todoService.getTodoById(id, userId);
+		if (!todo.getUserId().equals(userId)) {
+			throw new io.user.common.exception.RenException("只有创建者可以取消共享");
+		}
+		
+		// 撤销所有权限（VIEW + EDIT）
+		aclPermissionService.revokePermission(targetUserId, ResourceType.TODO.getCode(), id, PermissionCode.VIEW.getCode());
+		aclPermissionService.revokePermission(targetUserId, ResourceType.TODO.getCode(), id, PermissionCode.EDIT.getCode());
+		
+		return new Result().ok("取消共享成功");
 	}
 }
 

@@ -2,9 +2,116 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="io.user.dao.TodoDao">
+
+    <!-- 查询我的TODO列表（包含共享给我的）v1.1优化 -->
+    <select id="selectMyTodosPage" resultType="io.user.entity.TodoEntity">
+        SELECT DISTINCT t.*
+        FROM tb_todos t
+        LEFT JOIN tb_acl_access_control acl 
+            ON t.id = acl.resource_id 
+            AND acl.resource_type = 'TODO'
+            AND acl.subject_type = 'USER'
+            AND acl.subject_id = #{userId}
+            AND acl.is_active = 1
+            AND (acl.expires_at IS NULL OR acl.expires_at > NOW())
+        WHERE 
+            t.user_id = #{userId}  -- 我创建的
+            OR acl.id IS NOT NULL  -- 或共享给我的
+            
+        <!-- 动态查询条件 -->
+        <if test="keyword != null and keyword != ''">
+            AND (t.name LIKE CONCAT('%', #{keyword}, '%') 
+                 OR t.description LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        
+        <if test="status != null and status != ''">
+            AND t.status = #{status}
+        </if>
+        
+        <if test="priority != null and priority != ''">
+            AND t.priority = #{priority}
+        </if>
+        
+        <if test="teamId != null">
+            AND t.team_id = #{teamId}
+        </if>
+        
+        <if test="dueDateStart != null">
+            AND t.due_date >= #{dueDateStart}
+        </if>
+        
+        <if test="dueDateEnd != null">
+            AND t.due_date &lt;= #{dueDateEnd}
+        </if>
+        
+        <!-- 动态排序 -->
+        <choose>
+            <when test="orderBy == 'due_date'">
+                ORDER BY t.due_date 
+                <if test="orderDirection == 'asc'">ASC</if>
+                <if test="orderDirection != 'asc'">DESC</if>
+            </when>
+            <when test="orderBy == 'priority'">
+                ORDER BY t.priority 
+                <if test="orderDirection == 'asc'">ASC</if>
+                <if test="orderDirection != 'asc'">DESC</if>
+            </when>
+            <when test="orderBy == 'status'">
+                ORDER BY t.status 
+                <if test="orderDirection == 'asc'">ASC</if>
+                <if test="orderDirection != 'asc'">DESC</if>
+            </when>
+            <otherwise>
+                ORDER BY t.create_date 
+                <if test="orderDirection == 'asc'">ASC</if>
+                <if test="orderDirection != 'asc'">DESC</if>
+            </otherwise>
+        </choose>
+        
+        <!-- 分页 -->
+        LIMIT #{offset}, #{limit}
+    </select>
     
-    <!-- 基础 CRUD 由 MyBatis-Plus 自动提供 -->
-    <!-- 这里可以定义复杂查询 -->
+    <!-- 统计我的TODO数量（包含共享的）v1.1优化 -->
+    <select id="countMyTodos" resultType="long">
+        SELECT COUNT(DISTINCT t.id)
+        FROM tb_todos t
+        LEFT JOIN tb_acl_access_control acl 
+            ON t.id = acl.resource_id 
+            AND acl.resource_type = 'TODO'
+            AND acl.subject_type = 'USER'
+            AND acl.subject_id = #{userId}
+            AND acl.is_active = 1
+            AND (acl.expires_at IS NULL OR acl.expires_at > NOW())
+        WHERE 
+            t.user_id = #{userId}
+            OR acl.id IS NOT NULL
+            
+        <!-- 动态查询条件 -->
+        <if test="keyword != null and keyword != ''">
+            AND (t.name LIKE CONCAT('%', #{keyword}, '%') 
+                 OR t.description LIKE CONCAT('%', #{keyword}, '%'))
+        </if>
+        
+        <if test="status != null and status != ''">
+            AND t.status = #{status}
+        </if>
+        
+        <if test="priority != null and priority != ''">
+            AND t.priority = #{priority}
+        </if>
+        
+        <if test="teamId != null">
+            AND t.team_id = #{teamId}
+        </if>
+        
+        <if test="dueDateStart != null">
+            AND t.due_date >= #{dueDateStart}
+        </if>
+        
+        <if test="dueDateEnd != null">
+            AND t.due_date &lt;= #{dueDateEnd}
+        </if>
+    </select>
 
 </mapper>
-

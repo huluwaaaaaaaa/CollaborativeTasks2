@@ -15,6 +15,8 @@ import io.user.common.page.PageData;
 import io.user.common.service.impl.BaseServiceImpl;
 import io.user.dao.*;
 import io.user.dto.*;
+import io.user.common.annotation.DistributedLock;
+import io.user.common.annotation.Idempotent;
 import io.user.entity.*;
 import io.user.service.TeamService;
 import io.user.service.TodoService;
@@ -45,6 +47,7 @@ public class TeamServiceImpl extends BaseServiceImpl<TeamDao, TeamEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@Idempotent(timeout = 300)  // v1.2: 幂等性控制
 	public TeamVO createTeam(TeamCreateDTO dto, Long userId) {
 		// 1. 创建团队
 		TeamEntity team = new TeamEntity();
@@ -104,6 +107,7 @@ public class TeamServiceImpl extends BaseServiceImpl<TeamDao, TeamEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	// @DistributedLock(key = "'team:edit:' + #id", waitTime = 3, leaseTime = 10)  // v1.2: 分布式锁（暂时注释）
 	public TeamVO updateTeam(Long id, TeamUpdateDTO dto, Long userId) {
 		TeamEntity team = teamDao.selectById(id);
 		if (team == null) {

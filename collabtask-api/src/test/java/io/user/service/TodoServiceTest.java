@@ -21,6 +21,8 @@ import io.user.dto.TodoUpdateDTO;
 import io.user.dto.TodoVO;
 import io.user.entity.TodoEntity;
 import io.user.entity.UserEntity;
+import io.user.enums.PermissionCode;
+import io.user.enums.ResourceType;
 import io.user.service.impl.TodoServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,6 +54,9 @@ public class TodoServiceTest {
 
     @Mock
     private UserDao userDao;
+
+    @Mock
+    private AclPermissionService aclPermissionService;
 
     @InjectMocks
     private TodoServiceImpl todoService;
@@ -114,6 +119,8 @@ public class TodoServiceTest {
         UserEntity user = new UserEntity();
         user.setUsername("testuser");
         when(userDao.selectById(userId)).thenReturn(user);
+        
+        // v1.1: Mock ACL权限检查（用户是所有者，不需要检查hasPermission）
 
         // When
         TodoVO result = todoService.getTodoById(todoId, userId);
@@ -150,6 +157,11 @@ public class TodoServiceTest {
         Long otherUserId = 2L;
         todoEntity.setUserId(otherUserId);
         when(todoDao.selectById(todoId)).thenReturn(todoEntity);
+        
+        // v1.1: Mock ACL权限检查（不是所有者，且没有VIEW权限）
+        when(aclPermissionService.hasPermission(
+            userId, ResourceType.TODO.getCode(), todoId, PermissionCode.VIEW.getCode()
+        )).thenReturn(false);
 
         // When & Then
         assertThrows(RenException.class, () -> {
@@ -164,6 +176,8 @@ public class TodoServiceTest {
         Long todoId = 1L;
         TodoUpdateDTO updateDTO = new TodoUpdateDTO();
         updateDTO.setName("更新后的TODO");
+        
+        // v1.1: Mock ACL权限检查（用户是所有者，不需要检查hasPermission）
         updateDTO.setDescription("更新后的描述");
         
         when(todoDao.selectById(todoId)).thenReturn(todoEntity);

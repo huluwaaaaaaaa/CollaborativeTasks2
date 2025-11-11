@@ -33,8 +33,17 @@ public class AclPermissionAuditEntity implements Serializable {
 	@TableId(type = IdType.AUTO)
 	private Long id;
 	
-	@TableField("user_id")
-	private Long userId;
+	@TableField("acl_id")
+	private Long aclId;
+	
+	@TableField("action")
+	private String action;
+	
+	@TableField("subject_type")
+	private String subjectType;
+	
+	@TableField("subject_id")
+	private Long subjectId;
 	
 	@TableField("resource_type")
 	private String resourceType;
@@ -45,14 +54,17 @@ public class AclPermissionAuditEntity implements Serializable {
 	@TableField("permission_code")
 	private String permissionCode;
 	
-	@TableField("action")
-	private String action;
+	@TableField("operator_id")
+	private Long operatorId;
 	
-	@TableField("result")
-	private String result;
+	@TableField("reason")
+	private String reason;
 	
 	@TableField("ip_address")
 	private String ipAddress;
+	
+	@TableField("user_agent")
+	private String userAgent;
 	
 	@TableField("create_date")
 	private Date createDate;

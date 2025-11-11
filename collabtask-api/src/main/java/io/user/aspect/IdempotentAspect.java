@@ -52,7 +52,8 @@ public class IdempotentAspect {
 		}
 		
 		HttpServletRequest request = attributes.getRequest();
-		String userId = (String) request.getAttribute("userId");
+		Long userIdLong = (Long) request.getAttribute("userId");
+		String userId = userIdLong != null ? userIdLong.toString() : "unknown";
 		String uri = request.getRequestURI();
 		String methodName = method.getName();
 		

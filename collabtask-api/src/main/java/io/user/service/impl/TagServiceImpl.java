@@ -14,6 +14,7 @@ import io.user.common.service.impl.BaseServiceImpl;
 import io.user.dao.*;
 import io.user.dto.*;
 import io.user.entity.*;
+import io.user.common.annotation.Idempotent;
 import io.user.service.TagService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,7 @@ public class TagServiceImpl extends BaseServiceImpl<TagDao, TagEntity> implement
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@Idempotent(timeout = 300)  // v1.2: 幂等性控制
 	public TagVO createTag(TagCreateDTO dto, Long userId) {
 		// 检查标签名是否已存在
 		QueryWrapper<TagEntity> wrapper = new QueryWrapper<>();

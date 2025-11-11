@@ -54,7 +54,7 @@ docker-compose-*.yml
 scripts/
 
 # CI/CD
-.gitlab-ci.yml
+# .gitlab-ci.yml
 .gitlab-ci.yml.example
 .github/
 

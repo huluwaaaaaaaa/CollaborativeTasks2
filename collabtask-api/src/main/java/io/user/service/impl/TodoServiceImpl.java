@@ -23,6 +23,13 @@ import io.user.dto.TodoUpdateDTO;
 import io.user.dto.TodoVO;
 import io.user.entity.TodoEntity;
 import io.user.entity.UserEntity;
+import io.user.common.annotation.DistributedLock;
+import io.user.common.annotation.Idempotent;
+import io.user.enums.PermissionCode;
+import io.user.enums.ResourceType;
+import io.user.enums.TodoPriority;
+import io.user.enums.TodoStatus;
+import io.user.service.AclPermissionService;
 import io.user.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -44,17 +51,19 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	private final TodoDao todoDao;
 	private final UserDao userDao;
+	private final AclPermissionService aclPermissionService;
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@Idempotent(timeout = 300)  // v1.2: 幂等性控制（5分钟内防重复提交）
 	public TodoVO createTodo(TodoCreateDTO dto, Long userId) {
 		// 创建 TODO 实体
 		TodoEntity todo = new TodoEntity();
 		todo.setName(dto.getName());
 		todo.setDescription(dto.getDescription());
 		todo.setDueDate(dto.getDueDate());
-		todo.setPriority(StringUtils.isNotBlank(dto.getPriority()) ? dto.getPriority() : "MEDIUM");
-		todo.setStatus("NOT_STARTED");
+		todo.setPriority(StringUtils.isNotBlank(dto.getPriority()) ? dto.getPriority() : TodoPriority.MEDIUM.getCode());
+		todo.setStatus(TodoStatus.NOT_STARTED.getCode());
 		todo.setUserId(userId);
 		todo.setTeamId(dto.getTeamId());
 		todo.setCreateDate(new Date());
@@ -72,70 +81,44 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	@Override
 	public PageData<TodoVO> getTodoList(TodoQueryDTO dto, Long userId) {
-		// 构建查询条件
-		LambdaQueryWrapper<TodoEntity> wrapper = new LambdaQueryWrapper<>();
+		// v1.1优化：查询自己创建的 + 共享给我的TODO
+		// 使用自定义SQL联表查询ACL权限表
 		
-		// 只查询自己创建的 TODO（暂不考虑权限，后续通过 ACL 扩展）
-		wrapper.eq(TodoEntity::getUserId, userId);
+		// 计算偏移量
+		long offset = (dto.getPage() - 1) * dto.getLimit();
 		
-		// 关键词搜索
-		if (StringUtils.isNotBlank(dto.getKeyword())) {
-			wrapper.and(w -> w.like(TodoEntity::getName, dto.getKeyword())
-							 .or()
-							 .like(TodoEntity::getDescription, dto.getKeyword()));
-		}
+		// 调用自定义查询方法
+		List<TodoEntity> todoList = todoDao.selectMyTodosPage(
+			userId,
+			dto.getKeyword(),
+			dto.getStatus(),
+			dto.getPriority(),
+			dto.getTeamId(),
+			dto.getDueDateStart(),
+			dto.getDueDateEnd(),
+			StringUtils.isNotBlank(dto.getOrderBy()) ? dto.getOrderBy() : "create_date",
+			dto.getOrderDirection(),
+			offset,
+			dto.getLimit()
+		);
 		
-		// 状态筛选
-		if (StringUtils.isNotBlank(dto.getStatus())) {
-			wrapper.eq(TodoEntity::getStatus, dto.getStatus());
-		}
-		
-		// 优先级筛选
-		if (StringUtils.isNotBlank(dto.getPriority())) {
-			wrapper.eq(TodoEntity::getPriority, dto.getPriority());
-		}
-		
-		// 团队筛选
-		if (dto.getTeamId() != null) {
-			wrapper.eq(TodoEntity::getTeamId, dto.getTeamId());
-		}
-		
-		// 截止日期范围
-		if (dto.getDueDateStart() != null) {
-			wrapper.ge(TodoEntity::getDueDate, dto.getDueDateStart());
-		}
-		if (dto.getDueDateEnd() != null) {
-			wrapper.le(TodoEntity::getDueDate, dto.getDueDateEnd());
-		}
-		
-		// 排序
-		String orderBy = StringUtils.isNotBlank(dto.getOrderBy()) ? dto.getOrderBy() : "create_date";
-		boolean isAsc = "asc".equalsIgnoreCase(dto.getOrderDirection());
-		
-		switch (orderBy) {
-			case "due_date":
-				wrapper.orderBy(true, isAsc, TodoEntity::getDueDate);
-				break;
-			case "priority":
-				wrapper.orderBy(true, isAsc, TodoEntity::getPriority);
-				break;
-			case "status":
-				wrapper.orderBy(true, isAsc, TodoEntity::getStatus);
-				break;
-			default:
-				wrapper.orderBy(true, isAsc, TodoEntity::getCreateDate);
-		}
-		
-		// 分页查询
-		Page<TodoEntity> page = new Page<>(dto.getPage(), dto.getLimit());
-		IPage<TodoEntity> result = todoDao.selectPage(page, wrapper);
+		// 统计总数
+		Long total = todoDao.countMyTodos(
+			userId,
+			dto.getKeyword(),
+			dto.getStatus(),
+			dto.getPriority(),
+			dto.getTeamId(),
+			dto.getDueDateStart(),
+			dto.getDueDateEnd()
+		);
 		
 		// 转换为 VO
-		List<TodoVO> voList = result.getRecords().stream()
+		List<TodoVO> voList = todoList.stream()
 				.map(this::convertToVO)
 				.collect(Collectors.toList());
 		
-		return new PageData<>(voList, result.getTotal());
+		return new PageData<>(voList, total);
 	}
 	
 	@Override
@@ -146,13 +129,14 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 			throw new RenException("记录不存在");
 		}
 		
-		// TODO: 权限检查（ACL 功能开发后添加）
-		// if (!permissionService.hasPermission(userId, "TODO", id, "VIEW")) {
-		//     throw new RenException(ErrorCode.FORBIDDEN);
-		// }
+		// v1.1: ACL权限检查（支持TODO共享）
+		// 检查是否是创建者，或者有VIEW权限
+		boolean isOwner = todo.getUserId().equals(userId);
+		boolean hasPermission = aclPermissionService.hasPermission(
+			userId, ResourceType.TODO.getCode(), id, PermissionCode.VIEW.getCode()
+		);
 		
-		// 简单检查：只能查看自己的 TODO（暂不考虑权限）
-		if (!todo.getUserId().equals(userId)) {
+		if (!isOwner && !hasPermission) {
 			throw new RenException("无权限查看此 TODO");
 		}
 		
@@ -161,6 +145,7 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	// @DistributedLock(key = "'todo:edit:' + #id", waitTime = 3, leaseTime = 10)  // v1.2: 分布式锁（暂时注释）
 	public TodoVO updateTodo(Long id, TodoUpdateDTO dto, Long userId) {
 		TodoEntity todo = todoDao.selectById(id);
 		
@@ -168,13 +153,14 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 			throw new RenException("记录不存在");
 		}
 		
-		// TODO: 权限检查（ACL 功能开发后添加）
-		// if (!permissionService.hasPermission(userId, "TODO", id, "EDIT")) {
-		//     throw new RenException(ErrorCode.FORBIDDEN);
-		// }
+		// v1.1: ACL权限检查（支持TODO共享）
+		// 检查是否是创建者，或者有EDIT权限
+		boolean isOwner = todo.getUserId().equals(userId);
+		boolean hasPermission = aclPermissionService.hasPermission(
+			userId, ResourceType.TODO.getCode(), id, PermissionCode.EDIT.getCode()
+		);
 		
-		// 简单检查：只能编辑自己的 TODO
-		if (!todo.getUserId().equals(userId)) {
+		if (!isOwner && !hasPermission) {
 			throw new RenException("无权限编辑此 TODO");
 		}
 		
@@ -222,12 +208,12 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 		}
 		
 		// 已完成则不重复操作
-		if ("COMPLETED".equals(todo.getStatus())) {
+		if (TodoStatus.COMPLETED.getCode().equals(todo.getStatus())) {
 			throw new RenException("TODO 已经完成");
 		}
 		
 		// 设置为完成状态
-		todo.setStatus("COMPLETED");
+		todo.setStatus(TodoStatus.COMPLETED.getCode());
 		todo.setCompletedAt(new Date());
 		todo.setUpdateDate(new Date());
 		
@@ -238,6 +224,7 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 	
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	// @DistributedLock(key = "'todo:delete:' + #id", waitTime = 3, leaseTime = 10)  // v1.2: 分布式锁（暂时注释）
 	public void deleteTodo(Long id, Long userId) {
 		TodoEntity todo = todoDao.selectById(id);
 		
@@ -245,22 +232,18 @@ public class TodoServiceImpl extends BaseServiceImpl<TodoDao, TodoEntity> implem
 			throw new RenException("记录不存在");
 		}
 		
-		// TODO: 权限检查（ACL 功能开发后添加）
-		// if (!permissionService.hasPermission(userId, "TODO", id, "DELETE")) {
-		//     throw new RenException(ErrorCode.FORBIDDEN);
-		// }
-		
-		// 简单检查：只能删除自己的 TODO
+		// v1.1: ACL权限检查
+		// 只有创建者可以删除（即使有EDIT权限也不能删除）
 		if (!todo.getUserId().equals(userId)) {
-			throw new RenException("无权限删除此 TODO");
+			throw new RenException("只有创建者可以删除 TODO");
 		}
 		
-		// 删除
+		// 删除TODO
 		todoDao.deleteById(id);
 		
-		// TODO: 清理关联数据（标签关联、权限记录）
-		// todoTagDao.delete(new LambdaQueryWrapper<TodoTagEntity>().eq(TodoTagEntity::getTodoId, id));
-		// aclManagementService.revokeAllPermissions("TODO", id);
+		// 数据库外键级联删除会自动清理：
+		// - tb_todo_tags 中的关联记录（ON DELETE CASCADE）
+		// - tb_acl_access_control 中的权限记录（ON DELETE CASCADE）
 	}
 	
 	// ==================== 辅助方法 ====================

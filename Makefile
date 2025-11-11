@@ -188,8 +188,8 @@ release-ci:
 	@echo "新版本号: $(VERSION)"
 	@echo "=========================================="
 	@echo ""
-	@echo "[1/4] Maven编译..."
-	@mvn clean package -DskipTests -q
+	@echo "[1/4] Maven编译（跳过测试）..."
+	@mvn clean package -Dmaven.test.skip=true
 	@echo "[2/4] 构建镜像（环境: $(ENV)）..."
 	@docker build -f collabtask-api/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) . -q
 	@docker build -f collabtask-gateway/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) . -q

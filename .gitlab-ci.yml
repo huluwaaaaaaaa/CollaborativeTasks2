@@ -16,6 +16,8 @@ variables:
   NEXUS_USERNAME: "admin"
   NEXUS_PASSWORD: "123456"
   PROJECT_DIR: "/workspace"
+  # Java环境配置
+  JAVA_HOME: "/usr/lib/jvm/java-17-openjdk-arm64"
 
 stages:
   - deploy
@@ -46,9 +48,11 @@ deploy-test:
     - docker info | grep -A 3 "Insecure Registries"
     - echo "=========================================="
     - echo "🔐 登录Nexus..."
-
     - echo "$NEXUS_PASSWORD" | docker login $NEXUS_REGISTRY -u $NEXUS_USERNAME --password-stdin
     - echo "📦 开始构建和推送..."
+    - export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+    - export PATH=$JAVA_HOME/bin:$PATH
+    - java -version
     - make release-ci ENV=$ENV NEXUS_REGISTRY=$NEXUS_REGISTRY
     - echo "=========================================="
     - echo "✅ 测试环境部署完成！"

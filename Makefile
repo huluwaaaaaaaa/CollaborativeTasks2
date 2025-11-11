@@ -179,35 +179,46 @@ release:
 	@echo "🌐 访问: http://localhost:8001"
 	@echo "=========================================="
 
-# CI专用：只构建和推送，不部署
+# CI专用：构建、推送并自动部署
 release-ci:
 	@echo "=========================================="
-	@echo "🚀 CI构建和推送"
+	@echo "🚀 CI自动化部署"
 	@echo "当前分支: $$(git rev-parse --abbrev-ref HEAD)"
 	@echo "目标环境: $(ENV)"
 	@echo "新版本号: $(VERSION)"
 	@echo "=========================================="
 	@echo ""
-	@echo "[1/4] Maven编译（跳过测试）..."
+	@echo "[1/5] Maven编译（跳过测试）..."
 	@mvn clean package -Dmaven.test.skip=true
-	@echo "[2/4] 构建镜像（环境: $(ENV)）..."
+	@echo "[2/5] 构建镜像（环境: $(ENV)）..."
 	@docker build -f collabtask-api/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) . -q
 	@docker build -f collabtask-gateway/Dockerfile -t $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) . -q
-	@echo "[3/4] 推送到Nexus..."
+	@echo "[3/5] 推送到Nexus..."
 	@echo "123456" | docker login $(NEXUS_REGISTRY) -u admin --password-stdin > /dev/null 2>&1
 	@docker push $(NEXUS_REGISTRY)/collabtask-api:$(VERSION) -q
 	@docker push $(NEXUS_REGISTRY)/collabtask-gateway:$(VERSION) -q
-	@echo "[4/4] 完成！"
+	@echo "[4/5] 停止旧服务..."
+	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml down 2>/dev/null || true
+	@echo "[5/5] 部署新服务..."
+	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) NEXUS_REGISTRY=$(NEXUS_REGISTRY) docker compose -f docker-compose-nexus.yml up -d
+	@echo ""
+	@echo "等待服务启动..."
+	@sleep 10
 	@echo ""
 	@echo "=========================================="
-	@echo "✅ CI构建完成！"
+	@echo "✅ CI自动部署完成！"
+	@echo "=========================================="
 	@echo ""
 	@echo "📦 版本: $(VERSION)"
 	@echo "🎯 环境: $(ENV)"
-	@echo "🌐 Nexus: $(NEXUS_REGISTRY)"
+	@echo "🌐 访问: http://localhost:8001"
 	@echo ""
-	@echo "💡 部署命令（在宿主机执行）："
-	@echo "   IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml up -d"
+	@echo "🔍 服务状态:"
+	@IMAGE_TAG=$(VERSION) DEPLOY_ENV=$(ENV) docker compose -f docker-compose-nexus.yml ps
+	@echo ""
+	@echo "📊 查看日志:"
+	@echo "   docker logs -f collabtask-gateway"
+	@echo "   docker logs -f collabtask-api"
 	@echo "=========================================="
 
 # 快捷命令：发版到测试环境

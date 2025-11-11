@@ -25,11 +25,15 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -82,5 +86,32 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         converter.setObjectMapper(mapper);
         return converter;
+    }
+
+    /**
+     * 国际化配置
+     * 支持从请求头 Accept-Language 获取语言设置
+     * 
+     * 支持的语言：
+     * - zh-CN: 简体中文（默认）
+     * - en: 英文
+     * - zh-TW: 繁体中文
+     * 
+     * 使用示例：
+     * curl -H "Accept-Language: en" http://localhost:8002/collabtask-api/api/login
+     * curl -H "Accept-Language: zh-TW" http://localhost:8002/collabtask-api/api/login
+     */
+    @Bean
+    public LocaleResolver localeResolver() {
+        AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+        // 设置默认语言为简体中文
+        localeResolver.setDefaultLocale(Locale.SIMPLIFIED_CHINESE);
+        // 设置支持的语言列表
+        localeResolver.setSupportedLocales(Arrays.asList(
+            Locale.SIMPLIFIED_CHINESE,  // zh-CN
+            Locale.ENGLISH,              // en
+            Locale.TRADITIONAL_CHINESE   // zh-TW
+        ));
+        return localeResolver;
     }
 }

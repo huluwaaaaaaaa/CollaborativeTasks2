@@ -20,11 +20,13 @@ CollabTask 是一个功能完整的协作任务管理系统，核心特性包括
 - 🏷️ **标签系统** - 彩色标签、TODO分类
 - 🔒 **ACL权限** - 细粒度权限控制（v1.1）
 - ⚡ **并发控制** - 幂等性 + 分布式锁（v1.2）
+- 🌍 **多语言** - 支持简体中文、英文、繁体中文（v1.3）
 
 ### 🎯 技术特性
 
 - 🌐 Gateway + API服务化架构
 - 🔐 JWT双Token认证
+- 🌍 多语言国际化（简中/英文/繁中）
 - 📊 支持高级筛选和排序
 - ✅ 95%接口测试覆盖率
 
@@ -92,7 +94,7 @@ CollabTask 是一个功能完整的协作任务管理系统，核心特性包括
    ├─ 添加用户信息到请求头 (X-User-Id, X-Username)
    └─ 负载均衡选择API节点
    ↓
-3. API节点 (:8002/:8003)
+3. API节点 (:8002)
    ├─ Controller: 接收请求
    ├─ Service: 
    │   ├─ 从请求头获取userId (UserContext)
@@ -339,17 +341,27 @@ git checkout dev && git push origin dev
 
 ---
 
-## 📚 文档
+## 🌍 多语言支持
 
-### 核心文档
+系统支持多语言国际化（i18n），通过 `Accept-Language` 请求头切换语言：
 
-| 文档 | 说明 |
-|------|------|
-| [测试页面核心功能完善报告](docs/设计文档/02-测试页面核心功能完善报告.md) | ⭐ 功能详解 |
-| [v1.1-v1.2最终验证报告](docs/测试文档/01-v1.1-v1.2最终验证报告.md) | ⭐ 测试结果 |
-| [API接口统计](docs/开发文档/06-API接口统计.md) | 40个接口清单 |
+```bash
+# 英文
+curl -H "Accept-Language: en" http://localhost:8001/collabtask-api/api/login
 
-**完整索引**：`docs/README.md`
+# 繁体中文
+curl -H "Accept-Language: zh-TW" http://localhost:8001/collabtask-api/api/login
+
+# 简体中文（默认）
+curl -H "Accept-Language: zh-CN" http://localhost:8001/collabtask-api/api/login
+```
+
+**支持的语言**：
+- 🇨🇳 简体中文（zh-CN）- 默认
+- 🇺🇸 英文（en）
+- 🇹🇼 繁体中文（zh-TW）
+
+**详细文档**：[多语言国际化使用指南](docs/多语言国际化使用指南.md)
 
 ---
 

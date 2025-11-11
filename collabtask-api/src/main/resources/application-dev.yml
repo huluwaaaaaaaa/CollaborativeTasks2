@@ -1,0 +1,21 @@
+# ============================================
+# API服务 - 开发环境配置
+# 所有配置已迁移到Nacos配置中心
+# ============================================
+# 
+# Nacos配置位置：
+# 命名空间：dev
+# Data ID：collabtask-api.yaml
+# Group：DEFAULT_GROUP
+#
+# 如果Nacos不可用，可以临时在此配置：
+# spring:
+#   datasource:
+#     druid:
+#       url: jdbc:mysql://localhost:3306/collabtask?...
+#       username: root
+#       password: your_password
+#   data:
+#     redis:
+#       host: localhost
+#       port: 6379

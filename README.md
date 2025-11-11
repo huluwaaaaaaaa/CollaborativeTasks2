@@ -1,69 +1,71 @@
-# CollabTask - 协作任务管理系统
+[English](README.md) | [中文](README_ZH.md)
+
+# CollabTask - Collaborative Task Management System
 
 [![JDK](https://img.shields.io/badge/JDK-17+-orange)](https://www.oracle.com/java/technologies/downloads/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.4-green)](https://spring.io/projects/spring-boot)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-> 🚀 支持TODO共享、团队协作、细粒度权限控制的任务管理系统
+> 🚀 Task management system with TODO sharing, team collaboration, and fine-grained permission control
 
 ---
 
-## 📋 项目简介
+## 📋 Project Overview
 
-CollabTask 是一个功能完整的协作任务管理系统，核心特性包括TODO管理、团队协作、TODO共享和ACL权限控制。
+CollabTask is a fully-featured collaborative task management system with core features including TODO management, team collaboration, TODO sharing, and ACL permission control.
 
-### ✨ 核心功能
+### ✨ Core Features
 
-- 📝 **TODO管理** - 创建、更新、删除、完成、排序、筛选
-- 🤝 **TODO共享** - 支持VIEW/EDIT权限，实现协作
-- 👥 **团队管理** - 创建团队、添加成员、团队TODO
-- 🏷️ **标签系统** - 彩色标签、TODO分类
-- 🔒 **ACL权限** - 细粒度权限控制（v1.1）
-- ⚡ **并发控制** - 幂等性 + 分布式锁（v1.2）
-- 🌍 **多语言** - 支持简体中文、英文、繁体中文（v1.3）
+- 📝 **TODO Management** - Create, update, delete, complete, sort, and filter
+- 🤝 **TODO Sharing** - Support VIEW/EDIT permissions for collaboration
+- 👥 **Team Management** - Create teams, add members, team TODOs
+- 🏷️ **Tag System** - Colored tags, TODO categorization
+- 🔒 **ACL Permissions** - Fine-grained permission control (v1.1)
+- ⚡ **Concurrency Control** - Idempotency + distributed locks (v1.2)
+- 🌍 **Multi-language** - Support Simplified Chinese, English, Traditional Chinese (v1.3)
 
-### 🎯 技术特性
+### 🎯 Technical Features
 
-- 🌐 Gateway + API服务化架构
-- 🔐 JWT双Token认证
-- 🌍 多语言国际化（简中/英文/繁中）
-- 📊 支持高级筛选和排序
-- ✅ 95%接口测试覆盖率
+- 🌐 Gateway + API service-oriented architecture
+- 🔐 JWT dual-token authentication
+- 🌍 Multi-language internationalization (zh-CN/en/zh-TW)
+- 📊 Support advanced filtering and sorting
+- ✅ 95% API test coverage
 
 ---
 
-## 🏗️ 技术架构
+## 🏗️ Technical Architecture
 
-### 系统架构图
+### System Architecture Diagram
 
 ```
                     ┌─────────────────┐
-                    │   测试页面      │
+                    │   Test Page     │
                     │ api-test.html   │
                     └────────┬────────┘
                              │ HTTP
                              ▼
 ┌────────────────────────────────────────────────────────────┐
-│                      Gateway层 (:8001)                      │
+│                      Gateway Layer (:8001)                  │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  │
-│  │   路由   │  │ Token验证│  │ 负载均衡 │  │用户信息  │  │
-│  │  转发    │  │  认证    │  │  轮询    │  │请求头传递│  │
+│  │  Routing │  │  Token   │  │   Load   │  │   User   │  │
+│  │ Forward  │  │  Verify  │  │ Balance  │  │  Header  │  │
 │  └──────────┘  └──────────┘  └──────────┘  └──────────┘  │
 └───────────────────────┬────────────────────────────────────┘
                         │
             ┌───────────┴───────────┐
             │                       │
     ┌───────▼────────┐      ┌──────▼─────────┐
-    │   API节点-1    │      │   API节点-2    │
+    │   API Node-1   │      │   API Node-2   │
     │   (:8002)      │      │   (:8002)      │
     │ ┌────────────┐ │      │ ┌────────────┐ │
     │ │ Controller │ │      │ │ Controller │ │
     │ └─────┬──────┘ │      │ └─────┬──────┘ │
     │ ┌─────▼──────┐ │      │ ┌─────▼──────┐ │
     │ │  Service   │ │      │ │  Service   │ │
-    │ │ +ACL权限   │ │      │ │ +ACL权限   │ │
-    │ │ +幂等性    │ │      │ │ +幂等性    │ │
-    │ │ +分布式锁  │ │      │ │ +分布式锁  │ │
+    │ │ +ACL Perms │ │      │ │ +ACL Perms │ │
+    │ │ +Idempotent│ │      │ │ +Idempotent│ │
+    │ │ +Dist Lock │ │      │ │ +Dist Lock │ │
     │ └─────┬──────┘ │      │ └─────┬──────┘ │
     │ ┌─────▼──────┐ │      │ ┌─────▼──────┐ │
     │ │    DAO     │ │      │ │    DAO     │ │
@@ -78,353 +80,347 @@ CollabTask 是一个功能完整的协作任务管理系统，核心特性包括
    │  MySQL   │   │  Redis  │    │  Nacos  │
    │  :3306   │   │  :6379  │    │  :8848  │
    ├──────────┤   ├─────────┤    ├─────────┤
-   │ tb_todos │   │ 分布式锁│    │服务注册 │
-   │ tb_teams │   │ 幂等性  │    │配置中心 │
-   │ tb_acl_* │   │ Token   │    │         │
+   │ tb_todos │   │ Dist Lock│   │ Service │
+   │ tb_teams │   │ Idempote │   │Registry │
+   │ tb_acl_* │   │ Token   │    │ Config  │
    └──────────┘   └─────────┘    └─────────┘
 ```
 
-### 请求流程
+### Request Flow
 
 ```
-1. 客户端请求
+1. Client Request
    ↓
 2. Gateway (:8001)
-   ├─ Token验证
-   ├─ 添加用户信息到请求头 (X-User-Id, X-Username)
-   └─ 负载均衡选择API节点
+   ├─ Token Verification
+   ├─ Add user info to headers (X-User-Id, X-Username)
+   └─ Load balance to select API node
    ↓
-3. API节点 (:8002)
-   ├─ Controller: 接收请求
+3. API Node (:8002)
+   ├─ Controller: Receive request
    ├─ Service: 
-   │   ├─ 从请求头获取userId (UserContext)
-   │   ├─ ACL权限检查 (AclPermissionService)
-   │   ├─ 幂等性控制 (@Idempotent + Redis)
-   │   ├─ 分布式锁 (@DistributedLock + Redis)
-   │   └─ 业务逻辑处理
-   └─ DAO: MyBatis查询数据库
+   │   ├─ Get userId from headers (UserContext)
+   │   ├─ ACL permission check (AclPermissionService)
+   │   ├─ Idempotency control (@Idempotent + Redis)
+   │   ├─ Distributed lock (@DistributedLock + Redis)
+   │   └─ Business logic processing
+   └─ DAO: MyBatis query database
    ↓
-4. 返回响应
+4. Return Response
 ```
 
-### 核心组件说明
+### Core Components
 
-| 组件 | 职责 | 技术 |
-|------|------|------|
-| **Gateway** | 路由转发、Token验证、负载均衡 | Spring Cloud Gateway |
-| **API节点** | 业务逻辑、ACL权限、并发控制 | Spring Boot + MyBatis Plus |
-| **MySQL** | 数据存储（TODO、团队、ACL权限） | MySQL 8.0 |
-| **Redis** | 分布式锁、幂等性、Token缓存 | Redis 6.0 + Redisson |
-| **Nacos** | 服务注册、配置中心 | Nacos 2.0 |
+| Component | Responsibility | Technology |
+|-----------|---------------|------------|
+| **Gateway** | Routing, Token verification, Load balancing | Spring Cloud Gateway |
+| **API Node** | Business logic, ACL permissions, Concurrency control | Spring Boot + MyBatis Plus |
+| **MySQL** | Data storage (TODO, teams, ACL permissions) | MySQL 8.0 |
+| **Redis** | Distributed lock, Idempotency, Token cache | Redis 6.0 + Redisson |
+| **Nacos** | Service registry, Config center | Nacos 2.0 |
 
-**技术栈**：
+**Tech Stack**:
 - Spring Boot 3.5.4 + Spring Cloud Gateway
 - MySQL 8.0 + MyBatis Plus + Redis
-- Nacos（配置中心/注册中心） + Redisson（分布式锁）
+- Nacos (Config/Registry) + Redisson (Distributed Lock)
 
 ---
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 方式1：Docker Compose（推荐）
+### Method 1: Docker Compose (Recommended)
 
 ```bash
-# 一键启动所有服务
+# Start all services with one command
 docker-compose up -d
 
-# 访问
+# Access
 # Gateway: http://localhost:8001
-# 测试页面: api-test.html
+# Test Page: api-test.html
 ```
 
-### 方式2：本地启动
+### Method 2: Local Startup
 
 ```bash
-# 1. 启动基础服务
+# 1. Start infrastructure services
 docker-compose up -d mysql redis nacos
 
-# 2. 初始化数据库
+# 2. Initialize database
 mysql -h localhost -u root -p < database/schema_acl.sql
 
-# 3. 启动应用
-make start-gateway  # 或: cd collabtask-gateway && mvn spring-boot:run
-make start-api      # 或: cd collabtask-api && mvn spring-boot:run
+# 3. Start applications
+make start-gateway  # or: cd collabtask-gateway && mvn spring-boot:run
+make start-api      # or: cd collabtask-api && mvn spring-boot:run
 ```
 
-### 方式3：Makefile
+### Method 3: Makefile
 
 ```bash
-make build          # 编译打包
-make docker-up      # 启动Docker服务
-make status         # 查看状态
+make build          # Build and package
+make docker-up      # Start Docker services
+make status         # Check status
 ```
 
 ---
 
-## 🧪 功能测试
+## 🧪 Feature Testing
 
-### 测试页面（推荐）⭐
+### Test Page (Recommended) ⭐
 
 ```bash
-# 打开测试页面
+# Open test page
 open api-test.html
 
-# 特性：
-# ✅ 覆盖95%接口（38/40）
-# ✅ 所有请求通过Gateway
-# ✅ 支持TODO共享测试
-# ✅ 支持团队/标签管理
-# ✅ 自动化测试场景
+# Features:
+# ✅ Covers 95% of APIs (38/40)
+# ✅ All requests through Gateway
+# ✅ TODO sharing test support
+# ✅ Team/Tag management support
+# ✅ Automated test scenarios
 ```
 
-**测试流程**：
-1. 点击"登录"
-2. 点击"测试所有功能（完整）"
-3. 查看日志输出
+**Testing Steps**:
+1. Click "Login"
+2. Click "Test All Features (Complete)"
+3. View log output
 
-### 其他测试方式
+### Other Testing Methods
 
-- **Knife4j**：http://localhost:8002/collabtask-api/doc.html
+- **Knife4j**: http://localhost:8002/collabtask-api/doc.html
 
 ---
 
-## 📖 核心API
+## 📖 Core APIs
 
-### 认证
+### Authentication
 ```bash
-POST /api/login      # 登录
-POST /api/logout     # 登出
-POST /api/register   # 注册
+POST /api/login      # Login
+POST /api/logout     # Logout
+POST /api/register   # Register
 ```
 
-### TODO管理
+### TODO Management
 ```bash
-GET    /api/todos              # 列表（支持筛选+排序）
-POST   /api/todos              # 创建（v1.2幂等性）
-PUT    /api/todos/{id}         # 更新（v1.1 ACL检查）
-DELETE /api/todos/{id}         # 删除
-PATCH  /api/todos/{id}/complete # 完成
+GET    /api/todos              # List (with filtering + sorting)
+POST   /api/todos              # Create (v1.2 idempotency)
+PUT    /api/todos/{id}         # Update (v1.1 ACL check)
+DELETE /api/todos/{id}         # Delete
+PATCH  /api/todos/{id}/complete # Complete
 ```
 
-### TODO共享（v1.1核心功能）
+### TODO Sharing (v1.1 Core Feature)
 ```bash
-POST   /api/todos/{id}/share           # 共享TODO（VIEW/EDIT权限）
-DELETE /api/todos/{id}/share/{userId}  # 取消共享
+POST   /api/todos/{id}/share           # Share TODO (VIEW/EDIT permissions)
+DELETE /api/todos/{id}/share/{userId}  # Cancel sharing
 ```
 
-### 团队管理
+### Team Management
 ```bash
-POST   /api/teams                      # 创建团队
-POST   /api/teams/{id}/members/{uid}   # 添加成员
-DELETE /api/teams/{id}/members/{uid}   # 移除成员
+POST   /api/teams                      # Create team
+POST   /api/teams/{id}/members/{uid}   # Add member
+DELETE /api/teams/{id}/members/{uid}   # Remove member
 ```
 
-### 标签管理
+### Tag Management
 ```bash
-POST   /api/tags                       # 创建标签
-POST   /api/tags/todos/{tid}/tags/{id} # 添加标签到TODO
-DELETE /api/tags/todos/{tid}/tags/{id} # 移除标签
-GET    /api/tags/todos/{tid}/tags      # 查看TODO的标签
+POST   /api/tags                       # Create tag
+POST   /api/tags/todos/{tid}/tags/{id} # Add tag to TODO
+DELETE /api/tags/todos/{tid}/tags/{id} # Remove tag
+GET    /api/tags/todos/{tid}/tags      # View TODO tags
 ```
 
-**完整接口**：40个，详见 `docs/开发文档/06-API接口统计.md`
+**Complete APIs**: 40 APIs, see `docs/开发文档/06-API接口统计.md`
 
 ---
 
-## 🗂️ 项目结构
+## 🗂️ Project Structure
 
 ```
 CollaborativeTasks2/
-├── collabtask-gateway/         # Gateway服务（8001端口）
-├── collabtask-api/             # API服务（8002端口）
-│   ├── controller/             # 控制器（TODO、Team、Tag）
-│   ├── service/                # 业务层（ACL权限检查）
-│   ├── dao/                    # 数据访问层
-│   ├── entity/                 # 实体类（Entity）
-│   ├── dto/                    # 数据传输对象（DTO/VO）
-│   ├── enums/                  # 枚举类（PermissionCode、ResourceType）
-│   ├── aspect/                 # AOP切面（幂等性、分布式锁）
+├── collabtask-gateway/         # Gateway service (port 8001)
+├── collabtask-api/             # API service (port 8002)
+│   ├── controller/             # Controllers (TODO, Team, Tag)
+│   ├── service/                # Business layer (ACL permission checks)
+│   ├── dao/                    # Data access layer
+│   ├── entity/                 # Entities
+│   ├── dto/                    # Data transfer objects (DTO/VO)
+│   ├── enums/                  # Enums (PermissionCode, ResourceType)
+│   ├── aspect/                 # AOP aspects (Idempotency, Distributed lock)
 │   └── resources/mapper/       # MyBatis XML
-├── database/                   # 数据库脚本
-│   └── schema_acl.sql          # ACL权限系统表结构
-├── docs/                       # 📚 文档（22个文档）
-│   ├── 设计文档/               # 系统设计、方案评估
-│   ├── 测试文档/               # 测试报告、验证结果
-│   └── 开发文档/               # 开发规范、接口统计
-├── api-test.html               # 🎨 测试页面（v2.0）
-└── .cursor/rules/              # AI开发规范
+├── database/                   # Database scripts
+│   └── schema_acl.sql          # ACL permission system schema
+├── docs/                       # 📚 Documentation (22 docs)
+│   ├── 设计文档/               # System design, solution evaluation
+│   ├── 测试文档/               # Test reports, validation results
+│   └── 开发文档/               # Development standards, API stats
+├── api-test.html               # 🎨 Test page (v2.0)
+└── .cursor/rules/              # AI development standards
 ```
 
 ---
 
-## 📊 数据库设计
+## 📊 Database Design
 
-### 核心表（8张）
+### Core Tables (8)
 
-| 表名 | 说明 |
-|------|------|
-| tb_user | 用户表 |
-| tb_tokens | Token表（Access + Refresh） |
-| tb_todos | TODO表 |
-| tb_teams | 团队表 |
-| tb_team_members | 团队成员表 |
-| tb_tags | 标签表 |
-| tb_todo_tags | TODO-标签关联表 |
-| tb_scheduled_tasks | 定时任务表 |
+| Table | Description |
+|-------|-------------|
+| tb_user | User table |
+| tb_tokens | Token table (Access + Refresh) |
+| tb_todos | TODO table |
+| tb_teams | Team table |
+| tb_team_members | Team member table |
+| tb_tags | Tag table |
+| tb_todo_tags | TODO-Tag association table |
+| tb_scheduled_tasks | Scheduled task table |
 
-### ACL权限表（4张）
+### ACL Permission Tables (4)
 
-| 表名 | 说明 | 特点 |
-|------|------|------|
-| tb_acl_permission_definitions | 权限定义 | 14种权限 |
-| tb_acl_access_control | 访问控制列表 | 支持过期、撤销 |
-| tb_acl_permission_audit | 权限审计日志 | 完整追溯 |
-| tb_acl_role_definitions | 角色定义 | 预留扩展 |
+| Table | Description | Feature |
+|-------|-------------|---------|
+| tb_acl_permission_definitions | Permission definitions | 14 types of permissions |
+| tb_acl_access_control | Access control list | Support expiration, revocation |
+| tb_acl_permission_audit | Permission audit log | Complete traceability |
+| tb_acl_role_definitions | Role definitions | Reserved for expansion |
 
-**脚本位置**：`database/schema_acl.sql`
-
----
-
-## 🔧 配置说明
-
-### Nacos配置中心
-
-**访问地址**：http://localhost:8848/nacos（nacos/nacos）
-
-**配置文件**：
-- `collabtask-api.yaml` - API服务配置（MySQL、Redis）
-- `collabtask-gateway.yaml` - Gateway配置（路由、Token验证）
-
-**详细配置**：`docs/Nacos配置中心使用指南.md`
+**Script Location**: `database/schema_acl.sql`
 
 ---
 
-## 🚢 部署
+## 🔧 Configuration
 
-### Docker部署（推荐）
+### Nacos Config Center
+
+**Access URL**: http://localhost:8848/nacos (nacos/nacos)
+
+**Config Files**:
+- `collabtask-api.yaml` - API service config (MySQL, Redis)
+- `collabtask-gateway.yaml` - Gateway config (Routing, Token verification)
+
+**Detailed Guide**: `docs/Nacos配置中心使用指南.md`
+
+---
+
+## 🚢 Deployment
+
+### Docker Deployment (Recommended)
 
 ```bash
-# 启动
+# Start
 docker-compose up -d
 
-# 停止
+# Stop
 docker-compose down
 
-# 查看日志
+# View logs
 docker-compose logs -f
 ```
 
-### CI/CD（GitLab）
+### CI/CD (GitLab)
 
 ```bash
-# 自动部署：dev → test分支
+# Auto deploy: dev → test branch
 git checkout dev && git push origin dev
-# 创建MR → 合并 → 自动部署测试环境
+# Create MR → Merge → Auto deploy to test environment
 
-# 手动部署：test → main分支
-# 合并后在GitLab Pipeline中手动点击"deploy-prod"
+# Manual deploy: test → main branch
+# After merge, manually click "deploy-prod" in GitLab Pipeline
 ```
 
-**详细说明**：`docs/CI-CD实战指南.md`
+**Detailed Guide**: `docs/CI-CD实战指南.md`
 
 ---
 
-## 📝 开发规范
+## 📝 Development Standards
 
-**AI自动遵守**：`.cursor/rules/develop-style.mdc`
+**AI Auto-follows**: `.cursor/rules/develop-style.mdc`
 
-**核心规范**：
-- ✅ DTO/VO/Entity 分离
-- ✅ 分层架构（Controller → Service → DAO）
-- ✅ ACL权限检查
-- ✅ 并发控制（@Idempotent、@DistributedLock）
+**Core Standards**:
+- ✅ DTO/VO/Entity separation
+- ✅ Layered architecture (Controller → Service → DAO)
+- ✅ ACL permission checks
+- ✅ Concurrency control (@Idempotent, @DistributedLock)
 
 ---
 
-## 🌍 多语言支持
+## 🌍 Multi-language Support
 
-系统支持多语言国际化（i18n），通过 `Accept-Language` 请求头切换语言：
+The system supports multi-language internationalization (i18n), switch languages via `Accept-Language` header:
 
 ```bash
-# 英文
+# English
 curl -H "Accept-Language: en" http://localhost:8001/collabtask-api/api/login
 
-# 繁体中文
+# Traditional Chinese
 curl -H "Accept-Language: zh-TW" http://localhost:8001/collabtask-api/api/login
 
-# 简体中文（默认）
+# Simplified Chinese (Default)
 curl -H "Accept-Language: zh-CN" http://localhost:8001/collabtask-api/api/login
 ```
 
-**支持的语言**：
-- 🇨🇳 简体中文（zh-CN）- 默认
-- 🇺🇸 英文（en）
-- 🇹🇼 繁体中文（zh-TW）
+**Supported Languages**:
+- 🇨🇳 Simplified Chinese (zh-CN) - Default
+- 🇺🇸 English (en)
+- 🇹🇼 Traditional Chinese (zh-TW)
 
-**详细文档**：[多语言国际化使用指南](docs/多语言国际化使用指南.md)
+**Detailed Documentation**: [Multi-language Internationalization Guide](docs/多语言国际化使用指南.md)
 
 ---
 
 
-## 🛠️ 常用命令
+## 🛠️ Common Commands
 
 ```bash
-# 快速启动
-docker-compose up -d              # 启动所有服务
-make status                       # 查看状态
+# Quick start
+docker-compose up -d              # Start all services
+make status                       # Check status
 
-# 开发调试
-make start-api                    # 启动API
-make start-gateway                # 启动Gateway
+# Development
+make start-api                    # Start API
+make start-gateway                # Start Gateway
 
-# 测试
-mvn test                          # 单元测试
-open api-test.html                # 功能测试
+# Testing
+mvn test                          # Unit tests
+open api-test.html                # Feature tests
 
-# 构建部署
-make build                        # 编译打包
-make release-test                 # 发版到测试环境
+# Build & Deploy
+make build                        # Build and package
+make release-test                 # Release to test environment
 ```
 
 ---
 
-## 🔍 服务访问
+## 🔍 Service Access
 
-| 服务 | 地址 | 说明 |
-|------|------|------|
-| Gateway | http://localhost:8001 | 统一入口 |
-| API服务 | http://localhost:8002 | 直接访问 |
-| 测试页面 | `api-test.html` | 功能测试 ⭐ |
-| Knife4j | http://localhost:8002/collabtask-api/doc.html | API文档 |
-| Nacos | http://localhost:8848/nacos | 配置中心 |
+| Service | URL | Description |
+|---------|-----|-------------|
+| Gateway | http://localhost:8001 | Unified entry |
+| API Service | http://localhost:8002 | Direct access |
+| Test Page | `api-test.html` | Feature testing ⭐ |
+| Knife4j | http://localhost:8002/collabtask-api/doc.html | API documentation |
+| Nacos | http://localhost:8848/nacos | Config center |
 
 ---
 
-## 💡 快速上手
+## 💡 Quick Tutorial
 
-### 1. 启动服务
+### 1. Start Services
 
 ```bash
 docker-compose up -d
 ```
 
-### 2. 测试功能
+### 2. Test Features
 
 ```bash
-# 打开测试页面
+# Open test page
 open api-test.html
 
-# 操作步骤：
-# 1. 点击"登录"
-# 2. 点击"测试所有功能（完整）"
-# 3. 查看日志输出
+# Steps:
+# 1. Click "Login"
+# 2. Click "Test All Features (Complete)"
+# 3. View log output
 ```
 
-### 3. 查看文档
 
-```bash
-# 查看文档索引
-open docs/README.md
-
-```
 

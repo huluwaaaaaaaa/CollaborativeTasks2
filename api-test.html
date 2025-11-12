@@ -1434,7 +1434,7 @@
             
             log(`🏷️ 查询TODO ${todoId} 的标签...`);
             
-            const result = await apiRequest('GET', `/api/tags/todos/${todoId}/tags`);
+            const result = await apiRequest('GET', `/api/tags/todos/${todoId}`);
             
             if (result && result.code === 0) {
                 const tags = result.data;
@@ -1627,7 +1627,7 @@
             
             // Step 5: 查看TODO的标签
             log('【5/9】查看TODO的标签...', 'info');
-            let todoTags = await apiRequest('GET', `/api/tags/todos/${testTodoId}/tags`);
+            let todoTags = await apiRequest('GET', `/api/tags/todos/${testTodoId}`);
             
             if (todoTags && todoTags.code === 0) {
                 log(`  ✅ 标签查询成功，共 ${todoTags.data.length} 个标签`, 'success');

@@ -98,11 +98,12 @@ CollabTask is a fully-featured collaborative task management system with core fe
    ↓
 3. API Node (:8002)
    ├─ Controller: Receive request
+   ├─ AOP Aspects (Before Service):
+   │   ├─ @RequirePermission → ACL permission check (AclPermissionAspect)
+   │   ├─ @Idempotent → Idempotency control (Redis)
+   │   └─ @DistributedLock → Distributed lock (Redisson)
    ├─ Service: 
    │   ├─ Get userId from headers (UserContext)
-   │   ├─ ACL permission check (AclPermissionService)
-   │   ├─ Idempotency control (@Idempotent + Redis)
-   │   ├─ Distributed lock (@DistributedLock + Redis)
    │   └─ Business logic processing
    └─ DAO: MyBatis query database
    ↓
@@ -226,7 +227,7 @@ DELETE /api/teams/{id}/members/{uid}   # Remove member
 POST   /api/tags                       # Create tag
 POST   /api/tags/todos/{tid}/tags/{id} # Add tag to TODO
 DELETE /api/tags/todos/{tid}/tags/{id} # Remove tag
-GET    /api/tags/todos/{tid}/tags      # View TODO tags
+GET    /api/tags/todos/{tid}           # View TODO tags
 ```
 
 **Complete APIs**: 40 APIs, see `docs/开发文档/06-API接口统计.md`

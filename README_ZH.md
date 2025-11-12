@@ -98,11 +98,12 @@ CollabTask 是一个功能完整的协作任务管理系统，核心特性包括
    ↓
 3. API节点 (:8002)
    ├─ Controller: 接收请求
+   ├─ AOP切面 (Service执行前):
+   │   ├─ @RequirePermission → ACL权限检查 (AclPermissionAspect)
+   │   ├─ @Idempotent → 幂等性控制 (Redis)
+   │   └─ @DistributedLock → 分布式锁 (Redisson)
    ├─ Service: 
    │   ├─ 从请求头获取userId (UserContext)
-   │   ├─ ACL权限检查 (AclPermissionService)
-   │   ├─ 幂等性控制 (@Idempotent + Redis)
-   │   ├─ 分布式锁 (@DistributedLock + Redis)
    │   └─ 业务逻辑处理
    └─ DAO: MyBatis查询数据库
    ↓
@@ -226,7 +227,7 @@ DELETE /api/teams/{id}/members/{uid}   # 移除成员
 POST   /api/tags                       # 创建标签
 POST   /api/tags/todos/{tid}/tags/{id} # 添加标签到TODO
 DELETE /api/tags/todos/{tid}/tags/{id} # 移除标签
-GET    /api/tags/todos/{tid}/tags      # 查看TODO的标签
+GET    /api/tags/todos/{tid}           # 查看TODO的标签
 ```
 
 **完整接口**：40个，详见 `docs/开发文档/06-API接口统计.md`

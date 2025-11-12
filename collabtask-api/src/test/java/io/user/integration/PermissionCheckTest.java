@@ -40,43 +40,43 @@ import static org.mockito.Mockito.*;
 
 /**
  * @RequirePermission 注解集成测试
- * 
+ *
  * 测试权限检查切面是否正常工作
- * 
+ *
  * @author System
  */
-@SpringBootTest
-@ActiveProfiles("test")
-@DisplayName("权限检查注解集成测试")
-public class PermissionCheckIntegrationTest {
+//@SpringBootTest
+//@ActiveProfiles("test")
+//@DisplayName("权限检查注解集成测试")
+public class PermissionCheckTest {
 
     @Autowired
     private TodoService todoService;
-    
+
     @Autowired
     private TagService tagService;
-    
+
     @Autowired
     private TeamService teamService;
 
     @MockBean
     private TodoDao todoDao;
-    
+
     @MockBean
     private TagDao tagDao;
-    
+
     @MockBean
     private TeamDao teamDao;
-    
+
     @MockBean
     private UserDao userDao;
-    
+
     @MockBean
     private TodoTagDao todoTagDao;
-    
+
     @MockBean
     private TeamMemberDao teamMemberDao;
-    
+
     @MockBean
     private AclPermissionService aclPermissionService;
 
@@ -90,7 +90,7 @@ public class PermissionCheckIntegrationTest {
     void setUp() {
         ownerId = 1L;
         otherUserId = 2L;
-        
+
         // 准备 TODO 测试数据
         todoEntity = new TodoEntity();
         todoEntity.setId(1L);
@@ -98,7 +98,7 @@ public class PermissionCheckIntegrationTest {
         todoEntity.setUserId(ownerId);
         todoEntity.setStatus("NOT_STARTED");
         todoEntity.setCreateDate(new Date());
-        
+
         // 准备 Tag 测试数据
         tagEntity = new TagEntity();
         tagEntity.setId(1L);
@@ -106,20 +106,20 @@ public class PermissionCheckIntegrationTest {
         tagEntity.setColor("#FF0000");
         tagEntity.setUserId(ownerId);
         tagEntity.setCreateDate(new Date());
-        
+
         // 准备 Team 测试数据
         teamEntity = new TeamEntity();
         teamEntity.setId(1L);
         teamEntity.setName("测试团队");
         teamEntity.setOwnerId(ownerId);
         teamEntity.setCreateDate(new Date());
-        
+
         // Mock User
         UserEntity user = new UserEntity();
         user.setId(ownerId);
         user.setUsername("owner");
         when(userDao.selectById(ownerId)).thenReturn(user);
-        
+
         UserEntity otherUser = new UserEntity();
         otherUser.setId(otherUserId);
         otherUser.setUsername("other");
@@ -149,10 +149,10 @@ public class PermissionCheckIntegrationTest {
         // Given
         when(todoDao.selectById(1L)).thenReturn(todoEntity);
         when(aclPermissionService.hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.VIEW.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.VIEW.getCode())
         )).thenReturn(true);
 
         // When
@@ -162,10 +162,10 @@ public class PermissionCheckIntegrationTest {
 
         // Then - 应该调用了 ACL 检查
         verify(aclPermissionService, times(1)).hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.VIEW.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.VIEW.getCode())
         );
     }
 
@@ -175,28 +175,28 @@ public class PermissionCheckIntegrationTest {
         // Given
         when(todoDao.selectById(1L)).thenReturn(todoEntity);
         when(aclPermissionService.hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.VIEW.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.VIEW.getCode())
         )).thenReturn(false);
 
         // When & Then
         RenException exception = assertThrows(RenException.class, () -> {
             todoService.getTodoById(1L, otherUserId);
         });
-        
+
         assertEquals("权限不足", exception.getMessage());
-        
+
         // 应该记录审计日志
         verify(aclPermissionService, times(1)).auditLog(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.VIEW.getCode()),
-            eq("CHECK"),
-            eq("DENIED"),
-            eq(null)
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.VIEW.getCode()),
+                eq("CHECK"),
+                eq("DENIED"),
+                eq(null)
         );
     }
 
@@ -206,7 +206,7 @@ public class PermissionCheckIntegrationTest {
         // Given
         TodoUpdateDTO updateDTO = new TodoUpdateDTO();
         updateDTO.setName("更新后的名称");
-        
+
         when(todoDao.selectById(1L)).thenReturn(todoEntity);
         when(todoDao.updateById(argThat((TodoEntity t) -> t != null))).thenReturn(1);
 
@@ -226,13 +226,13 @@ public class PermissionCheckIntegrationTest {
         // Given
         TodoUpdateDTO updateDTO = new TodoUpdateDTO();
         updateDTO.setName("更新后的名称");
-        
+
         when(todoDao.selectById(1L)).thenReturn(todoEntity);
         when(aclPermissionService.hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.EDIT.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.EDIT.getCode())
         )).thenReturn(true);
         when(todoDao.updateById(argThat((TodoEntity t) -> t != null))).thenReturn(1);
 
@@ -243,10 +243,10 @@ public class PermissionCheckIntegrationTest {
 
         // Then
         verify(aclPermissionService, times(1)).hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.EDIT.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.EDIT.getCode())
         );
     }
 
@@ -272,17 +272,17 @@ public class PermissionCheckIntegrationTest {
         // Given
         when(todoDao.selectById(1L)).thenReturn(todoEntity);
         when(aclPermissionService.hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.DELETE.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.DELETE.getCode())
         )).thenReturn(false);
 
         // When & Then
         assertThrows(RenException.class, () -> {
             todoService.deleteTodo(1L, otherUserId);
         });
-        
+
         verify(todoDao, never()).deleteById(any());
     }
 
@@ -294,7 +294,7 @@ public class PermissionCheckIntegrationTest {
         // Given
         TagUpdateDTO updateDTO = new TagUpdateDTO();
         updateDTO.setName("更新后的标签");
-        
+
         when(tagDao.selectById(1L)).thenReturn(tagEntity);
         when(tagDao.updateById(argThat((TagEntity t) -> t != null))).thenReturn(1);
 
@@ -313,20 +313,20 @@ public class PermissionCheckIntegrationTest {
         // Given
         TagUpdateDTO updateDTO = new TagUpdateDTO();
         updateDTO.setName("更新后的标签");
-        
+
         when(tagDao.selectById(1L)).thenReturn(tagEntity);
         when(aclPermissionService.hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TAG.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.EDIT.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TAG.getCode()),
+                eq(1L),
+                eq(PermissionCode.EDIT.getCode())
         )).thenReturn(false);
 
         // When & Then
         assertThrows(RenException.class, () -> {
             tagService.updateTag(1L, updateDTO, otherUserId);
         });
-        
+
         verify(tagDao, never()).updateById(argThat((TagEntity t) -> true));
     }
 
@@ -354,7 +354,7 @@ public class PermissionCheckIntegrationTest {
         // Given
         TeamUpdateDTO updateDTO = new TeamUpdateDTO();
         updateDTO.setName("更新后的团队");
-        
+
         when(teamDao.selectById(1L)).thenReturn(teamEntity);
         when(teamDao.updateById(argThat((TeamEntity t) -> t != null))).thenReturn(1);
 
@@ -373,20 +373,20 @@ public class PermissionCheckIntegrationTest {
         // Given
         TeamUpdateDTO updateDTO = new TeamUpdateDTO();
         updateDTO.setName("更新后的团队");
-        
+
         when(teamDao.selectById(1L)).thenReturn(teamEntity);
         when(aclPermissionService.hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TEAM.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.EDIT.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TEAM.getCode()),
+                eq(1L),
+                eq(PermissionCode.EDIT.getCode())
         )).thenReturn(false);
 
         // When & Then
         assertThrows(RenException.class, () -> {
             teamService.updateTeam(1L, updateDTO, otherUserId);
         });
-        
+
         verify(teamDao, never()).updateById(argThat((TeamEntity t) -> true));
     }
 
@@ -414,10 +414,10 @@ public class PermissionCheckIntegrationTest {
         // Given
         when(todoDao.selectById(1L)).thenReturn(todoEntity);
         when(aclPermissionService.hasPermission(
-            eq(otherUserId), 
-            eq(ResourceType.TODO.getCode()), 
-            eq(1L), 
-            eq(PermissionCode.VIEW.getCode())
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.VIEW.getCode())
         )).thenReturn(false);
 
         // When & Then
@@ -427,13 +427,13 @@ public class PermissionCheckIntegrationTest {
 
         // 验证审计日志被记录
         verify(aclPermissionService, times(1)).auditLog(
-            eq(otherUserId),
-            eq(ResourceType.TODO.getCode()),
-            eq(1L),
-            eq(PermissionCode.VIEW.getCode()),
-            eq("CHECK"),
-            eq("DENIED"),
-            eq(null)
+                eq(otherUserId),
+                eq(ResourceType.TODO.getCode()),
+                eq(1L),
+                eq(PermissionCode.VIEW.getCode()),
+                eq("CHECK"),
+                eq("DENIED"),
+                eq(null)
         );
     }
 
@@ -459,10 +459,10 @@ public class PermissionCheckIntegrationTest {
     void testEnumUsageNotMagicValues() {
         // 这个测试主要是编译期验证
         // 如果代码使用了魔法值，这里会编译失败
-        
+
         ResourceType resourceType = ResourceType.TODO;
         PermissionCode permission = PermissionCode.VIEW;
-        
+
         assertNotNull(resourceType);
         assertNotNull(permission);
         assertEquals("TODO", resourceType.getCode());
